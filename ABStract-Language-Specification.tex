@@ -12,93 +12,115 @@
 \usepackage{syntax}
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
 
+\newcommand{\revisionNumber}{DRAFT Revision 33 - 2023.05.16}
+\fancypagestyle{revision}{
+  \fancyhf{} % Clear header and footer fields
+  \renewcommand{\headrulewidth}{0pt} % Remove header rule
+  \fancyfoot[C]{Page \thepage\ | \revisionNumber} % Set the page number and revision number in the center of the footer
+}
+\pagestyle{revision}
+	
 \newcolumntype{b}{>{\hsize=0.2\hsize}X}
 \newcolumntype{s}{X}
 
 \makeindex
 
 \title{\textbf{ABStract Language Specifcation}}
-\date{Revision 0.07 - May 4th 2021}
-\author{Maintainers:\\John Dunlap\\\\Contributors:\\Ryan Connolly}
+\date{\revisionNumber}
+\author{\textbf{Author}\\John Dunlap\\\\\textbf{Acknowledgements}\\Daniel Pratt - Randall Fairman - Ryan Connolly}
 
 \begin{document}
 \pagenumbering{gobble}
 \maketitle
+
+\begin{center}
+\begin{tikzpicture}
+	\begin{scope} [fill opacity = .4]
+	
+	\definecolor{shade1}{RGB}{96,96,96}
+	\definecolor{shade2}{RGB}{128,128,128}
+	\definecolor{shade3}{RGB}{160,160,160}
+	\definecolor{shade4}{RGB}{192,192,192}
+	
+	%% Draw ovals
+    \draw[fill=shade1,    draw=gray, rotate=22.5]  (3,0) ellipse (4cm and 2cm);
+    \draw[fill=shade2,    draw=gray, rotate=67.5]  (3,0) ellipse (4cm and 2cm);
+    \draw[fill=shade3,    draw=gray, rotate=112.5] (3,0) ellipse (4cm and 2cm);
+    \draw[fill=shade4,    draw=gray, rotate=157.5] (3,0) ellipse (4cm and 2cm);
+    \draw[fill=shade1,    draw=gray, rotate=202.5] (3,0) ellipse (4cm and 2cm);
+    \draw[fill=shade2,    draw=gray, rotate=247.5] (3,0) ellipse (4cm and 2cm);
+    \draw[fill=shade3,    draw=gray, rotate=292.5] (3,0) ellipse (4cm and 2cm);
+    \draw[fill=shade4,    draw=gray, rotate=337.5] (3,0) ellipse (4cm and 2cm);
+
+    \draw[fill=black,    draw=gray]               (0,0) circle (1cm);
+
+	%% Draw text on ovals
+    \node[rotate=22.5]  at (4.62,1.91)   {\LARGE\textbf{Java}};
+    \node[rotate=67.5]  at (1.91,4.62)   {\LARGE\textbf{C}};
+    \node[rotate=337.5] at (-4.62,1.91)  {\LARGE\textbf{Python}};
+    \node[rotate=292.5] at (1.91,-4.62)  {\LARGE\textbf{Erlang}};
+    \node[rotate=292.5] at (-1.91,4.62)  {\LARGE\textbf{JavaScript}};
+    \node[rotate=337.5] at (4.62,-1.91)  {\LARGE\textbf{Swift}};
+    \node[rotate=67.5]  at (-1.91,-4.62) {\LARGE\textbf{Rust}};
+    \node[rotate=22.5]  at (-4.62,-1.91) {\LARGE\textbf{C\#}};
+
+	%% Draw center text
+    \node[text=white, opacity=1] at (0,0) {\LARGE\textbf{\textit{abs}}};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
 \newpage
 \pagenumbering{arabic}
 \tableofcontents{}
 \newpage
 
 \section{Introduction}
-\paragraph{}\textit{ABStract}, hereafter referred to as \textit{abs}, is a multi-paradigm, statically typed, source-to-source transpiled language which supports compile time null checking, portable abstractions, compile time sandboxing, and self compilation. \textit{abs} aims to have as few runtime dependencies as possible. The design of the \textit{abs} transpiler, hereafter referred to as a compiler, can be embedded into any supported compilation target. 
+\paragraph{}The goal of the \textit{ABStract Programming Language}, hereafter referred to as \textit{abs}, is to cleanly share logic between wholly incompatible programming languages without introducing any dependencies beyond the logic itself.
+
+\paragraph{}To achieve this goal, \textit{abs} has been designed as a transpiled programming language which enables unidirectional source-to-source transformation from \textit{abs} into other programming languages, hereafter referred to as targets. The initial list of supported targets is: Java, C\#, JavaScript, Erlang, Rust, C, Python, and Swift. By embracing dissimilar targets from day one, \textit{abs} benefits from a broader range of perspectives and ensures that its design is naturally bounded by commonalities between targets. This is why the \textit{abs} logo is a Venn diagram. 
+
+\paragraph{}Commonalities between targets include, but are not necessarily restricted to: Variables, data types, functions, recursion, loops, if/else, arithmetic/logical operations, function call stack, and memory allocation.
+
+\paragraph{}\textit{abs} supports three different kinds of functions: Native, pure, and impure. Native functions are \textit{abs} method contracts which define a name, return type, and argument list but which do not have a body. These methods are assumed to be implemented in the target language and available at runtime. Pure functions are functions which cannot call native functions either directly or indirectly. This is enforced by raising a compiler error if a pure function calls a function which is not also a pure function. Impure functions are functions which call functions of all types. Sharing state outside of method contracts is strictly forbidden and, consequently, \textit{abs} does not support global variables, singletons, static variables, or similar mechanisms. \textit{abs} does not guarantee the size of its numeric data types. At first glance, this may seem like inhibits portability but it is the position of this document that the opposite is true because this allows \textit{abs} to support different hardware platforms which have dissimilar CPU registers. This is similar to the approach taken by C which is, arguably, the most portable language ever created.
+
+\paragraph{}However, there are also aspects of the \textit{abs} design with significantly differ from that of its supported targets. For example, \textit{abs} introduces support for multiple entry points, removes support IO of any kind, and prevents runtime errors at compile time. Multiple entry points are necessary because native code, written in a target language, must be able to directly call \textit{abs} functions. Support for IO is not provided because \textit{abs} is dependent on the target to provide this functionality through native methods.  
+
 
 \subsection{Why Another Language?}
 \paragraph{}
-The world is full of weird and wonderful programming languages which aim to solve problems in every way you can imagine and likely a few ways that you can't. At the time this was written, there were 694 programming languages listed on \href{https://en.wikipedia.org/wiki/List_of_programming_languages}{{\color{blue}Wikipedia}}\footnote{\url{https://en.wikipedia.org/wiki/List_of_programming_languages}.}. Every programming language has its pros and cons but, at this point, it's pretty unusual to encounter a problem which cannot be solved with an existing language. The enescapable question which must be answered by every language designer is this: Why does a world with so many programming languages need another one? We will explore this question in the following section.
+The world is full of weird and wonderful programming languages which aim to solve problems in every way you can imagine and likely a few ways you can't. At the time this was written, there were 694 programming languages listed on \href{https://en.wikipedia.org/wiki/List_of_programming_languages}{{\color{blue}Wikipedia}}\footnote{\url{https://en.wikipedia.org/wiki/List_of_programming_languages}.}. Every programming language has its pros and cons but, at this point, it's very unusual to encounter a problem which cannot be solved with at least one of them. The enescapable question which must be answered by every language designer is this: Why does a world with so many programming languages need another one? While it is certainly true that there are very few tasks, if any, which cannot be solved with an existing programming language, it is important to remember that this has always been the case. For example, there are no solvable problems which cannot be solved with assembly language and yet more than 600 programming languages have been created since assembly language was created. Just because it's possible to solve a problem with a particular language does not necessarly mean that it's the best tool for the job, even if it's the only available tool. Programming languages are created for a variety of reasons including expressiveness, domain specific needs, performance, parallelism, simplification, compatibility, etc. The need driving the creation of \textit{abs} is broad compatibility. Certainly, you could write the same function multiple times, once for each of your deployment environments but it would be more efficient and preferable to write that function once and compile it separately for each of your deployment environments.
 
-\paragraph{}\textbf{TODO: Business logic is a second class citizen which cannot be cleanly inferred from the code because it, inevitably, cross cuts all layers, technologies, and systems. Explain how ABS can transform business logic into a first class citizen.}
+\subsection{Design Descisions}
+\subsubsection{Memory Management}
+\paragraph{}Within the initial list of targets, there are four distinct approaches to memory management: 
+\begin{longtable}{ |p{4cm}|p{11cm}|  }
+\hline
+\textbf{Approach} & \textbf{Targets} \\
+\hline
+Garbage collected heap memory & Java, C\#, Erlang, Swift, Python, JavaScript\\
+&\\
+\hline
+Manually managed heap memory & C\\
+&\\
+\hline
+Smart pointer managed heap memory & Rust\\
+&\\
+\hline
+Automatically managed stack memory & All\\ 
+&\\
+\hline
+\end{longtable}
+\paragraph{}Automatic memory management is a fundamental design goal of \textit{abs}. Unfortunately, not all targets support it. C defers heap management to the programmer, Rust requires the explicit use of smart pointers, and other targets rely on garbage collectors to manage the heap. This inconsistency forces \textit{abs} to include memory management in its design such that it it is possible to support targets which do not have a garbage collector.
 
-\paragraph{}\textbf{TODO: Talk about the need for semantic boundaries to enforce the clean separation of concerns between business logic and architectural logic}
+\paragraph{}It is not feasible to implement a portable garbage collector for targets which do not already have one. The simplest solution to this problem is to add compile time constraints which which have no affect in targets other than C while allowing \textit{abs} to implement a stack managed heap when targeting C.
 
-\subsection{Why have cross platform languages failed in the past?}
-\paragraph{}\textbf{TODO: Define what is meant by "failed". What would success look like for a cross platform language? Did Java really fail? It's one of the most popular languages ever created.} Most modern programming languages are capable of implementing any other programming language. However, just because language A can be used to implement language B doesn't necessarily mean that the resulting implementation of language B will perform well enough to be useful outside an academic setting.
-\paragraph{}The Java Programming Language\footnote{\url{https://en.wikipedia.org/wiki/Java_(programming_language)}} boasts \textit{"Write once. Run anywhere"}. While this was mostly true when Java was originally created, it has become less and less true over time. The problem is that Java programs can only be run on platforms which are supported by the JVM\footnote{\url{https://en.wikipedia.org/wiki/Java_virtual_machine}} and the number of available platforms, in combination with the increasing complexity of the JVM, has made it very difficult for Java to support all of them. To make matters worse, even if a platform is supported by the JVM, the platform may prohibit the installation of the JVM, may provide an API or SDK which is not written in Java, or the JVM may be too resource intensive to be viable on the target platform. At this point, no language runtime has achieved the level of dominance necessary to be available on every platform, it seems unlikely that any languge runtime will achieve this level of dominance, and even if a language runtime were to achieve this level of dominance, it is unlikely that it could maintain this level of dominance indefinitely. Given the apparent impossibility of this dilemma, \textit{abs} has chosen to abandon the concept of a language runtime entirely. Every platform which currently exists, or which is likely to exist, will support at least one programming language so there is no need to provide a language runtime in the first place. It is, therefore, the goal of the \textit{abs} compiler to leverage whatever language, API, or SDK is available on the target platform. This goal has lead to the ideal: \textit{"Write once. Compile anywhere."}
-\textbf{TODO: Expand on the idea that Java's downfall was too many runtime dependencies.}
-\subsection{Why aren't cross platform languages the norm?}
-\textbf{TODO}Cross platform languages are hard. Different languages have different capabilities, strengths, and weaknesses. Too many features; Every supported feature complicates adding support for new platforms. Designing a language which is functionally divergent from the platforms on which it needs to run. Too much complexity. Failure to constrain language semantics to the overlapping capabilities of the platforms which must be supported. Similar or identical problems are solved in different ways on different platforms. Attempting to solve the same problem in a portable way may 
-\subsection{Inspirational Quotes}
-\begin{itemize}
-\item \textit{Any fool can write code that a computer can understand. Good programmers write code that humans can understand} - Martin Fowler
-\end{itemize}
-\subsection{Problems}
-The following are problems which are not, either in whole or in part, solved by existing languages.
-\subsubsection{Multiple Platforms}\paragraph{}One of the principle challenges in modern software development is supporting the ever increasing number of platforms and smart devices. Many of these devices, despite supporting similar use cases, technically have very little in common with one another. These devices have different form factors, different operating systems, different hardware, different language support, different libraries, and different distrubution mechanisms. Consequently, supporting multiple devices is more expensive than supporting a single device and every additional supported device increases costs and extends deadlines.
-\subsubsection{Limited Reusability}\paragraph{}The word "abstract" can mean different things. In the context of this document, it is a programming language. In conversation, it can mean something is difficult to understand or it can refer to an idea. In the context of an object oriented programming language, it refers to classes which are intended to address the overlap between two or more similar problems. Code which is useful in multiple problems is included and code which is only useful for a single problem is excluded. This allows an unknown number of similar problems to be partially solved while fully solving a single problem. This is a valuable capability which simplifies the creation of reusable software. However, it does have limitations. Although many languages support the concept of an abstract class, in one form or another, an abstract class in languge A is, generally speaking, wholly incompatible with language B. Consequently, an abstract class isn't truly abstract because it must be written separately in each language which requires it. This inability to share abstract classes between languages and platforms is one of the reasons that supporting two or more platforms more expensive than supporting a single platform.
-\textbf{TODO: Limited reusability is a problem which applies to more than just abstract classes. For example, a function written in language A cannot be reused in language B}
-\subsubsection{Premature Obsolescence}\paragraph{}Software applications degrade over time, for a variety of reasons, and, while some degrade more quickly than others, in the absence of extraordinary intervention, they all, eventually, reach the end of their useful service life. This degredation is, unfortunately, unavoidable because it is caused by the very technical implementation details which make the application functional. Over time, technical implementation details become increasingly intertwined with business logic and, past a certain point, it becomes impractical to separate them. Many software applications continue like this until it becomes necessary to retire their underlying technology which, in turn, forces the organization to retire the application as well. This is unfortunate because organizations invest decades of time, money, knowledge, and effort into building software applications which still have value at the point that they must be retired. Replacing these software applications is difficult, time consuming, and expensive.
-\subsubsection{Conflict Of Interest}\paragraph{}The interests of corporations, which provide free software development tooling, are not always aligned with the interests of those who use their tooling. If a corporation spends a large amount of money developing tools which they subsequently give away for free, there's very rarely an altruistic explanation. Common explanations include, but are not limited to, a corporation wants you to use their hardware, their operating system, or their platform and, consequently, makes it as easy as possible for you to do so. Whatever their reason happens to be, the use of their tools is usually a mutually beneficial relationship. However, it should be self evident that a corporation which offers free tools for building applications on their own platform cannot be relied upon also provide free tools for building applications on their competitors platforms. They may do it, under some circumstances, particularly if they are not the market leader, but they may discontinue support for their competitor's platforms, at any time and without warning, if it becomes too expensive or if they achieve market dominance. It is in the best interest of a corporation for application X to exclusively support their platform. By contrast, it is in the best interest of the consumer to for application X to support as many platforms as possible because this gives them the freedom to choose which platform works best for them. 
-\subsubsection{Monolingual applications are expensive}\paragraph{}
-\textbf{TODO: Fill this out}
-\subsection{Solution}
-It is the position of this document that there can be no solution to the problems outlined above except the creation of a new programming language.
-\\
-\textbf{TODO: Explain how the proposed solution solves the previously mentioned problems}
-\subsection{Philosophy}
-The design of the \textit{abs} language is guided by the following principles.
-\subsubsection{Do one thing and do it well}
-Don't go crazy with language features. Portability increases as language complexity decreases.
-\subsubsection{Compilation errors are better than runtime errors}
-Errors encountered by a developer are better than errors encountered by a user. Minimize runtime errors by maximizing compilation errors.
-\subsubsection{Resemble Java syntax where possible}
-The initial \textit{abs} compiler, referred to as the bootstrap compiler, will be built in Java. However, once the bootstrap compiler is mature enough to compile an \textit{abs} version of itself, the Java source code of the bootstrap compiler will be ported from Java to \textit{abs} and compiled with the bootstrap compiler. Beyond this point, the \textit{abs} compiler can be compiled into any supported target language and embedded into other projects. Toward that end, the complexity of porting the compiler from Java to \textit{abs} decreases as the similarity between the languages increases. For example, \textit{"import a.b.c;"} should be favored above \textit{"use a.b.c;"} because this eliminates the need for altering that line of code during the port of the compiler from Java to \textit{abs}.
-\subsubsection{Minimize dependencies}
-The design of the \textit{abs} language should inherently minimize runtime requirements because this makes it easier to support compilation targets with different runtime environments. 
-\\
-For example, in an object oriented paradigm, generated classes should not extend a common base object. Whether or not to inherit from another class should be left to the developer.
-\\
-For example, dynamic types would require runtime type checking and while this would not be detriminental in dynamically typed languages, because types are already checked at runtime, but would be detrimental in statically types languages where runtime type checking would have to be layered on top of the language. As such, it should be avoided. Other examples of detrimental design decisions would be anything which necessitates an \textit{abs} runtime library. This would include language extensions which, while possibly easily implemented, require the placement of a function somewhere in the output. A good example of this is 
-\subsubsection{Maximize pure code}
-\textit{TODO: Describe the difference between pure and impure code and talk about how impure code is more dynamic, less portable, and harder to test.}\\
-To be considered reusable, code must execute in an equivalent fashion on any runtime, any operating system, and any hardware. To achieve this, code must be abstracted away from implemention details which are incompatible with other platforms. Therefore, if code is not abstract then it cannot be reusable and if code is reusable then it must be abstract.
-\subsubsection{Portability over performance}
-This does not mean that performance does not matter but rather that, in the pursuit of performance, portability should not be compromised. In the case of portable applications, this is a way of formalizing a pre-eisting design goal and in the case of non-portable applications \textit{abs} is not necessary. If \textit{abs} did not execute in an equivalent fashion on different platforms then it would have very little practical value. If extremely high performance operations are required then they should be performed within native methods.
-\subsubsection{Code is data}
-The grammar of a computer programming language is a sophisticated executable data format which, typically, can only be read by the appropriate compiler or interpreter. This means that the source code for every computer program is a data file and not simply a text file. Consequently, the \textit{abs} compiler aims to provide interfaces which allow external tools to query, update, and transform this data structure without duplicating functionality which already exists within the \textit{abs} compiler.
-\subsubsection{Truth should not be repeated}
-If a truth has been fully expressed then there should be no need to repeat it in the future.
-\subsubsection{Lowest common denominator}
-Supported semantics should closely adhere to the semantic overlap between supported target languages. This minimizes the amount of extra code that the compiler must inject into generated source files to support \textit{abs} semantics.
-\subsection{Design Considerations}
-\subsubsection{Native Code Injection}
-Native code injection attacks are very similar to SQL injection attacks. When accepting user created code, string concatenaction is extremely dangerous because the user could attempt to escape the compiler's sandbox by embedding native code in a string constant, which would be ignored by \textit{abs} but not by the compiler of the native language, with the goal of accessing native resources which would not otherwise be available. One possible solution to this problem would be to store all string constants in a text file which gets automatically loaded at runtime by the code which is emitted by the compiler.
-\subsubsection{Denial Of Service}
-If abs code is accepted by users then, in the absence of some kind of timeout, code which loops or iterates infinitely could be used to execute a denial of service attack.
 \subsubsection{Types}
-\textbf{TODO: Discuss the challenges of designing a portable type system}
-\subsubsection{Boolean truth}
-TODO: Describe the pros and cons of "truthiness" vs actual boolean types.
-\subsubsection{Null references}
+\subsubsection{Error Handling}
+\subsubsection{Null References}
 \paragraph{}To null or not to null? That is the question. In 1965, \href{https://en.wikipedia.org/wiki/Tony_Hoare}{{\color{blue}Tony Hoare}}\footnote{\url{https://en.wikipedia.org/wiki/Tony_Hoare}.} changed computer science forever by introducing null references in \textit{ALGOL W}. In 2009, having observed his invention for 44 years, he had this to say:
 \paragraph{}\textit{"I call it my billion-dollar mistake. It was the invention of the null reference in 1965. At that time, I was designing the first comprehensive type system for references in an object oriented language (ALGOL W). My goal was to ensure that all use of references should be absolutely safe, with checking performed automatically by the compiler. But I couldn't resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years." - Tony Hoare}
 
@@ -111,7 +133,48 @@ It seems as if the problems Mr. Hoare attributes to null references, in the quot
 
 Is the answer simply that Mr. Hoare failed to solve the problem of unsafe references? Not exactly. Reference errors existed both before and after the invention of null references so, in that sense, you could say that he failed. However, in fairness to Mr. Hoare, he succeeded in reducing the number of invalid references from many to one. This is no small feat and represents a major step forward in the field of computer computer science because it replaces complicated address range checks with a single equality comparison. This equality comparison allows higher level languages to safely report reference errors, gracefully fail, and even recover from reference errors without crashing the entire program. Unfortunately, this has led to the unfair perception that null is the root of the problem and it isn't. It doesn't matter if the address of an invalid reference is zero or some other value. If a program attempts to dereference an invalid reference, there will be an error. Period. If a compiler allows a program to dereference an invalid reference be it a null reference or not then the fault lies with the compiler. When these errors occur, null isn't an antagonist; It is a messenger.
 
-\paragraph{Should \textit{abs} support null?}At a practical level, the answer must be: Yes. Due to \textit{abs} being a transpiled language, many of its compilation targets will support null and refusing to support null would complicate the interaction between native and non-native methods. Null references exist; That is a fact. Whether or not they \textit{should} exist isn't relevant. What happens if \textit{abs} does not support null and a native method returns null or passes null into an \textit{abs} entry point? It's inconcievable that this would never happen in practice and, consequently, it must be accounted for in the design of the language. There are other ways to approach the problem but it is the position of this document that supporting null references is, by far, the simplest solution.
+\paragraph{Should \textit{abs} support null?}From a pragmatic perspective, the answer must be: Yes. Due to \textit{abs} being a transpiled language, many of its compilation targets will support null and refusing to support null would complicate the interaction between native and non-native methods. Null references exist; That is a fact. Whether or not they \textit{should} exist isn't relevant. What happens if \textit{abs} does not support null and a native method returns null or passes null into an \textit{abs} entry point? It's inconcievable that this would never happen in practice and, consequently, it must be accounted for in the design of the language. There are other ways to approach the problem but it is the position of this document that supporting null references is, by far, the simplest.
+
+\subsection{Why have cross platform languages failed in the past?}
+\paragraph{}\textbf{TODO: Define what is meant by "failed". What would success look like for a cross platform language? Did Java really fail? It's one of the most popular languages ever created.} Most modern programming languages are capable of implementing any other programming language. However, just because language A can be used to implement language B doesn't necessarily mean that the resulting implementation of language B will perform well enough to be useful outside an academic setting.
+\paragraph{}The Java Programming Language\footnote{\url{https://en.wikipedia.org/wiki/Java_(programming_language)}} boasts \textit{"Write once. Run anywhere"}. While this was mostly true when Java was originally created, it has become less and less true over time. The problem is that Java programs can only be run on platforms which are supported by the JVM\footnote{\url{https://en.wikipedia.org/wiki/Java_virtual_machine}} and the number of available platforms, in combination with the increasing complexity of the JVM, has made it very difficult for Java to support all of them. To make matters worse, even if a platform is supported by the JVM, the platform may prohibit the installation of the JVM, may provide an API or SDK which is not written in Java, or the JVM may be too resource intensive to be viable on the target platform. At this point, no language runtime has achieved the level of dominance necessary to be available on every platform, it seems unlikely that any languge runtime will achieve this level of dominance, and even if a language runtime were to achieve this level of dominance, it is unlikely that it could maintain this level of dominance indefinitely. Given the apparent impossibility of this dilemma, \textit{abs} has chosen to abandon the concept of a language runtime entirely. Every platform which currently exists, or which is likely to exist, will support at least one programming language so there is no need to provide a language runtime in the first place. It is, therefore, the goal of the \textit{abs} compiler to leverage whatever language, API, or SDK is available on the target platform. This goal has lead to the ideal: \textit{"Write once. Compile anywhere."}
+\textbf{TODO: Expand on the idea that Java's downfall was too many runtime dependencies.}
+\subsection{Why aren't cross platform languages the norm?}
+\textbf{TODO}Cross platform languages are hard. Different languages have different capabilities, strengths, and weaknesses. Too many features; Every supported feature complicates adding support for new platforms. Designing a language which is functionally divergent from the platforms on which it needs to run. Too much complexity. Failure to constrain language semantics to the overlapping capabilities of the platforms which must be supported. Similar or identical problems are solved in different ways on different platforms. Attempting to solve the same problem in a portable way may 
+\subsection{Problems}
+The following are problems which are not, either in whole or in part, solved by existing languages.
+\subsubsection{Multiple Platforms}\paragraph{}One of the principle challenges in modern software development is supporting the ever increasing number of platforms and smart devices. Many of these devices, despite supporting similar use cases, technically have very little in common with one another. These devices have different form factors, different operating systems, different hardware, different language support, different libraries, and different distrubution mechanisms. Consequently, supporting multiple devices is more expensive than supporting a single device and every additional supported device increases costs and extends deadlines.
+\subsubsection{Limited Reusability}\paragraph{}The word "abstract" can mean different things. In the context of this document, it is a programming language. In conversation, it can mean something is difficult to understand or it can refer to an idea. In the context of an object oriented programming language, it refers to classes which are intended to address the overlap between two or more similar problems. Code which is useful in multiple problems is included and code which is only useful for a single problem is excluded. This allows an unknown number of similar problems to be partially solved while fully solving a single problem. This is a valuable capability which simplifies the creation of reusable software. However, it does have limitations. Although many languages support the concept of an abstract class, in one form or another, an abstract class in languge A is, generally speaking, wholly incompatible with language B. Consequently, an abstract class isn't truly abstract because it must be written separately in each language which requires it. This inability to share abstract classes between languages and platforms is one of the reasons that supporting two or more platforms more expensive than supporting a single platform.
+\textbf{TODO: Limited reusability is a problem which applies to more than just abstract classes. For example, a function written in language A cannot be reused in language B}
+\subsubsection{Premature Obsolescence}\paragraph{}Software applications degrade over time, for a variety of reasons, and, while some degrade more quickly than others, in the absence of extraordinary intervention, they all, eventually, reach the end of their useful service life. This degredation is, unfortunately, unavoidable because it is caused by the very technical implementation details which make the application functional. Over time, technical implementation details become increasingly intertwined with business logic and, past a certain point, it becomes impractical to separate them. Many software applications continue like this until it becomes necessary to retire their underlying technology which, in turn, forces the organization to retire the application as well. This is unfortunate because organizations invest decades of time, money, knowledge, and effort into building software applications which still have value at the point that they must be retired. Replacing these software applications is difficult, time consuming, and expensive.
+\subsubsection{Conflict Of Interest}\paragraph{}The interests of corporations, which provide free software development tooling, are not always aligned with the interests of those who use their tooling. If a corporation spends a large amount of money developing tools which they subsequently give away for free, there's very rarely an altruistic explanation. Common explanations include, but are not limited to, a corporation wants you to use their hardware, their operating system, or their platform and, consequently, makes it as easy as possible for you to do so. Whatever their reason happens to be, the use of their tools is usually a mutually beneficial relationship. However, it should be self evident that a corporation which offers free tools for building applications on their own platform cannot be relied upon also provide free tools for building applications on their competitors platforms. They may do it, under some circumstances, particularly if they are not the market leader, but they may discontinue support for their competitor's platforms, at any time and without warning, if it becomes too expensive or if they achieve market dominance. It is in the best interest of a corporation for application X to exclusively support their platform. By contrast, it is in the best interest of the consumer to for application X to support as many platforms as possible because this gives them the freedom to choose which platform works best for them. 
+\subsubsection{Monolingual applications are expensive}\paragraph{}
+\textbf{TODO: Fill this out}
+\subsection{Solution}
+It is the position of this document that there can be no solution to the problems outlined above except the creation of a new programming language.
+\\
+\subsection{Philosophy}
+The design of the \textit{abs} language is guided by the principles found below. Some of these principles may be familiar to the discerning eye. This is because principles deemed to have value, in the context of \textit{abs}, have been adopted from other projects.
+\begin{itemize}
+  \item \textbf{Do one thing and do it well:} Don't try to be all things to all people. The goal is portable logic. Nothing more. Nothing less.
+  \item \textbf{Compilation errors are better than runtime errors:} Errors encountered by a developer are better than errors encountered by a user. Minimize runtime errors by maximizing compilation errors.
+  \item \textbf{Portability is more valuable than performance:} Without portability, there is no reason for \textit{abs} to exist. Performance matters but portability should never be sacrificed in pursuit of it.
+  \item \textbf{Pragmatism in all things:} Ideas are only useful insofar as they help us solve the problem at hand. If a good idea detracts from our ability to solve a problem then that idea must inform our solution rather than embody it.
+  \item \textbf{Simple is better than complex:} Portability increases as complexity decreases. \textit{The best part is no part} - Elon Musk
+  \item \textbf{Explicit is better than implicit:} Make intentions and behaviors clear, rather than relying on implicit or obscure mechanisms.
+  \item \textbf{Readability counts:} \textit{Any fool can write code that a computer can understand. Good programmers write code that humans can understand} - Martin Fowler
+\end{itemize}
+\subsection{Security Considerations}
+\subsubsection{Native Code Injection}
+Native code injection attacks are very similar to SQL injection attacks. When accepting user created code, string concatenaction is extremely dangerous because the user could attempt to escape the compiler's sandbox by embedding native code in a string constant, which would be ignored by \textit{abs} but not by the compiler of the native language, with the goal of accessing native resources which would not otherwise be available. One possible solution to this problem would be to store all string constants in a text file which gets automatically loaded at runtime by the code which is emitted by the compiler.
+\subsubsection{Denial Of Service}
+If abs code is accepted from users then, in the absence of some kind of timeout, code which loops or iterates infinitely could be used to execute a denial of service attack.
+\subsubsection{Types}
+\paragraph{}The principal hurdle of building a portable type system is ensuring consistency and compatibility across multiple target languages. Transpilation involves converting code from one language to another, each with its own type system and semantic rules. Mapping types accurately between the source language and target languages can be complex, as different languages may have different type representations, behavior, and limitations. Maintaining semantic integrity and ensuring that the type system behaves consistently across targets requires careful consideration and meticulous design. Another challenge is dealing with language-specific features and constructs that may not have direct equivalents in all target languages. Balancing the expressiveness of the type system while accommodating the constraints and limitations of the target languages is crucial. Furthermore, error reporting and debugging can be challenging when dealing with type-related issues in a transpiled language, as the error messages need to be meaningful and provide insights that align with the target language's conventions and error reporting mechanisms. Overall, creating a portable type system in a transpiled language necessitates a deep understanding of both the source and target languages, as well as careful planning and implementation to address the inherent challenges of cross-language compatibility and semantic consistency.
+\subsubsection{Boolean truth}
+\begin{tcolorbox}[colback=gray!20, colframe=gray!50!black, arc=4mm]
+TODO: Describe the pros and cons of "truthiness" vs actual boolean types.
+\end{tcolorbox}
 
 \subsubsection{Error handling}
 \paragraph{}Errors are inevitable and, consequently, it is necessary to both detect and react to them. 
@@ -136,15 +199,10 @@ This must be taken into account in the architecture of every programming languag
 Any language which is supported as an \textit{abs} compilation target.
 \subsubsection{Pure function}
 A pure function is any function which does not either directly or indirectly invoke a native method. This results in functions which do not have external dependencies.
-\subsection{Paradigms}
-
-TODO
-\subsubsection{Object Oriented}
-TODO
-\subsubsection{Procedural}
-TODO
-\subsubsection{Functional}
-TODO
+\subsubsection{Impure function}
+An impure function is not declared as native or pure and is able to call all types of functions.
+\subsubsection{Native function}
+Native functions do not have a body because they are assumed to have been implemented in the target language and to be available at runtime.
 \subsection{Literals}
 \subsubsection{Number Literal}
 Number literals are comprised of the characters 0 through 9 and may not contain a decimal point. If a number literal is terminated with the letter L, case sensitive, then it is of type Long. Ohterwise, it is of type Integer. Number literals may use underscores as separators to make large numbers easier to read. Number literals which begin with 0x are hexidecimal. In hexadeciam numbers, underscores are not permitted until after the 0x. Leading zeros are ignored in all bases. Number literals may be prefixed with a minus sign or a plus sign to indicate the sign of the literal.
@@ -171,17 +229,15 @@ It is illegal for any namespace, function, or variable name to coincide with a r
 \hline
 \textbf{coalesce} & Built-in method which accepts two or more parameters and returns its first non-null parameter or null if all parameters evaluate to null. The first parameter must be nullable. The last parameter may be nullable or non-nullable. If there are intermediate parameters, all of them must be nullable. Parameters are evaluated from left to right. All parameters must be the same type. The nullability of the return is inherited from the last parameter. It is illegal for any of the parameters to be a null literal.\\
 &\\
-\textbf{nullable} & Variable modifier which permits null assignment. In the absence of this modifier, the compiler will emit an error when an assignment operation may result in null assignment. This modifier may also be used on the function return type or function parameters. \\
+\textbf{nullable} & Variable modifier which permits null assignment. In the absence of this modifier, the compiler will emit an error when an assignment operation may result in null assignment. This modifier may also be used on the function return type or function parameters. \textbf{TODO: This should be revisited it would be simpler to follow the .NET ? approach to determining nullability} \\
 &\\
 \textbf{pure} & Namespace modifier which prevents methods within the namespace from interacting with other namespaces which haven't also been declared as pure. This modifier is mutually exclusive with the native modifier. Pure namespaces may not interact with impure namespaces but impure namespaces may interact with pure namespaces. This increases the portability of pure namespaces because the \textit{abs} compiler is able to verify, at compile time, that pure namespaces do not have any native dependencies.\\
 &\\
 \textbf{native} & Namespace modifier which indicates that methods declared within the namespace must be implemented separately in each target language. Method declarations within a native namespace should be terminated with a semicolon as it is illegal for them to have a body. This modifier is mutually exclusive with the pure modifier. It is illegal for a native method to be declared as returning a value which is non-nullable or a type which, either directly or indirectly, containes one or more properties which are non-nullable because the return value of a native method cannot be known until run time and, therefore, cannot be checked for null at compile time.\\
 &\\
-\textbf{singleton} & Class modifier which indicates that constructors within a class should always return the same instance, regardless of how many times they are invoked. This modifer is mutually exclusive with the native modifier because there is no way for the \textit{abs} compiler to guarantee that the native class is implemented as a singleton. If a singleton class has been previously instantiated, the existing instance will be returned and the constructor will not be executed.\\
-&\\
 \textbf{entry} & Method modifier which declares a method as an entry point into an \textit{abs} program. This is necessary because compile time null checking is not possible if a native method, which isn't written in \textit{abs}, can invoke any \textit{abs} method at any time because the provided arguments might be null at run time even if the method in question expects non-nullable parameters. Consequently, methods declared as an entry point may not directly or indirectly accept parameters which have not been declared as nullable. This forces explicit null checking to be performed prior to invoking functions which do not accept nullable parameters. Additionally, the \textit{abs} compiler may obfuscate functions in its output which have not been declared as an entry point to discourage their use in native functions as doing so would create the possibility of a null pointer exception. This modifier may be used within a pure namespace. It is an error to use this modifier within a native namespace. \\
 &\\
-\textbf{immutable} & Variable modifier which indicates that the value of the modified variable cannot be changed. This is enforced by copying the value of the variable and then modifying the copy. \\
+\textbf{final} & Variable modifier which indicates that the value of the variable cannot be changed. \\
 &\\
 \textbf{in} & Operator which evaluates to true if the value on its left side exists in the collection on its right side and evaluates to false otherwise. It is illegal for the value on its left side to be null. \\
 &\\
@@ -189,10 +245,6 @@ It is illegal for any namespace, function, or variable name to coincide with a r
 &\\
 \textbf{return} & Operator which immediately halts execution of the function in which it is invoked. This operator must be invoked without an argument if the function was declared with a void return type and must be invoked with a single argument otherwise. If invoked with a single argument, the argument will be returned to the invoking function. It is an error for the type or nullability of the argument to differ from that of the return type which was declared in the method signature. \\
 & \\
-\textbf{interface} & Declares an interface. Interfaces are a special kind of class which may only contain abstract methods. \\
-& \\
-\textbf{accessor} & Declares a function as an accessor for a property in the struct.\\
-&\\
 \hline
 \end{longtable}
 
@@ -399,6 +451,8 @@ Additionally, compilation targets for the following languages are planned for th
 		\item Java
 		\item C\#
 		\item C++
+		\item C
+		\item Rust
 		\item Python
 		\item Perl
 		\item Lua
@@ -406,12 +460,10 @@ Additionally, compilation targets for the following languages are planned for th
 	\end{itemize}
 \subsection{Supported}
 \begin{itemize}
-\item \textbf{return this(OOP only)} When a non-static method defines its return type as \textit{this} it means that an explicit return statement within the method should result in a syntax error and that the object's \textit{this} pointer should implicitly be returned. It is a syntax error for a static method to define its return type as \textit{this}. Originally, it was intended that \textit{void} should implicitly return \textit{this} but it was decided that this could have performance implications and was, consequently, abandoned in favor of the current approach.
 \item \textbf{Encoding} - \textit{Abs} source files must be UTF-8 encoded and an illegal character exception must be thrown during compilation if an invalid UTF-8 character is encountered. This is critical because the compiler will be compiled to multiple platforms and each of them may operate in a different encoding by default. Therefore, for \textit{abs} source code to be portable from one compiler to another, it must be written in a standard encoding.
 \item \textbf{Native classes} - Native classes function as an interface between \textit{abs} code and the outside world. Libraries and APIs, implemented in the target languguage, can be invoked by \textit{abs} through native classes. However, because the \textit{abs} compiler has no control over, nor knowledge of, what happens in a native class, the return type of methods within a native class cannot contain \textit{notnull} properties. Forcing these properties to be nullable allows the \textit{abs} compiler to verify, for example, that a function is never called on a null value, that null is never passed to a function which requires a not-null parameter, and that null is never assigned to a not-null variable. The \textit{abs} compiler does not support the mixing of native and concrete methods within the same class because, although it is theoretically possible, this would significantly complicate the addition of new compilation targets because the target would have to be able to both generate and parse the target language. It is, therefore, preferable that parsing the target language is not necessary when implementing new compilation targets. Additionally, to protect the compiler's ability to enforce notnull constraints, methods within a native class are not permitted to return native classes.
-\item \textbf{Keyword: entrypoint} - Methods declared with the \textit{entrypoint} keyword will not be obfuscated. Additionally, the class/package name of classes which contain at least one \textit{entrypoint} method will not be obfuscated because they are necessary for invoking both the constructor and static methods. Obfuscated method names will have a randomly generated name in the generated source to inhibit direct invokation. This is necessary because direct invokation could circumvent the compiler's not-null protections. Additionally, methods which havve been declared with the entrypoint keyword cannot accept native classes as arguments. This is necessary to protect the compiler's ability to enforce \textit{notnull} constraints.
+\item \textbf{Keyword: entry} - Methods declared with the \textit{entry} keyword will not be obfuscated. Additionally, the class/package name of classes which contain at least one \textit{entry} method will not be obfuscated because they are necessary for invoking both the constructor and static methods. Obfuscated method names will have a randomly generated name in the generated source to inhibit direct invokation. This is necessary because direct invokation could circumvent the compiler's not-null protections. Additionally, methods which havve been declared with the entrypoint keyword cannot accept native classes as arguments. This is necessary to protect the compiler's ability to enforce \textit{notnull} constraints.
 \item \textbf{Compilation targets are written in ABS itself.} This was, initially, a way to maximize code re-use during the development of the bootstrap compiler, which was written in Java. Implementing the compilation targets in ABS and running them in an interpreter during compilation, minimized the amount of code which would later have to be rewriteen when the bootstrap compiler was ported from Java to ABS.
-\item Objected Oriented programming. The target user base for ABS primarily uses Object Oriented programming languages and the majority of planned compilation targets support it as well so it is a natural fit. Additionally, planned compilation targets which do not natively support object oriented programming, like C, can simulate it.
 \item Abstract methods.
 \item Dot invokation on variables. Eligible functions will accept the data type of the variable as their fist parameter. Eligible functions will include sibling methods from the same class and static methods.
 \item Ternary operator. This can be expanded to if/else statements in languages which do not support the ternary operator.
