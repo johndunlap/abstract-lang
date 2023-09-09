@@ -1,0 +1,9 @@
+package abs.samples.UnitConversion;
+
+entry double in2cm(double inches) {
+    return inches * 0.3937;
+}
+
+entry double cm2in(double centimeters) {
+    return centimeters * 2.54;
+}

@@ -1,0 +1,28 @@
+// This is a comment
+package abs.samples.HttpClient;
+
+enum Method {
+    GET,
+    PUT,
+    POST,
+    DELETE
+};
+
+struct Response {
+    Request request;
+    Header[] headers;
+    string body;
+};
+
+struct Header {
+    string name;
+    string value;
+};
+
+struct Request {
+    Header[] headers;
+    Method method;
+    string body;
+};
+
+native Response send(Request);

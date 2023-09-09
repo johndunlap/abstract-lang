@@ -28,3 +28,12 @@ hs_err_pid*
 *.out
 *.synctex.gz
 *.toc
+
+# IntelliJ
+.idea
+
+# Maven
+target
+
+# Misc
+tmp.*
