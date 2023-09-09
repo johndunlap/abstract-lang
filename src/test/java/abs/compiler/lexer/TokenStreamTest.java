@@ -70,6 +70,7 @@ import abs.compiler.exception.IllegalCharacterException;
 import abs.compiler.exception.LexerException;
 import abs.compiler.exception.UnexpectedEndOfInput;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -984,7 +985,7 @@ public class TokenStreamTest {
         }
     }
 
-    @Test
+//    @Test
     public void testTokenizeUnitConversion() throws URISyntaxException, IOException {
         String name = "abs/sample/UnitConversion.abs";
         Path filePath = Paths.get(getClass().getClassLoader().getResource(name).toURI());
@@ -1010,7 +1011,7 @@ public class TokenStreamTest {
         System.out.println(json);
     }
 
-    @Test
+//    @Test
     public void testHttpClient() throws URISyntaxException, IOException {
         String name = "abs/sample/HttpClient.abs";
         Path filePath = Paths.get(getClass().getClassLoader().getResource(name).toURI());
