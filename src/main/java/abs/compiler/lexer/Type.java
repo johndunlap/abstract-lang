@@ -10,84 +10,88 @@ import java.util.Map;
  * token type but different text representations.
  */
 public enum Type {
-    DOLLAR("$", false),
-    EQ("=", false),
-    LPAREN("(", false),
-    RPAREN(")", false),
-    LBRACE("{", false),
-    RBRACE("}", false),
-    LBRACKET("[", false),
-    RBRACKET("]", false),
-    SEMICOLON(";", false),
-    COMMA(",", false),
-    QUESTION("?", false),
-    DQUOTE("\"", false),
-    COLON(":", false),
-    COLONCOLON("::", false),
-    TILDE("~", false),
-    TILDEEQ("~=", false),
-    ADD("+", false),
-    ADDEQ("+=", false),
-    ADDADD("++", false),
-    SUB("-", false),
-    SUBEQ("-=", false),
-    SUBSUB("--", false),
-    MUL("*", false),
-    MULEQ("*=", false),
-    DIV("/", false),
-    DIVEQ("/=", false),
-    MOD("%", false),
-    MODEQ("%=", false),
-    EQEQ("==", false),
-    NOT("!", false),
-    NOTEQ("!=", false),
-    LT("<", false),
-    LTEQ("<=", false),
-    GT(">", false),
-    GTEQ(">=", false),
-    AND("&", false),
-    ANDEQ("&=", false),
-    OR("|", false),
-    OREQ("|=", false),
-    ANDAND("&&", false),
-    OROR("||", false),
-    XOR("^", false),
-    XOREQ("^=", false),
-    SR(">>", false),
-    SREQ(">>=", false),
-    SL("<<", false),
-    SLEQ("<<=", false),
-    PIPE("|>", false),
-    COMMENTO("/*", true),
-    COMMENTC("*/", true),
-    COMMENTL("//", true),
-    PERIOD(".", false),
-    PERIODEQ(".=", false),
-    IDENTIFIER(false),
-    COMMENT(true),
-    STRCONST(false),
-    WHOLE_NUMBER_LITERAL(false),
-    HEX_LITERAL(false),
-    FLOAT_LITERAL(false),
-    WHITESPACE(true),
-    LF(true),
-    TAB(true),
-    EOF(false)
+    DOLLAR("$", 0, false),
+    EQ("=", 0, false),
+    LPAREN("(", 0, false),
+    RPAREN(")", 0, false),
+    LBRACE("{", 0, false),
+    RBRACE("}", 0, false),
+    LBRACKET("[", 0, false),
+    RBRACKET("]", 0, false),
+    SEMICOLON(";", 0, false),
+    COMMA(",", 0, false),
+    QUESTION("?", 0, false),
+    DQUOTE("\"", 0, false),
+    COLON(":", 0, false),
+    COLONCOLON("::", 0, false),
+    TILDE("~", 0, false),
+    TILDEEQ("~=", 0, false),
+    ADD("+", 0, false),
+    ADDEQ("+=", 0, false),
+    ADDADD("++", 0, false),
+    SUB("-", 0, false),
+    SUBEQ("-=", 0, false),
+    SUBSUB("--", 0, false),
+    MUL("*", 0, false),
+    MULEQ("*=", 0, false),
+    DIV("/", 0, false),
+    DIVEQ("/=", 0, false),
+    MOD("%", 0, false),
+    MODEQ("%=", 0, false),
+    EQEQ("==", 0, false),
+    NOT("!", 0, false),
+    NOTEQ("!=", 0, false),
+    LT("<", 0, false),
+    LTEQ("<=", 0, false),
+    GT(">", 0, false),
+    GTEQ(">=", 0, false),
+    AND("&", 0, false),
+    ANDEQ("&=", 0, false),
+    OR("|", 0, false),
+    OREQ("|=", 0, false),
+    ANDAND("&&", 0, false),
+    OROR("||", 0, false),
+    XOR("^", 0, false),
+    XOREQ("^=", 0, false),
+    SR(">>", 0, false),
+    SREQ(">>=", 0, false),
+    SL("<<", 0, false),
+    SLEQ("<<=", 0, false),
+    PIPE("|>", 0, false),
+    COMMENTO("/*", 0, true),
+    COMMENTC("*/", 0, true),
+    COMMENTL("//", 0, true),
+    PERIOD(".", 0, false),
+    PERIODEQ(".=", 0, false),
+    IDENTIFIER(0, false),
+    COMMENT(0, true),
+    STRCONST(0, false),
+    WHOLE_NUMBER_LITERAL(0, false),
+    HEX_LITERAL(0, false),
+    FLOAT_LITERAL(0, false),
+    WHITESPACE(0, true),
+    LF(0, true),
+    TAB(0, true),
+    EOF(0, false)
     ;
 
     private final boolean parserIgnore;
+
+    private final int precedence;
 
     private String representation;
 
     private static Map<String, Type> lookup = null;
 
-    Type(boolean parserIgnore) {
+    Type(int precedence, boolean parserIgnore) {
         this.parserIgnore = parserIgnore;
+        this.precedence = precedence;
     }
 
-    Type(String representation, boolean parserIgnore) {
+    Type(String representation, int precedence, boolean parserIgnore) {
         this.representation = representation;
         this.parserIgnore = parserIgnore;
+        this.precedence = precedence;
     }
 
     public boolean isParserIgnore() {
