@@ -1,7 +1,8 @@
 package abs.compiler.lexer;
 
 public enum Precedence {
-    LOWEST(0);
+    LOWEST(1_000),
+    HIGHEST(1_000_000);
 
     private final int precedence;
 

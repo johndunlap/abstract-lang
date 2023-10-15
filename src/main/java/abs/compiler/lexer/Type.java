@@ -1,5 +1,8 @@
 package abs.compiler.lexer;
 
+import static abs.compiler.lexer.Associativity.LEFT;
+import static abs.compiler.lexer.Precedence.LOWEST;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,94 +11,101 @@ import java.util.Map;
  * reasons. In many languages this will allow parsing to be based on a comparison which is faster than a string match.
  * Also, some tokens cannot be matched based on string comparisons. For example, all integer numbers will have the same
  * token type but different text representations.
+ *
+ * TODO: Many of these token types have the wrong precedence and associativity. For some of them, it is not applicable
+ *   and for others it is just wrong and needs to be fixed.
  */
 public enum Type {
-    DOLLAR("$", Precedence.LOWEST, false),
-    EQ("=", Precedence.LOWEST, false),
-    LPAREN("(", Precedence.LOWEST, false),
-    RPAREN(")", Precedence.LOWEST, false),
-    LBRACE("{", Precedence.LOWEST, false),
-    RBRACE("}", Precedence.LOWEST, false),
-    LBRACKET("[", Precedence.LOWEST, false),
-    RBRACKET("]", Precedence.LOWEST, false),
-    SEMICOLON(";", Precedence.LOWEST, false),
-    COMMA(",", Precedence.LOWEST, false),
-    QUESTION("?", Precedence.LOWEST, false),
-    DQUOTE("\"", Precedence.LOWEST, false),
-    COLON(":", Precedence.LOWEST, false),
-    COLONCOLON("::", Precedence.LOWEST, false),
-    TILDE("~", Precedence.LOWEST, false),
-    TILDEEQ("~=", Precedence.LOWEST, false),
-    ADD("+", Precedence.LOWEST, false),
-    ADDEQ("+=", Precedence.LOWEST, false),
-    ADDADD("++", Precedence.LOWEST, false),
-    SUB("-", Precedence.LOWEST, false),
-    SUBEQ("-=", Precedence.LOWEST, false),
-    SUBSUB("--", Precedence.LOWEST, false),
-    MUL("*", Precedence.LOWEST, false),
-    MULEQ("*=", Precedence.LOWEST, false),
-    DIV("/", Precedence.LOWEST, false),
-    DIVEQ("/=", Precedence.LOWEST, false),
-    MOD("%", Precedence.LOWEST, false),
-    MODEQ("%=", Precedence.LOWEST, false),
-    EQEQ("==", Precedence.LOWEST, false),
-    NOT("!", Precedence.LOWEST, false),
-    NOTEQ("!=", Precedence.LOWEST, false),
-    LT("<", Precedence.LOWEST, false),
-    LTEQ("<=", Precedence.LOWEST, false),
-    GT(">", Precedence.LOWEST, false),
-    GTEQ(">=", Precedence.LOWEST, false),
-    AND("&", Precedence.LOWEST, false),
-    ANDEQ("&=", Precedence.LOWEST, false),
-    OR("|", Precedence.LOWEST, false),
-    OREQ("|=", Precedence.LOWEST, false),
-    ANDAND("&&", Precedence.LOWEST, false),
-    OROR("||", Precedence.LOWEST, false),
-    XOR("^", Precedence.LOWEST, false),
-    XOREQ("^=", Precedence.LOWEST, false),
-    SR(">>", Precedence.LOWEST, false),
-    SREQ(">>=", Precedence.LOWEST, false),
-    SL("<<", Precedence.LOWEST, false),
-    SLEQ("<<=", Precedence.LOWEST, false),
-    PIPE("|>", Precedence.LOWEST, false),
-    COMMENTO("/*", Precedence.LOWEST, true),
-    COMMENTC("*/", Precedence.LOWEST, true),
-    COMMENTL("//", Precedence.LOWEST, true),
-    PERIOD(".", Precedence.LOWEST, false),
-    PERIODEQ(".=", Precedence.LOWEST, false),
-    IDENTIFIER(Precedence.LOWEST, false),
-    COMMENT(Precedence.LOWEST, true),
-    STRCONST(Precedence.LOWEST, false),
-    WHOLE_NUMBER_LITERAL(Precedence.LOWEST, false),
-    HEX_LITERAL(Precedence.LOWEST, false),
-    FLOAT_LITERAL(Precedence.LOWEST, false),
-    WHITESPACE(Precedence.LOWEST, true),
-    LF(Precedence.LOWEST, true),
-    TAB(Precedence.LOWEST, true),
-    EOF(Precedence.LOWEST, false)
+    DOLLAR("$", LOWEST, LEFT, false),
+    EQ("=", LOWEST, LEFT, false),
+    LPAREN("(", LOWEST, LEFT, false),
+    RPAREN(")", LOWEST, LEFT, false),
+    LBRACE("{", LOWEST, LEFT, false),
+    RBRACE("}", LOWEST, LEFT, false),
+    LBRACKET("[", LOWEST, LEFT, false),
+    RBRACKET("]", LOWEST, LEFT, false),
+    SEMICOLON(";", LOWEST, LEFT, false),
+    COMMA(",", LOWEST, LEFT, false),
+    QUESTION("?", LOWEST, LEFT, false),
+    DQUOTE("\"", LOWEST, LEFT, false),
+    COLON(":", LOWEST, LEFT, false),
+    COLONCOLON("::", LOWEST, LEFT, false),
+    TILDE("~", LOWEST, LEFT, false),
+    TILDEEQ("~=", LOWEST, LEFT, false),
+    ADD("+", LOWEST, LEFT, false),
+    ADDEQ("+=", LOWEST, LEFT, false),
+    ADDADD("++", LOWEST, LEFT, false),
+    SUB("-", LOWEST, LEFT, false),
+    SUBEQ("-=", LOWEST, LEFT, false),
+    SUBSUB("--", LOWEST, LEFT, false),
+    MUL("*", LOWEST, LEFT, false),
+    MULEQ("*=", LOWEST, LEFT, false),
+    DIV("/", LOWEST, LEFT, false),
+    DIVEQ("/=", LOWEST, LEFT, false),
+    MOD("%", LOWEST, LEFT, false),
+    MODEQ("%=", LOWEST, LEFT, false),
+    EQEQ("==", LOWEST, LEFT, false),
+    NOT("!", LOWEST, LEFT, false),
+    NOTEQ("!=", LOWEST, LEFT, false),
+    LT("<", LOWEST, LEFT, false),
+    LTEQ("<=", LOWEST, LEFT, false),
+    GT(">", LOWEST, LEFT, false),
+    GTEQ(">=", LOWEST, LEFT, false),
+    AND("&", LOWEST, LEFT, false),
+    ANDEQ("&=", LOWEST, LEFT, false),
+    OR("|", LOWEST, LEFT, false),
+    OREQ("|=", LOWEST, LEFT, false),
+    ANDAND("&&", LOWEST, LEFT, false),
+    OROR("||", LOWEST, LEFT, false),
+    XOR("^", LOWEST, LEFT, false),
+    XOREQ("^=", LOWEST, LEFT, false),
+    SR(">>", LOWEST, LEFT, false),
+    SREQ(">>=", LOWEST, LEFT, false),
+    SL("<<", LOWEST, LEFT, false),
+    SLEQ("<<=", LOWEST, LEFT, false),
+    PIPE("|>", LOWEST, LEFT, false),
+    COMMENTO("/*", LOWEST, LEFT, true),
+    COMMENTC("*/", LOWEST, LEFT, true),
+    COMMENTL("//", LOWEST, LEFT, true),
+    PERIOD(".", LOWEST, LEFT, false),
+    PERIODEQ(".=", LOWEST, LEFT, false),
+    IDENTIFIER(LOWEST, LEFT, false),
+    COMMENT(LOWEST, LEFT, true),
+    STRCONST(LOWEST, LEFT, false),
+    WHOLE_NUMBER_LITERAL(LOWEST, LEFT, false),
+    HEX_LITERAL(LOWEST, LEFT, false),
+    FLOAT_LITERAL(LOWEST, LEFT, false),
+    WHITESPACE(LOWEST, LEFT, true),
+    LF(LOWEST, LEFT, true),
+    TAB(LOWEST, LEFT, true),
+    EOF(LOWEST, LEFT, false)
     ;
 
-    private final boolean parserIgnore;
+    private final boolean ignore;
 
     private final Precedence precedence;
+    
+    private final Associativity associativity;
 
     private String representation;
 
     private static Map<String, Type> lookup = null;
 
-    Type(Precedence precedence, boolean parserIgnore) {
-        this.parserIgnore = parserIgnore;
+    Type(Precedence precedence, Associativity associativity, boolean ignore) {
+        this.ignore = ignore;
         this.precedence = precedence;
+        this.associativity = associativity;
     }
 
-    Type(String representation, Precedence precedence, boolean parserIgnore) {
+    Type(String representation, Precedence precedence, Associativity associativity, boolean ignore) {
         this.representation = representation;
-        this.parserIgnore = parserIgnore;
+        this.ignore = ignore;
         this.precedence = precedence;
+        this.associativity = associativity;
     }
 
-    public boolean isParserIgnore() {
-        return parserIgnore;
+    public boolean isIgnore() {
+        return ignore;
     }
 
     public String getRepresentation() {
