@@ -2,6 +2,7 @@ package abs.compiler.lexer;
 
 import static abs.compiler.lexer.Associativity.LEFT;
 import static abs.compiler.lexer.Precedence.ONE;
+import static abs.compiler.lexer.Precedence.TWO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +39,7 @@ public enum Type {
     SUB("-", ONE, LEFT, false),
     SUBEQ("-=", ONE, LEFT, false),
     SUBSUB("--", ONE, LEFT, false),
-    MUL("*", ONE, LEFT, false),
+    MUL("*", TWO, LEFT, false),
     MULEQ("*=", ONE, LEFT, false),
     DIV("/", ONE, LEFT, false),
     DIVEQ("/=", ONE, LEFT, false),
