@@ -4,9 +4,9 @@ import abs.compiler.lexer.TokenStream;
 import abs.compiler.parser.tree.ParseNode;
 
 public abstract class AbstractParser implements Parser {
-    private final ParserOptions options;
+    protected final ParserOptions options;
 
-    private final TokenStream tokenStream;
+    protected final TokenStream tokenStream;
 
     public AbstractParser(ParserOptions options, TokenStream tokenStream) {
         this.options = options;

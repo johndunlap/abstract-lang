@@ -2,6 +2,7 @@ package abs.compiler.parser.tree;
 
 import abs.compiler.lexer.Token;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,6 +20,10 @@ public class ErrorNode extends AbstractParseNode {
      * This is a list because once we encounter an error we have to skip tokens until we reach a recovery point.
      */
     private final List<Token> tokens;
+
+    public ErrorNode(String message, Token token) {
+        this(message, Collections.singletonList(token));
+    }
 
     public ErrorNode(String message, List<Token> tokens) {
         this.message = message;
