@@ -16,8 +16,8 @@ import abs.compiler.lexer.Type;
 import abs.compiler.parser.tree.LongNode;
 import abs.compiler.parser.tree.ParseNode;
 
-public class PrecedenceClimbingParser extends AbstractParser {
-    public PrecedenceClimbingParser(ParserOptions options, TokenStream tokenStream) {
+public class PrecedenceClimbingParserV1 extends AbstractParser {
+    public PrecedenceClimbingParserV1(ParserOptions options, TokenStream tokenStream) {
         super(options, tokenStream);
     }
 
