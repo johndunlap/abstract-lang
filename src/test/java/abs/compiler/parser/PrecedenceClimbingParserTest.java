@@ -9,7 +9,7 @@ public class PrecedenceClimbingParserTest extends AbstractParserTest {
     @Test
     public void testEvaluatingSimpleExpression() {
         ParserOptions options = new ParserOptions();
-        TokenStream tokenStream = buildTokenStream("1+2*7");
+        TokenStream tokenStream = buildTokenStream("1+2*7+9/3^4");
         PrecedenceClimbingParser parser = new PrecedenceClimbingParser(options, tokenStream);
         LongNode result = (LongNode) parser.parse();
         assertEquals(15L, result.getLongValue().longValue());

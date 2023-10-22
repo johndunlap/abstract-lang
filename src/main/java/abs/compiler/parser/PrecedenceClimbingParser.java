@@ -39,6 +39,7 @@ public class PrecedenceClimbingParser extends AbstractParser {
                 throw new RuntimeException("Expected right parenthesis but found " + type + " instead");
             }
 
+            next();
             return value;
         } else if (type.equals(EOF)) {
             throw new RuntimeException("Source ended unexpectedly ");
@@ -60,7 +61,7 @@ public class PrecedenceClimbingParser extends AbstractParser {
             Associativity associativity = type.getAssociativity();
 
             boolean abort = type.equals(EOF) ||
-                type.equals(WHOLE_NUMBER_LITERAL) ||
+                type.in(WHOLE_NUMBER_LITERAL, RPAREN) ||
                 type.getPrecedence().getPrecedence() < minimumPrecedence;
 
             if (abort) {
@@ -93,6 +94,8 @@ public class PrecedenceClimbingParser extends AbstractParser {
                 return left + right;
             case SUB:
                 return left - right;
+            case XOR:
+                return (long) Math.pow((double)left, (double)right);
             default:
                 throw new RuntimeException("Unsupported operation " + type + " found");
         }
