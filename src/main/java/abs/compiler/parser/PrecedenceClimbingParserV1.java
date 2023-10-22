@@ -9,7 +9,7 @@ import abs.compiler.lexer.Precedence;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.lexer.Type;
-import abs.compiler.parser.tree.LongNode;
+import abs.compiler.parser.tree.DoubleNode;
 import abs.compiler.parser.tree.ParseNode;
 
 public class PrecedenceClimbingParserV1 extends AbstractParser {
@@ -19,17 +19,17 @@ public class PrecedenceClimbingParserV1 extends AbstractParser {
 
     @Override
     public ParseNode parse() {
-        return new LongNode(computeExpression(0));
+        return new DoubleNode(computeExpression(0));
     }
 
-    private long computeAtom() {
+    private double computeAtom() {
         Token token = peek();
         Type type = token.getType();
 
         if (type.equals(Type.LPAREN)) {
             next();
 
-            long value = computeExpression(1);
+            double value = computeExpression(1);
 
             if (!peek().getType().equals(RPAREN)) {
                 throw new RuntimeException("Expected right parenthesis but found " + type + " instead");
@@ -47,8 +47,8 @@ public class PrecedenceClimbingParserV1 extends AbstractParser {
         }
     }
 
-    private long computeExpression(int minimumPrecedence) {
-        long lhs = computeAtom();
+    private double computeExpression(int minimumPrecedence) {
+        double lhs = computeAtom();
 
         while (true) {
             Token token = peek();
@@ -72,7 +72,7 @@ public class PrecedenceClimbingParserV1 extends AbstractParser {
 
             next();
 
-            long rhs = computeExpression(nextMinimumPrecedence);
+            double rhs = computeExpression(nextMinimumPrecedence);
 
             lhs = computeOperation(type, lhs, rhs);
         }
@@ -80,7 +80,7 @@ public class PrecedenceClimbingParserV1 extends AbstractParser {
         return lhs;
     }
 
-    private long computeOperation(Type type, long left, long right) {
+    private double computeOperation(Type type, double left, double right) {
         switch (type) {
             case MUL:
                 return left * right;
@@ -91,7 +91,7 @@ public class PrecedenceClimbingParserV1 extends AbstractParser {
             case SUB:
                 return left - right;
             case XOR:
-                return (long) Math.pow((double)left, (double)right);
+                return Math.pow(left, right);
             default:
                 throw new RuntimeException("Unsupported operation " + type + " found");
         }
