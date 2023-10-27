@@ -59,7 +59,7 @@ public enum Type {
     OREQ("|=", ONE, LEFT, false),
     ANDAND("&&", ONE, LEFT, false),
     OROR("||", ONE, LEFT, false),
-    XOR("^", THREE, LEFT, false),
+    XOR("^", ONE, LEFT, false),
     XOREQ("^=", ONE, LEFT, false),
     SR(">>", ONE, LEFT, false),
     SREQ(">>=", ONE, LEFT, false),

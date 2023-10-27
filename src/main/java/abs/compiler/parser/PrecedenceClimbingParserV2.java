@@ -2,6 +2,7 @@ package abs.compiler.parser;
 
 import static abs.compiler.lexer.Associativity.LEFT;
 import static abs.compiler.lexer.Type.EOF;
+import static abs.compiler.lexer.Type.MUL;
 import static abs.compiler.lexer.Type.RPAREN;
 import static abs.compiler.lexer.Type.WHOLE_NUMBER_LITERAL;
 import abs.compiler.lexer.Associativity;
@@ -92,20 +93,52 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
         return lhs;
     }
 
-    private double computeOperation(Type type, double left, double right) {
+    private static boolean isNumber(String value) {
+        try {
+            Double.parseDouble(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static double computeOperation(String type, double left, double right) {
         switch (type) {
-            case MUL:
+            case "*":
                 return left * right;
-            case DIV:
+            case "/":
                 return left / right;
-            case ADD:
+            case "+":
                 return left + right;
-            case SUB:
+            case "-":
                 return left - right;
-            case XOR:
-                return Math.pow(left, right);
             default:
                 throw new RuntimeException("Unsupported operation " + type + " found");
+        }
+    }
+
+    public static double evaluate(StringNode node) {
+        if (isNumber(node.getValue())) {
+            return Double.parseDouble(node.getValue());
+        } else {
+            StringNode leftNode = (StringNode) node.getChildren().get(0);
+            StringNode rightNode = (StringNode) node.getChildren().get(1);
+            double leftValue;
+            double rightValue;
+
+            if (isNumber(leftNode.getValue())) {
+                leftValue = Double.parseDouble(leftNode.getValue());
+            } else {
+                leftValue = evaluate(leftNode);
+            }
+
+            if (isNumber(rightNode.getValue())) {
+                rightValue = Double.parseDouble(rightNode.getValue());
+            } else {
+                rightValue = evaluate(rightNode);
+            }
+
+            return computeOperation(node.getValue(), leftValue, rightValue);
         }
     }
 
@@ -147,6 +180,8 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
         String dot = result.toDot();
         System.out.println(dot);
         toFile(dot, "tree.dot");
+
+        System.out.println("\nResult: " + evaluate((StringNode) result.getChildren().get(0)));
     }
 
     public static void toFile(String contents, String filePath) {
