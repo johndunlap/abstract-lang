@@ -22,6 +22,11 @@ public class PrecedenceClimbingParserV1 extends AbstractParser {
         return new DoubleNode(computeExpression(0));
     }
 
+    /**
+     * An "atom" is a number or a parenthesized expression.
+     *
+     * @return The value of the atom
+     */
     private double computeAtom() {
         Token token = peek();
         Type type = token.getType();
