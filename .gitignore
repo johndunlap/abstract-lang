@@ -37,3 +37,6 @@ target
 
 # Misc
 tmp.*
+/tree.dot
+/tree.png
+/example.dot

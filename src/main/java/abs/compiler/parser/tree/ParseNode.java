@@ -31,4 +31,22 @@ public interface ParseNode {
      * @param parent The parent of this node.
      */
     void setParent(ParseNode parent);
+
+    /**
+     * This id should be unique within the tree.
+     * @return The id of this node.
+     */
+    String getId();
+
+    /**
+     * Returns a string in the DOT language which can be used to visualize this tree.
+     * @return A string in the DOT language which can be used to visualize this tree.
+     */
+    String toDot();
+
+    /**
+     * Returns a string representation of this node.
+     * @return A string representation of this node.
+     */
+    String toString();
 }
