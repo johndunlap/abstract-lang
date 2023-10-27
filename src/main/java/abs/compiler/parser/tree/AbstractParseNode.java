@@ -51,7 +51,7 @@ public class AbstractParseNode implements ParseNode {
             .append(id)
             .append(" [label=\"")
             .append(toString())
-            .append("\", shape=circle];\n");
+            .append("\", shape=oval];\n");
 
         // Add dot edges to each child node
         for (ParseNode child : children) {

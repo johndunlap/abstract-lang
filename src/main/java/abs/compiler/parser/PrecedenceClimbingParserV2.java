@@ -2,6 +2,7 @@ package abs.compiler.parser;
 
 import static abs.compiler.lexer.Associativity.LEFT;
 import static abs.compiler.lexer.Type.EOF;
+import static abs.compiler.lexer.Type.FLOAT_LITERAL;
 import static abs.compiler.lexer.Type.MUL;
 import static abs.compiler.lexer.Type.RPAREN;
 import static abs.compiler.lexer.Type.WHOLE_NUMBER_LITERAL;
@@ -52,8 +53,8 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
             return node;
         } else if (type.equals(EOF)) {
             throw new RuntimeException("Source ended unexpectedly ");
-        } else if (!type.equals(WHOLE_NUMBER_LITERAL)) {
-            throw new RuntimeException("Expected whole number literal but found " + type + " instead");
+        } else if (!type.in(WHOLE_NUMBER_LITERAL, FLOAT_LITERAL)) {
+            throw new RuntimeException("Expected number literal but found " + type + " instead");
         } else {
             next();
             return new StringNode(token.getValue());
