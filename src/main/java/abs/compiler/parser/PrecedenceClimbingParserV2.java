@@ -3,7 +3,6 @@ package abs.compiler.parser;
 import static abs.compiler.lexer.Associativity.LEFT;
 import static abs.compiler.lexer.Type.EOF;
 import static abs.compiler.lexer.Type.FLOAT_LITERAL;
-import static abs.compiler.lexer.Type.MUL;
 import static abs.compiler.lexer.Type.RPAREN;
 import static abs.compiler.lexer.Type.WHOLE_NUMBER_LITERAL;
 import abs.compiler.lexer.Associativity;
