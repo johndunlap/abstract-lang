@@ -160,11 +160,11 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
 
     public static void main(String[] args) {
         // Merge all command line arguments into a single string
-        String input = String.join("", args);
+        String expression = String.join("", args);
 
         // Create a character stream from the input string
         LexerOptions o = new LexerOptions();
-        CharacterStream characterStream = new CharacterStream(input, o);
+        CharacterStream characterStream = new CharacterStream(expression, o);
 
         // Create a token stream from the character stream
         TokenStream tokenStream = new TokenStream(characterStream, o);
@@ -181,7 +181,7 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
         System.out.println(dot);
         toFile(dot, "tree.dot");
 
-        System.out.println("\nResult: " + evaluate((StringNode) result.getChildren().get(0)));
+        System.out.println("\n" + expression + " == " + evaluate((StringNode) result.getChildren().get(0)));
     }
 
     public static void toFile(String contents, String filePath) {
