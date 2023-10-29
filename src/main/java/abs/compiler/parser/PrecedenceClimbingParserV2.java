@@ -178,10 +178,9 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
 
         // Write the result to a file named tree.dot
         String dot = result.toDot();
-        System.out.println(dot);
         toFile(dot, "tree.dot");
 
-        System.out.println("\n" + expression + " == " + evaluate((StringNode) result.getChildren().get(0)));
+        System.out.println(expression + " == " + evaluate((StringNode) result.getChildren().get(0)));
     }
 
     public static void toFile(String contents, String filePath) {

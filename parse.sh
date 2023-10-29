@@ -1,5 +1,7 @@
 #!/bin/bash
 
+clear
+
 ABS_JAR='target/abs-1.0-SNAPSHOT.jar'
 
 # Compile if necessary
