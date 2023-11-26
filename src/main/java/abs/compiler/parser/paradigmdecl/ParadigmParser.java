@@ -3,6 +3,7 @@ package abs.compiler.parser.paradigmdecl;
 import static abs.compiler.Util.coalesce;
 import static abs.compiler.lexer.Type.IDENTIFIER;
 import static abs.compiler.lexer.Type.SEMICOLON;
+import abs.ImplementMeException;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
@@ -84,5 +85,11 @@ public class ParadigmParser extends AbstractParser {
 
         // Return a parse error if no paradigm declaration was found
         return new ErrorNode("Expected \"paradigm\" but found \"" + token.getValue() + "\" instead", tokens);
+    }
+
+    @Override
+    public void recover(ErrorNode error) {
+        // TODO: Skip tokens until an import statement or a class declaration is found
+        throw new ImplementMeException();
     }
 }
