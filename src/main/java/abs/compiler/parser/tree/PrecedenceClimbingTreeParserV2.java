@@ -1,4 +1,4 @@
-package abs.compiler.parser;
+package abs.compiler.parser.tree;
 
 import static abs.compiler.lexer.Associativity.LEFT;
 import static abs.compiler.lexer.Type.EOF;
@@ -13,16 +13,13 @@ import abs.compiler.lexer.Precedence;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.lexer.Type;
-import abs.compiler.parser.tree.TreeNode;
-import abs.compiler.parser.tree.RootNode;
-import abs.compiler.parser.tree.StringNode;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class PrecedenceClimbingParserV2 extends AbstractParser {
-    public PrecedenceClimbingParserV2(Options options, TokenStream tokenStream) {
+public class PrecedenceClimbingTreeParserV2 extends AbstractTreeParser {
+    public PrecedenceClimbingTreeParserV2(Options options, TokenStream tokenStream) {
         super(options, tokenStream);
     }
 
@@ -174,7 +171,7 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
 
         // Create a parser from the token stream
         Options options = new Options();
-        PrecedenceClimbingParserV2 parser = new PrecedenceClimbingParserV2(options, tokenStream);
+        PrecedenceClimbingTreeParserV2 parser = new PrecedenceClimbingTreeParserV2(options, tokenStream);
 
         // Parse the expression into a tree
         RootNode result = (RootNode) parser.parse();

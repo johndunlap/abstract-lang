@@ -1,11 +1,10 @@
-package abs.compiler.parser;
+package abs.compiler.parser.tree;
 
 import abs.compiler.Options;
 import abs.compiler.lexer.TokenStream;
-import abs.compiler.parser.tree.RootNode;
 
-public class OopV1Parser extends AbstractParser {
-    public OopV1Parser(Options options, TokenStream tokenStream) {
+public class OopV1TreeParser extends AbstractTreeParser {
+    public OopV1TreeParser(Options options, TokenStream tokenStream) {
         super(options, tokenStream);
     }
 

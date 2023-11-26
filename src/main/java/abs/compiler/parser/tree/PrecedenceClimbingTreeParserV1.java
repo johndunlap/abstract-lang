@@ -1,4 +1,4 @@
-package abs.compiler.parser;
+package abs.compiler.parser.tree;
 
 import static abs.compiler.lexer.Associativity.LEFT;
 import static abs.compiler.lexer.Type.EOF;
@@ -10,11 +10,9 @@ import abs.compiler.lexer.Precedence;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.lexer.Type;
-import abs.compiler.parser.tree.DoubleNode;
-import abs.compiler.parser.tree.TreeNode;
 
-public class PrecedenceClimbingParserV1 extends AbstractParser {
-    public PrecedenceClimbingParserV1(Options options, TokenStream tokenStream) {
+public class PrecedenceClimbingTreeParserV1 extends AbstractTreeParser {
+    public PrecedenceClimbingTreeParserV1(Options options, TokenStream tokenStream) {
         super(options, tokenStream);
     }
 
