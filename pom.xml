@@ -28,22 +28,6 @@
             <version>2.15.1</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- Used for loading test data from a file -->
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Used for verifying that the hand written parser conforms to the formal grammar -->
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4</artifactId>
-            <version>4.9.2</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
