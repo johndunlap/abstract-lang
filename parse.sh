@@ -10,7 +10,7 @@ if [ ! -e "${ABS_JAR}" ]; then
 fi
 
 # TODO: Pass all arguments to the jar and render the dot file it outputs
-java -cp target/classes abs.compiler.parser.PrecedenceClimbingParserV2 "$@"
+java -cp target/classes abs.compiler.parser.tree.PrecedenceClimbingTreeParserV2 "$@"
 
 # Render the dot file as a png
 dot -Tpng -o tree.png tree.dot
