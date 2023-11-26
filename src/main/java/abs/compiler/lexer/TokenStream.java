@@ -42,6 +42,7 @@ import static abs.compiler.lexer.Type.SUBEQ;
 import static abs.compiler.lexer.Type.SUBSUB;
 import static abs.compiler.lexer.Type.TILDE;
 import static abs.compiler.lexer.Type.TILDEEQ;
+import static abs.compiler.lexer.Type.WHITESPACE;
 import static abs.compiler.lexer.Type.XOREQ;
 import abs.ImplementMeException;
 import abs.compiler.exception.IllegalCharacterException;
@@ -69,6 +70,21 @@ public class TokenStream {
     public TokenStream(CharacterStream characterStream, LexerOptions options) {
         this.characterStream = characterStream;
         setOptions(options);
+    }
+
+    /**
+     * Remove all whitespace tokens from the token stream until a non-whitespace token is encountered.
+     */
+    public TokenStream consumeWhitespace() {
+        Token token = peek();
+
+        // Skip over any whitespace tokens
+        while (token.hasType(WHITESPACE) || token.hasType(LF)) {
+            next();
+            token = peek();
+        }
+
+        return this;
     }
 
     public Token next() {

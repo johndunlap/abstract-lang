@@ -87,7 +87,7 @@ public class ParadigmParserTest extends AbstractParserTest {
     }
 
     @Test
-    public void testParseInvalidThirdToken() {
+    public void testParseInvalidThirdTokenScenario1() {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("paradigm oop");
         ParadigmParser parser = new ParadigmParser(tokenStream, options);
@@ -103,5 +103,25 @@ public class ParadigmParserTest extends AbstractParserTest {
         assertEquals(IDENTIFIER, errorNode.getTokens().get(1).getType());
         assertEquals("oop", errorNode.getTokens().get(1).getValue());
         assertEquals(EOF, errorNode.getTokens().get(2).getType());
+    }
+
+    @Test
+    public void testParseInvalidThirdTokenScenario2() {
+        Options options = new Options();
+        TokenStream tokenStream = buildTokenStream("paradigm oop\nimport com.abs.whatever.MyClass;");
+        ParadigmParser parser = new ParadigmParser(tokenStream, options);
+        Node result = parser.parse();
+
+        assertEquals(ErrorNode.class, result.getClass());
+
+        ErrorNode errorNode = (ErrorNode) result;
+        assertEquals("Expected \";\" but found \"import\" instead", errorNode.getMessage());
+        assertEquals(3, errorNode.getTokens().size());
+        assertEquals(IDENTIFIER, errorNode.getTokens().get(0).getType());
+        assertEquals("paradigm", errorNode.getTokens().get(0).getValue());
+        assertEquals(IDENTIFIER, errorNode.getTokens().get(1).getType());
+        assertEquals("oop", errorNode.getTokens().get(1).getValue());
+        assertEquals(IDENTIFIER, errorNode.getTokens().get(2).getType());
+        assertEquals("import", errorNode.getTokens().get(2).getValue());
     }
 }

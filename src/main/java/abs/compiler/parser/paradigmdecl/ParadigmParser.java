@@ -25,17 +25,17 @@ public class ParadigmParser extends AbstractParser {
     @Override
     public Node parse() {
         // Look ahead at the next token without removing it from the token stream
-        Token token = peek();
+        Token token = tokenStream.consumeWhitespace().peek();
         List<Token> tokens = new ArrayList<>();
 
         // If the next token is an identifier, and it has the value "paradigm", then we have a paradigm declaration
         if (token.hasType(IDENTIFIER) && token.hasValue("paradigm")) {
             // Remove the "paradigm" token from the token stream
-            next();
+            tokenStream.consumeWhitespace().next();
             tokens.add(token);
 
             // Look ahead at the next token without removing it from the token stream
-            token = peek();
+            token = tokenStream.consumeWhitespace().peek();
 
             // If the next token is an identifier, then we need to check it to see if it is a valid paradigm name
             if (token.hasType(IDENTIFIER)) {
@@ -44,16 +44,16 @@ public class ParadigmParser extends AbstractParser {
 
                 // Was a valid paradigm name found?
                 if (paradigm != null) {
-                    next();
+                    tokenStream.consumeWhitespace().next();
                     tokens.add(token);
 
                     // Look ahead at the next token without removing it from the token stream
-                    token = peek();
+                    token = tokenStream.consumeWhitespace().peek();
 
                     // If the next token is a semicolon, then we have a valid paradigm declaration
                     if (token.hasType(SEMICOLON)) {
                         // Remove the semicolon token from the token stream
-                        next();
+                        tokenStream.consumeWhitespace().next();
                         tokens.add(token);
 
                         // Return the paradigm declaration node
