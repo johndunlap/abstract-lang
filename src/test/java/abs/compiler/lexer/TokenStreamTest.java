@@ -70,7 +70,6 @@ import abs.compiler.exception.IllegalCharacterException;
 import abs.compiler.exception.LexerException;
 import abs.compiler.exception.UnexpectedEndOfInput;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -824,11 +823,11 @@ public class TokenStreamTest {
         CharacterStream characterStream = new CharacterStream("paradigm oop;\n", o);
         TokenStream tokenStream = createTokenStream(characterStream, o);
 
-        assertTrue(tokenStream.next().isType(IDENTIFIER));
-        assertTrue(tokenStream.next().isType(WHITESPACE));
-        assertTrue(tokenStream.next().isType(IDENTIFIER));
-        assertTrue(tokenStream.next().isType(SEMICOLON));
-        assertTrue(tokenStream.next().isType(LF));
+        assertTrue(tokenStream.next().hasType(IDENTIFIER));
+        assertTrue(tokenStream.next().hasType(WHITESPACE));
+        assertTrue(tokenStream.next().hasType(IDENTIFIER));
+        assertTrue(tokenStream.next().hasType(SEMICOLON));
+        assertTrue(tokenStream.next().hasType(LF));
     }
 
     @Test(expected = IllegalCharacterException.class)

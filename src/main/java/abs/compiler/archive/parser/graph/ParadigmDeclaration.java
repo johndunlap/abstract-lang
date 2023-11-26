@@ -15,14 +15,14 @@ public class ParadigmDeclaration extends GraphObject     {
         Token paradigmToken = tokenStream.peek(0);
 
         // What if there was white space prior to the paradigm keyword
-        if (paradigmToken.isType(Type.WHITESPACE)) {
+        if (paradigmToken.hasType(Type.WHITESPACE)) {
             setBefore(paradigmToken.getValue());
             paradigmToken = tokenStream.eatAndPeek();
         }
 
         Token whitespaceToken = tokenStream.peek(1);
 
-        if (!whitespaceToken.isType(Type.WHITESPACE)) {
+        if (!whitespaceToken.hasType(Type.WHITESPACE)) {
             errorHandler.addExpectationError("whitespace", whitespaceToken);
         } else {
             between = whitespaceToken.getValue();

@@ -50,7 +50,7 @@ public class Token {
         return false;
     }
 
-    public boolean isType(Type type) {
+    public boolean hasType(Type type) {
         return getType().equals(type);
     }
 

@@ -48,7 +48,7 @@ public class Namespace {
 
         Token token = tokenStream.peek();
 
-        if (token.isType(Type.IDENTIFIER)) {
+        if (token.hasType(Type.IDENTIFIER)) {
             currentNamespace = new Namespace(token.getValue());
 
             // Start looking at the next token
@@ -56,15 +56,15 @@ public class Namespace {
 
             boolean lastWasIdentifier = true;
 
-            while (token.isType(Type.IDENTIFIER) || token.isType(Type.PERIOD)) {
+            while (token.hasType(Type.IDENTIFIER) || token.hasType(Type.PERIOD)) {
                 if (lastWasIdentifier) {
-                    if (token.isType(Type.PERIOD)) {
+                    if (token.hasType(Type.PERIOD)) {
                         lastWasIdentifier = false;
                     } else {
                         errorHandler.addExpectationError(".", token);
                     }
                 } else {
-                    if (token.isType(Type.IDENTIFIER)) {
+                    if (token.hasType(Type.IDENTIFIER)) {
                         Namespace child = new Namespace(token.getValue());
                         currentNamespace.addChild(child);
                         currentNamespace = child;
