@@ -5,6 +5,7 @@ import static abs.compiler.lexer.Type.EOF;
 import static abs.compiler.lexer.Type.FLOAT_LITERAL;
 import static abs.compiler.lexer.Type.RPAREN;
 import static abs.compiler.lexer.Type.WHOLE_NUMBER_LITERAL;
+import abs.compiler.Options;
 import abs.compiler.lexer.Associativity;
 import abs.compiler.lexer.CharacterStream;
 import abs.compiler.lexer.LexerOptions;
@@ -21,7 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class PrecedenceClimbingParserV2 extends AbstractParser {
-    public PrecedenceClimbingParserV2(ParserOptions options, TokenStream tokenStream) {
+    public PrecedenceClimbingParserV2(Options options, TokenStream tokenStream) {
         super(options, tokenStream);
     }
 
@@ -172,7 +173,7 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
         TokenStream tokenStream = new TokenStream(characterStream, o);
 
         // Create a parser from the token stream
-        ParserOptions options = new ParserOptions();
+        Options options = new Options();
         PrecedenceClimbingParserV2 parser = new PrecedenceClimbingParserV2(options, tokenStream);
 
         // Parse the expression into a tree

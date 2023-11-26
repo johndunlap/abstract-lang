@@ -4,6 +4,7 @@ import static abs.compiler.lexer.Associativity.LEFT;
 import static abs.compiler.lexer.Type.EOF;
 import static abs.compiler.lexer.Type.RPAREN;
 import static abs.compiler.lexer.Type.WHOLE_NUMBER_LITERAL;
+import abs.compiler.Options;
 import abs.compiler.lexer.Associativity;
 import abs.compiler.lexer.Precedence;
 import abs.compiler.lexer.Token;
@@ -13,7 +14,7 @@ import abs.compiler.parser.tree.DoubleNode;
 import abs.compiler.parser.tree.ParseNode;
 
 public class PrecedenceClimbingParserV1 extends AbstractParser {
-    public PrecedenceClimbingParserV1(ParserOptions options, TokenStream tokenStream) {
+    public PrecedenceClimbingParserV1(Options options, TokenStream tokenStream) {
         super(options, tokenStream);
     }
 

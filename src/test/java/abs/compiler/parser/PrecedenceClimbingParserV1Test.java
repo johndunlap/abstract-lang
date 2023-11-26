@@ -1,6 +1,7 @@
 package abs.compiler.parser;
 
 import static org.junit.Assert.assertEquals;
+import abs.compiler.Options;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.parser.tree.DoubleNode;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import org.junit.Test;
 public class PrecedenceClimbingParserV1Test extends AbstractParserTest {
     @Test
     public void testEvaluatingSimpleExpression() {
-        ParserOptions options = new ParserOptions();
+        Options options = new Options();
         TokenStream tokenStream = buildTokenStream("1+2*7+9/3");
         PrecedenceClimbingParserV1 parser = new PrecedenceClimbingParserV1(options, tokenStream);
         DoubleNode result = (DoubleNode) parser.parse();
