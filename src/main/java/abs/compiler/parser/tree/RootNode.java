@@ -1,11 +1,11 @@
 package abs.compiler.parser.tree;
 
-public class RootNode extends AbstractParseNode {
+public class RootNode extends AbstractTreeNode {
     public RootNode() {
         this.parent = null;
     }
 
-    public RootNode(ParseNode child) {
+    public RootNode(TreeNode child) {
         this();
         this.children.add(child);
     }

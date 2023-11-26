@@ -1,6 +1,6 @@
 package abs.compiler.parser.tree;
 
-public class DoubleNode extends AbstractParseNode {
+public class DoubleNode extends AbstractTreeNode {
     private final Double value;
 
     public DoubleNode(Double value) {

@@ -11,7 +11,7 @@ import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.lexer.Type;
 import abs.compiler.parser.tree.DoubleNode;
-import abs.compiler.parser.tree.ParseNode;
+import abs.compiler.parser.tree.TreeNode;
 
 public class PrecedenceClimbingParserV1 extends AbstractParser {
     public PrecedenceClimbingParserV1(Options options, TokenStream tokenStream) {
@@ -19,7 +19,7 @@ public class PrecedenceClimbingParserV1 extends AbstractParser {
     }
 
     @Override
-    public ParseNode parse() {
+    public TreeNode parse() {
         return new DoubleNode(computeExpression(0));
     }
 

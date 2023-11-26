@@ -2,13 +2,13 @@ package abs.compiler.parser.tree;
 
 import java.util.List;
 
-public interface ParseNode {
+public interface TreeNode {
     /**
      * Guaranteed to be non-null unless this is the root node.
      *
      * @return The parent node or null if this is the root node.
      */
-    ParseNode getParent();
+    TreeNode getParent();
 
     /**
      * Returns a list of all children of this node. This list is
@@ -16,21 +16,21 @@ public interface ParseNode {
      *
      * @return A list of all children of this node.
      */
-    List<ParseNode> getChildren();
+    List<TreeNode> getChildren();
 
     /**
      * Adds a child to this node.
      *
      * @param child The child to add.
      */
-    void addChild(ParseNode child);
+    void addChild(TreeNode child);
 
     /**
      * Sets the parent of this node.
      *
      * @param parent The parent of this node.
      */
-    void setParent(ParseNode parent);
+    void setParent(TreeNode parent);
 
     /**
      * This id should be unique within the tree.

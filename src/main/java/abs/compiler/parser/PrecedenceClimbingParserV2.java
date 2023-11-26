@@ -13,7 +13,7 @@ import abs.compiler.lexer.Precedence;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.lexer.Type;
-import abs.compiler.parser.tree.ParseNode;
+import abs.compiler.parser.tree.TreeNode;
 import abs.compiler.parser.tree.RootNode;
 import abs.compiler.parser.tree.StringNode;
 
@@ -27,7 +27,7 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
     }
 
     @Override
-    public ParseNode parse() {
+    public TreeNode parse() {
         return new RootNode(parseExpression(0));
     }
 
@@ -36,14 +36,14 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
      *
      * @return The value of the atom
      */
-    private ParseNode parseAtom() {
+    private TreeNode parseAtom() {
         Token token = peek();
         Type type = token.getType();
 
         if (type.equals(Type.LPAREN)) {
             next();
 
-            ParseNode node = parseExpression(1);
+            TreeNode node = parseExpression(1);
 
             if (!peek().getType().equals(RPAREN)) {
                 throw new RuntimeException("Expected right parenthesis but found " + type + " instead");
@@ -61,8 +61,8 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
         }
     }
 
-    private ParseNode parseExpression(int minimumPrecedence) {
-        ParseNode lhs = parseAtom();
+    private TreeNode parseExpression(int minimumPrecedence) {
+        TreeNode lhs = parseAtom();
 
         while (true) {
             Token token = peek();
@@ -86,7 +86,7 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
 
             next();
 
-            ParseNode rhs = parseExpression(nextMinimumPrecedence);
+            TreeNode rhs = parseExpression(nextMinimumPrecedence);
 
             lhs = new StringNode(type.getRepresentation(), lhs, rhs);
         }

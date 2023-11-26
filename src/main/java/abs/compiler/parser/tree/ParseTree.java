@@ -7,5 +7,5 @@ package abs.compiler.parser.tree;
  * fundamental requirement of any IDE.
  */
 public interface ParseTree {
-    ParseNode getRootNode();
+    TreeNode getRootNode();
 }

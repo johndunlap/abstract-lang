@@ -2,7 +2,7 @@ package abs.compiler.parser;
 
 import abs.compiler.Options;
 import abs.compiler.lexer.TokenStream;
-import abs.compiler.parser.tree.ParseNode;
+import abs.compiler.parser.tree.TreeNode;
 
 public abstract class AbstractParser implements Parser {
     protected final Options options;
@@ -14,9 +14,9 @@ public abstract class AbstractParser implements Parser {
         this.tokenStream = tokenStream;
     }
 
-    public ParseNode parse(TokenStream tokenStream, Options options) {
+    public TreeNode parse(TokenStream tokenStream, Options options) {
         return parse();
     }
 
-    public abstract ParseNode parse();
+    public abstract TreeNode parse();
 }

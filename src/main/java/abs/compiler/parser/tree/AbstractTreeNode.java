@@ -4,38 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class AbstractParseNode implements ParseNode {
+public class AbstractTreeNode implements TreeNode {
     /**
      * Link to the parent node. This will be null for the root node in the tree.
      */
-    protected ParseNode parent;
+    protected TreeNode parent;
 
     /**
      * The children of this node. This will be an empty list if this node has no children. This list will never be null.
      */
-    protected final List<ParseNode> children = new ArrayList<>();
+    protected final List<TreeNode> children = new ArrayList<>();
 
     protected final String id = 'a' + UUID.randomUUID()
         .toString()
         .replaceAll("-", "");
 
     @Override
-    public ParseNode getParent() {
+    public TreeNode getParent() {
         return parent;
     }
 
     @Override
-    public List<ParseNode> getChildren() {
+    public List<TreeNode> getChildren() {
         return children;
     }
 
     @Override
-    public void addChild(ParseNode child) {
+    public void addChild(TreeNode child) {
         children.add(child);
     }
 
     @Override
-    public void setParent(ParseNode parent) {
+    public void setParent(TreeNode parent) {
         this.parent = parent;
     }
 
@@ -54,7 +54,7 @@ public class AbstractParseNode implements ParseNode {
             .append("\", shape=oval];\n");
 
         // Add dot edges to each child node
-        for (ParseNode child : children) {
+        for (TreeNode child : children) {
             dot.append("      ")
                 .append(id)
                 .append(" -> ")

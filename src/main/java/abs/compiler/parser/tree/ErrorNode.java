@@ -10,7 +10,7 @@ import java.util.List;
  * tree so that a parse tree can be generated even if there are errors, without losing
  * track of the errors.
  */
-public class ErrorNode extends AbstractParseNode {
+public class ErrorNode extends AbstractTreeNode {
     /**
      * The error message which was emitted by the parser.
      */

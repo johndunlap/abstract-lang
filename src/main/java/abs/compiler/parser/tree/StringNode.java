@@ -1,15 +1,15 @@
 package abs.compiler.parser.tree;
 
-public class StringNode extends AbstractParseNode {
+public class StringNode extends AbstractTreeNode {
     private final String value;
 
     public StringNode(String value) {
         this.value = value;
     }
-    public StringNode(String value, ParseNode... children) {
+    public StringNode(String value, TreeNode... children) {
         this(value);
 
-        for (ParseNode node : children) {
+        for (TreeNode node : children) {
             addChild(node);
         }
     }
