@@ -1,6 +1,7 @@
 package abs.compiler.lexer;
 
 import static abs.compiler.lexer.Associativity.LEFT;
+import static abs.compiler.lexer.Associativity.RIGHT;
 import static abs.compiler.lexer.Precedence.ONE;
 import static abs.compiler.lexer.Precedence.THREE;
 import static abs.compiler.lexer.Precedence.TWO;
@@ -59,7 +60,7 @@ public enum Type {
     OREQ("|=", ONE, LEFT, false),
     ANDAND("&&", ONE, LEFT, false),
     OROR("||", ONE, LEFT, false),
-    XOR("^", ONE, LEFT, false),
+    XOR("^", THREE, RIGHT, false),
     XOREQ("^=", ONE, LEFT, false),
     SR(">>", ONE, LEFT, false),
     SREQ(">>=", ONE, LEFT, false),
@@ -71,7 +72,7 @@ public enum Type {
     COMMENTL("//", ONE, LEFT, true),
     PERIOD(".", ONE, LEFT, false),
     PERIODEQ(".=", ONE, LEFT, false),
-    IDENTIFIER(ONE, LEFT, false),
+    IDENTIFIER(null, null, false),
     COMMENT(ONE, LEFT, true),
     STRCONST(ONE, LEFT, false),
     WHOLE_NUMBER_LITERAL(ONE, LEFT, false),

@@ -112,6 +112,8 @@ public class PrecedenceClimbingParserV2 extends AbstractParser {
                 return left + right;
             case "-":
                 return left - right;
+            case "^":
+                return Math.pow(left, right);
             default:
                 throw new RuntimeException("Unsupported operation " + type + " found");
         }
