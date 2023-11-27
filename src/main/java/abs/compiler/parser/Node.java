@@ -27,4 +27,10 @@ public interface Node {
      * @return A list of all tokens which were used to create this node.
      */
     List<Token> getTokens();
+
+    /**
+     * Returns a string representation of this node.
+     * @return A string representation of this node.
+     */
+    String toString();
 }

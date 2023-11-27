@@ -24,4 +24,13 @@ public class ErrorNode extends AbstractNode {
     public String getMessage() {
         return message;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        // TODO: Add line number and column number to error message
+        return message;
+    }
 }

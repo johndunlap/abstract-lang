@@ -89,7 +89,7 @@ public class ParadigmParser extends AbstractParser {
 
     @Override
     public void recover(ErrorNode error) {
-        // TODO: Skip tokens until an import statement or a class declaration is found
+        // TODO: Skip tokens until a package declaration is found
         throw new ImplementMeException();
     }
 }

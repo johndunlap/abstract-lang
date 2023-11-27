@@ -20,19 +20,34 @@ public abstract class AbstractNode implements Node {
      * The list of tokens that this node represents.
      */
     protected List<Token> tokens;
-    
+
+    /**
+     * {@inheritDoc
+     */
     @Override
     public String getId() {
         return id + "";
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public String toDot() {
         throw new ImplementMeException();
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public List<Token> getTokens() {
         return tokens;
     }
+
+    /**
+     * {@inheritDoc
+     */
+    @Override
+    public abstract String toString();
 }

@@ -20,4 +20,9 @@ public class ParadigmDecl extends AbstractNode {
     public void setParadigm(ParadigmEnum paradigm) {
         this.paradigm = paradigm;
     }
+
+    @Override
+    public String toString() {
+        return paradigm.name();
+    }
 }
