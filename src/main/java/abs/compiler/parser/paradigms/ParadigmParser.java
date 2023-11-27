@@ -1,4 +1,4 @@
-package abs.compiler.parser.paradigmdecl;
+package abs.compiler.parser.paradigms;
 
 import static abs.compiler.Util.coalesce;
 import static abs.compiler.lexer.Type.IDENTIFIER;
@@ -58,7 +58,7 @@ public class ParadigmParser extends AbstractParser {
                         tokens.add(token);
 
                         // Return the paradigm declaration node
-                        return new ParadigmDecl(paradigm, tokens);
+                        return new ParadigmDeclaration(paradigm, tokens);
                     }
 
                     tokens.add(token);

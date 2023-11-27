@@ -1,4 +1,4 @@
-package abs.compiler.parser.paradigmdecl;
+package abs.compiler.parser.paradigms;
 
 public enum ParadigmEnum {
     OOP("oop");

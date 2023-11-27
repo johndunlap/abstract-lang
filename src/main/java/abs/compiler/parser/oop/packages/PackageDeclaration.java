@@ -1,14 +1,13 @@
-package abs.compiler.parser.oop.packagedecl;
+package abs.compiler.parser.oop.packages;
 
-import abs.ImplementMeException;
 import abs.compiler.parser.AbstractNode;
 
-public class PackageDecl extends AbstractNode {
+public class PackageDeclaration extends AbstractNode {
     private String name;
 
-    private PackageDecl child;
+    private PackageDeclaration child;
 
-    public PackageDecl(String name) {
+    public PackageDeclaration(String name) {
         this.name = name;
     }
 
@@ -16,7 +15,7 @@ public class PackageDecl extends AbstractNode {
         return name;
     }
 
-    public PackageDecl getChild() {
+    public PackageDeclaration getChild() {
         return child;
     }
 
@@ -24,7 +23,7 @@ public class PackageDecl extends AbstractNode {
         this.name = name;
     }
 
-    public void setChild(PackageDecl child) {
+    public void setChild(PackageDeclaration child) {
         this.child = child;
     }
 

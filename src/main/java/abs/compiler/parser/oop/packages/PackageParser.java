@@ -1,4 +1,4 @@
-package abs.compiler.parser.oop.packagedecl;
+package abs.compiler.parser.oop.packages;
 
 import static abs.compiler.lexer.Type.IDENTIFIER;
 import static abs.compiler.lexer.Type.PERIOD;
@@ -37,10 +37,10 @@ public class PackageParser extends AbstractParser {
                 tokens.add(token);
 
                 String packageName = token.getValue();
-                PackageDecl rootPackageDecl;
+                PackageDeclaration rootPackageDeclaration;
 
                 if (token.getValue() != null || !token.getValue().isEmpty()) {
-                    rootPackageDecl = new PackageDecl(packageName);
+                    rootPackageDeclaration = new PackageDeclaration(packageName);
                 } else {
                     // Return an error because we don't have a package name
                     return new ErrorNode("Expected package name but found " + token.toText() + " instead", tokens);
@@ -49,7 +49,7 @@ public class PackageParser extends AbstractParser {
                 // Look ahead at the next token without removing it from the token stream
                 token = tokenStream.consumeWhitespace().peek();
 
-                PackageDecl previousPackageDecl = rootPackageDecl;
+                PackageDeclaration previousPackageDeclaration = rootPackageDeclaration;
 
                 while (token.hasType(PERIOD)) {
                     tokenStream.consumeWhitespace().next();
@@ -59,9 +59,9 @@ public class PackageParser extends AbstractParser {
 
                     if (token.hasType(IDENTIFIER)) {
                         tokenStream.consumeWhitespace().next();
-                        PackageDecl packageDecl = new PackageDecl(token.getValue());
-                        previousPackageDecl.setChild(packageDecl);
-                        previousPackageDecl = packageDecl;
+                        PackageDeclaration packageDeclaration = new PackageDeclaration(token.getValue());
+                        previousPackageDeclaration.setChild(packageDeclaration);
+                        previousPackageDeclaration = packageDeclaration;
                         token = tokenStream.consumeWhitespace().peek();
                     } else {
                         // Return error because we don't have a package name
@@ -72,7 +72,7 @@ public class PackageParser extends AbstractParser {
                 tokens.add(token);
 
                 if (token.hasType(SEMICOLON)) {
-                    return rootPackageDecl;
+                    return rootPackageDeclaration;
                 }
 
                 // Return an error because we don't have a semicolon

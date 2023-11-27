@@ -1,4 +1,4 @@
-package abs.compiler.parser.oop;
+package abs.compiler.parser.oop.packages;
 
 import abs.compiler.parser.AbstractNode;
 

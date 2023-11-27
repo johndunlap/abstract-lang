@@ -1,14 +1,14 @@
-package abs.compiler.parser.paradigmdecl;
+package abs.compiler.parser.paradigms;
 
 import abs.compiler.lexer.Token;
 import abs.compiler.parser.AbstractNode;
 
 import java.util.List;
 
-public class ParadigmDecl extends AbstractNode {
+public class ParadigmDeclaration extends AbstractNode {
     private ParadigmEnum paradigm;
 
-    public ParadigmDecl(ParadigmEnum paradigm, List<Token> tokens) {
+    public ParadigmDeclaration(ParadigmEnum paradigm, List<Token> tokens) {
         this.paradigm = paradigm;
         this.tokens = tokens;
     }

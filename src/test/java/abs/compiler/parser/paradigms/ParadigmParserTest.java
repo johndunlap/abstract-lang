@@ -1,4 +1,4 @@
-package abs.compiler.parser.paradigmdecl;
+package abs.compiler.parser.paradigms;
 
 import static abs.compiler.lexer.Type.EOF;
 import static abs.compiler.lexer.Type.IDENTIFIER;
@@ -21,17 +21,17 @@ public class ParadigmParserTest extends AbstractParserTest {
         Node result = parser.parse();
 
         assertNotError(result);
-        assertEquals(ParadigmDecl.class, result.getClass());
+        assertEquals(ParadigmDeclaration.class, result.getClass());
 
-        ParadigmDecl paradigmDecl = (ParadigmDecl) result;
+        ParadigmDeclaration paradigmDeclaration = (ParadigmDeclaration) result;
 
-        assertEquals(ParadigmEnum.OOP, paradigmDecl.getParadigm());
-        assertEquals(3, paradigmDecl.getTokens().size());
-        assertEquals(IDENTIFIER, paradigmDecl.getTokens().get(0).getType());
-        assertEquals("paradigm", paradigmDecl.getTokens().get(0).getValue());
-        assertEquals(IDENTIFIER, paradigmDecl.getTokens().get(1).getType());
-        assertEquals("oop", paradigmDecl.getTokens().get(1).getValue());
-        assertEquals(SEMICOLON, paradigmDecl.getTokens().get(2).getType());
+        assertEquals(ParadigmEnum.OOP, paradigmDeclaration.getParadigm());
+        assertEquals(3, paradigmDeclaration.getTokens().size());
+        assertEquals(IDENTIFIER, paradigmDeclaration.getTokens().get(0).getType());
+        assertEquals("paradigm", paradigmDeclaration.getTokens().get(0).getValue());
+        assertEquals(IDENTIFIER, paradigmDeclaration.getTokens().get(1).getType());
+        assertEquals("oop", paradigmDeclaration.getTokens().get(1).getValue());
+        assertEquals(SEMICOLON, paradigmDeclaration.getTokens().get(2).getType());
     }
 
     @Test

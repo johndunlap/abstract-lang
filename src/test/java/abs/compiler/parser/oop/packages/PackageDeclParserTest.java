@@ -1,4 +1,4 @@
-package abs.compiler.parser.oop.packagedecl;
+package abs.compiler.parser.oop.packages;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -18,13 +18,13 @@ public class PackageDeclParserTest extends AbstractParserTest {
 
         assertNotError(node);
 
-        PackageDecl packageDecl = (PackageDecl) node;
+        PackageDeclaration packageDeclaration = (PackageDeclaration) node;
 
-        assertEquals("abs", packageDecl.getName());
-        assertEquals("compiler", packageDecl.getChild().getName());
-        assertEquals("parser", packageDecl.getChild().getChild().getName());
-        assertEquals("oop", packageDecl.getChild().getChild().getChild().getName());
-        assertEquals("packagedecl", packageDecl.getChild().getChild().getChild().getChild().getName());
-        assertNull(packageDecl.getChild().getChild().getChild().getChild().getChild());
+        assertEquals("abs", packageDeclaration.getName());
+        assertEquals("compiler", packageDeclaration.getChild().getName());
+        assertEquals("parser", packageDeclaration.getChild().getChild().getName());
+        assertEquals("oop", packageDeclaration.getChild().getChild().getChild().getName());
+        assertEquals("packagedecl", packageDeclaration.getChild().getChild().getChild().getChild().getName());
+        assertNull(packageDeclaration.getChild().getChild().getChild().getChild().getChild());
     }
 }
