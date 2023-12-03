@@ -1,7 +1,44 @@
 package abs.compiler.parser;
 
+import static abs.compiler.lexer.Type.IDENTIFIER;
+import static abs.compiler.lexer.Type.PARADIGM;
+import static abs.compiler.lexer.Type.SEMICOLON;
+import static org.junit.Assert.assertEquals;
+import abs.compiler.lexer.Token;
+import abs.compiler.lexer.TokenStream;
+import org.junit.Test;
+
+import java.util.List;
+
 public class ParserTest extends AbstractParserTest {
-/*
+
+    @Test
+    public void testMatchMethodWithValidCode() throws ParseErrorException {
+        TokenStream tokenStream = buildTokenStream("paradigm oop;");
+        List<Token> tokens = new Parser(tokenStream)
+                .match(PARADIGM)
+                .match(IDENTIFIER, "oop")
+                .match(SEMICOLON)
+                .tokens();
+
+        assertEquals(3, tokens.size());
+        assertEquals(PARADIGM, tokens.get(0).getType());
+        assertEquals(IDENTIFIER, tokens.get(1).getType());
+        assertEquals("oop", tokens.get(1).getValue());
+        assertEquals(SEMICOLON, tokens.get(2).getType());
+    }
+
+    @Test(expected = ParseErrorException.class)
+    public void testMatchMethodWithInvalidCode() throws ParseErrorException {
+        TokenStream tokenStream = buildTokenStream("paradigm oop");
+        new Parser(tokenStream)
+                .match(PARADIGM)
+                .match(IDENTIFIER, "oop")
+                .match(SEMICOLON)
+                .tokens();
+    }
+
+    /*
     @Test
     public void testNextMethod() throws ParserException {
         Parser parser = buildParser("paradigm oop;");

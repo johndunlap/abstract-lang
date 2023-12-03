@@ -6,7 +6,7 @@ import abs.compiler.lexer.TokenStream;
 /**
  * Base class for all parsers.
  */
-public abstract class AbstractParser implements Parser {
+public abstract class AbstractParser implements IParser {
     protected final TokenStream tokenStream;
 
     protected final Options options;

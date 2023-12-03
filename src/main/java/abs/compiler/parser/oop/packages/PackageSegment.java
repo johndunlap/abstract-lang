@@ -6,12 +6,12 @@ import abs.compiler.parser.AbstractNode;
  * Represents a fully qualified package name. This class can be referenced from import statements, class declarations,
  * package declarations, etc.
  */
-public class PackageName extends AbstractNode {
+public class PackageSegment extends AbstractNode {
     private String name;
 
-    private PackageName child;
+    private PackageSegment child;
 
-    public PackageName(String name) {
+    public PackageSegment(String name) {
         this.name = name;
     }
 
@@ -23,11 +23,11 @@ public class PackageName extends AbstractNode {
         this.name = name;
     }
 
-    public PackageName getChild() {
+    public PackageSegment getChild() {
         return child;
     }
 
-    public void setChild(PackageName child) {
+    public void setChild(PackageSegment child) {
         this.child = child;
     }
 

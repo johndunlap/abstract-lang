@@ -72,6 +72,7 @@ public enum Type {
     COMMENTL("//", ONE, LEFT, true),
     PERIOD(".", ONE, LEFT, false),
     PERIODEQ(".=", ONE, LEFT, false),
+    PARADIGM("paradigm", ONE, LEFT, false),
     IDENTIFIER(null, null, false),
     COMMENT(ONE, LEFT, true),
     STRCONST(ONE, LEFT, false),

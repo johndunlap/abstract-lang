@@ -3,13 +3,15 @@ package abs.compiler.parser.paradigms;
 import static abs.compiler.Util.coalesce;
 import static abs.compiler.lexer.Type.IDENTIFIER;
 import static abs.compiler.lexer.Type.SEMICOLON;
-import abs.ImplementMeException;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
+import abs.compiler.lexer.Type;
 import abs.compiler.parser.AbstractParser;
 import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.Node;
+import abs.compiler.parser.ParseErrorException;
+import abs.compiler.parser.IParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,6 @@ public class ParadigmParser extends AbstractParser {
         super(tokenStream, options);
     }
 
-    @Override
     public Node parse() {
         // Look ahead at the next token without removing it from the token stream
         Token token = tokenStream.consumeWhitespace().peek();
@@ -88,8 +89,17 @@ public class ParadigmParser extends AbstractParser {
     }
 
     @Override
-    public void recover(ErrorNode error) {
-        // TODO: Skip tokens until a package declaration is found
-        throw new ImplementMeException();
+    public IParser match(Type type) throws ParseErrorException {
+        return null;
+    }
+
+    @Override
+    public IParser match(Type type, String value) throws ParseErrorException {
+        return null;
+    }
+
+    @Override
+    public List<Token> tokens() {
+        return null;
     }
 }

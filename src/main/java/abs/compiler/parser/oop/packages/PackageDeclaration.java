@@ -3,38 +3,23 @@ package abs.compiler.parser.oop.packages;
 import abs.compiler.parser.AbstractNode;
 
 public class PackageDeclaration extends AbstractNode {
-    private String name;
+    private PackageSegment packageName;
 
-    private PackageDeclaration child;
-
-    public PackageDeclaration(String name) {
-        this.name = name;
+    public PackageDeclaration(PackageSegment packageName) {
+        this.packageName = packageName;
     }
 
-    public String getName() {
-        return name;
+    public PackageSegment getPackageName() {
+        return packageName;
     }
 
-    public PackageDeclaration getChild() {
-        return child;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setChild(PackageDeclaration child) {
-        this.child = child;
+    public void setPackageName(PackageSegment packageName) {
+        this.packageName = packageName;
     }
 
     @Override
     public String toString() {
-        String result = "package " + name;
-
-        if (child != null) {
-            result += "." + child;
-        }
-
-        return result;
+        // This is recursive because of the implicit toString() call on the child
+        return "package " + packageName;
     }
 }
