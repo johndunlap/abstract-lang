@@ -13,8 +13,11 @@ public class Parser {
 
     private final TokenStream tokenStream;
 
-    public Parser(TokenStream tokenStream) {
+    private Options options;
+
+    public Parser(TokenStream tokenStream, Options options) {
         this.tokenStream = tokenStream;
+        this.options = options;
     }
 
     public Parser match(Type type) throws ParseErrorException {

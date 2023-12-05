@@ -45,6 +45,7 @@ import static abs.compiler.lexer.Type.TILDEEQ;
 import static abs.compiler.lexer.Type.WHITESPACE;
 import static abs.compiler.lexer.Type.XOREQ;
 import abs.ImplementMeException;
+import abs.compiler.Options;
 import abs.compiler.exception.IllegalCharacterException;
 import abs.compiler.exception.UnexpectedEndOfInput;
 
@@ -67,7 +68,7 @@ public class TokenStream {
     private int depth = -1;
     private int index = 1;
 
-    public TokenStream(CharacterStream characterStream, LexerOptions options) {
+    public TokenStream(CharacterStream characterStream, Options options) {
         this.characterStream = characterStream;
         setOptions(options);
     }
@@ -1013,7 +1014,7 @@ public class TokenStream {
             System.exit(1);
         }
 
-        LexerOptions o = new LexerOptions();;
+        Options o = new Options();;
 
         CharacterStream characterStream = new CharacterStream(new FileInputStream(file), o);
         TokenStream tokenStream = new TokenStream(characterStream, o);
@@ -1021,14 +1022,14 @@ public class TokenStream {
         System.out.println(tokenStream.toJson());
     }
 
-    protected LexerOptions options;
+    protected Options options;
     protected boolean traceEnabled = false;
 
-    public LexerOptions getOptions() {
+    public Options getOptions() {
         return options;
     }
 
-    public void setOptions(LexerOptions options) {
+    public void setOptions(Options options) {
         this.options = options;
 
         if (options.isTraceEnabled()) {

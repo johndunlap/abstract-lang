@@ -7,6 +7,10 @@ public class Options {
     private boolean debugEnabled = false;
     private PrintStream trace;
     private PrintStream debug;
+    private boolean includeSpaces = false;
+    private boolean includeLineFeed = false;
+    private boolean includeTab = false;
+    private boolean includeComment = false;
 
     public boolean isTraceEnabled() {
         return traceEnabled;
@@ -38,5 +42,36 @@ public class Options {
 
     public void setDebug(PrintStream debug) {
         this.debug = debug;
+    }
+    public boolean isIncludeSpaces() {
+        return includeSpaces;
+    }
+
+    public void setIncludeSpaces(boolean includeSpaces) {
+        this.includeSpaces = includeSpaces;
+    }
+
+    public boolean isIncludeLineFeed() {
+        return includeLineFeed;
+    }
+
+    public void setIncludeLineFeed(boolean includeLineFeed) {
+        this.includeLineFeed = includeLineFeed;
+    }
+
+    public boolean isIncludeTab() {
+        return includeTab;
+    }
+
+    public void setIncludeTab(boolean includeTab) {
+        this.includeTab = includeTab;
+    }
+
+    public boolean isIncludeComment() {
+        return includeComment;
+    }
+
+    public void setIncludeComment(boolean includeComment) {
+        this.includeComment = includeComment;
     }
 }

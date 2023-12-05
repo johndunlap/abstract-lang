@@ -1,5 +1,6 @@
 package abs.compiler.lexer;
 
+import abs.compiler.Options;
 import abs.compiler.exception.LexerException;
 
 import java.io.ByteArrayInputStream;
@@ -18,11 +19,11 @@ public class CharacterStream {
     private int currentLine;
     private int currentColumn;
 
-    public CharacterStream(String s, LexerOptions options) {
+    public CharacterStream(String s, Options options) {
         this(new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8)), options);
     }
 
-    public CharacterStream(InputStream inputStream, LexerOptions options) {
+    public CharacterStream(InputStream inputStream, Options options) {
         this.inputStream = inputStream;
         setOptions(options);
 
@@ -162,14 +163,14 @@ public class CharacterStream {
                 '}';
     }
 
-    protected LexerOptions options;
+    protected Options options;
     protected boolean traceEnabled = false;
 
-    public LexerOptions getOptions() {
+    public Options getOptions() {
         return options;
     }
 
-    public void setOptions(LexerOptions options) {
+    public void setOptions(Options options) {
         this.options = options;
 
         if (options.isTraceEnabled()) {

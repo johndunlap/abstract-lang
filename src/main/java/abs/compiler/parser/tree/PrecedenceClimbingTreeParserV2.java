@@ -8,7 +8,6 @@ import static abs.compiler.lexer.Type.WHOLE_NUMBER_LITERAL;
 import abs.compiler.Options;
 import abs.compiler.lexer.Associativity;
 import abs.compiler.lexer.CharacterStream;
-import abs.compiler.lexer.LexerOptions;
 import abs.compiler.lexer.Precedence;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
@@ -163,7 +162,7 @@ public class PrecedenceClimbingTreeParserV2 extends AbstractTreeParser {
         String expression = String.join("", args);
 
         // Create a character stream from the input string
-        LexerOptions o = new LexerOptions();
+        Options o = new Options();
         CharacterStream characterStream = new CharacterStream(expression, o);
 
         // Create a token stream from the character stream

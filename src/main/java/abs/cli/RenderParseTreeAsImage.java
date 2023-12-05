@@ -1,9 +1,9 @@
 package abs.cli;
 
+import abs.compiler.Options;
 import abs.compiler.Util;
 import abs.compiler.archive.parser.ErrorHandler;
 import abs.compiler.lexer.CharacterStream;
-import abs.compiler.lexer.LexerOptions;
 import abs.compiler.lexer.TokenStream;
 
 import java.io.File;
@@ -28,7 +28,7 @@ public class RenderParseTreeAsImage {
 
         String fileContents = Util.fromFile(inputFile);
 
-        LexerOptions o = new LexerOptions();
+        Options o = new Options();
 
         CharacterStream characterStream = new CharacterStream(fileContents, o);
         TokenStream tokenStream = new TokenStream(characterStream, o);
