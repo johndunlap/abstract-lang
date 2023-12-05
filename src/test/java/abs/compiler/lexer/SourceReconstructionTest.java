@@ -3,6 +3,7 @@ package abs.compiler.lexer;
 import static abs.compiler.lexer.Type.EOF;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import abs.compiler.Options;
 import abs.compiler.Util;
 import abs.compiler.exception.LexerException;
 import org.junit.Test;
@@ -45,7 +46,7 @@ public class SourceReconstructionTest {
 
             System.out.println("Lexing: " + absFile.getAbsolutePath());
 
-            LexerOptions options = new LexerOptions() {{
+            Options options = new Options() {{
                 setTrace(System.out);
                 setTraceEnabled(false);
                 setIncludeLineFeed(true);
@@ -187,7 +188,7 @@ public class SourceReconstructionTest {
      * @param options the options which should be passed to the token stream
      * @return the requested token stream
      */
-    private TokenStream createTokenStream(CharacterStream characterStream, LexerOptions options) {
+    private TokenStream createTokenStream(CharacterStream characterStream, Options options) {
         return new TokenStream(characterStream, options) {
             @Override
             public Token next() throws LexerException {

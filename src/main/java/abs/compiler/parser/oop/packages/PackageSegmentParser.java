@@ -7,7 +7,7 @@ import abs.compiler.lexer.Type;
 import abs.compiler.parser.AbstractParser;
 import abs.compiler.parser.Node;
 import abs.compiler.parser.ParseErrorException;
-import abs.compiler.parser.IParser;
+import abs.compiler.parser.Parser;
 
 import java.util.List;
 
@@ -60,21 +60,6 @@ public class PackageSegmentParser extends AbstractParser {
         }
 
 */
-        return null;
-    }
-
-    @Override
-    public IParser match(Type type) throws ParseErrorException {
-        return null;
-    }
-
-    @Override
-    public IParser match(Type type, String value) throws ParseErrorException {
-        return null;
-    }
-
-    @Override
-    public List<Token> tokens() {
         return null;
     }
 }

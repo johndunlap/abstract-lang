@@ -2,6 +2,7 @@ package abs.compiler.parser.paradigms;
 
 import static abs.compiler.lexer.Type.EOF;
 import static abs.compiler.lexer.Type.IDENTIFIER;
+import static abs.compiler.lexer.Type.PARADIGM;
 import static abs.compiler.lexer.Type.SEMICOLON;
 import static abs.compiler.lexer.Type.WHOLE_NUMBER_LITERAL;
 import static org.junit.Assert.assertEquals;
@@ -27,8 +28,7 @@ public class ParadigmParserTest extends AbstractParserTest {
 
         assertEquals(ParadigmEnum.OOP, paradigmDeclaration.getParadigm());
         assertEquals(3, paradigmDeclaration.getTokens().size());
-        assertEquals(IDENTIFIER, paradigmDeclaration.getTokens().get(0).getType());
-        assertEquals("paradigm", paradigmDeclaration.getTokens().get(0).getValue());
+        assertEquals(PARADIGM, paradigmDeclaration.getTokens().get(0).getType());
         assertEquals(IDENTIFIER, paradigmDeclaration.getTokens().get(1).getType());
         assertEquals("oop", paradigmDeclaration.getTokens().get(1).getValue());
         assertEquals(SEMICOLON, paradigmDeclaration.getTokens().get(2).getType());
@@ -62,8 +62,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         ErrorNode errorNode = (ErrorNode) result;
         assertEquals("\"other\" is not a valid paradigm", errorNode.getMessage());
         assertEquals(2, errorNode.getTokens().size());
-        assertEquals(IDENTIFIER, errorNode.getTokens().get(0).getType());
-        assertEquals("paradigm", errorNode.getTokens().get(0).getValue());
+        assertEquals(PARADIGM, errorNode.getTokens().get(0).getType());
         assertEquals(IDENTIFIER, errorNode.getTokens().get(1).getType());
         assertEquals("other", errorNode.getTokens().get(1).getValue());
     }
@@ -80,8 +79,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         ErrorNode errorNode = (ErrorNode) result;
         assertEquals("Expected identifier but found \"5\" instead", errorNode.getMessage());
         assertEquals(2, errorNode.getTokens().size());
-        assertEquals(IDENTIFIER, errorNode.getTokens().get(0).getType());
-        assertEquals("paradigm", errorNode.getTokens().get(0).getValue());
+        assertEquals(PARADIGM, errorNode.getTokens().get(0).getType());
         assertEquals(WHOLE_NUMBER_LITERAL, errorNode.getTokens().get(1).getType());
         assertEquals("5", errorNode.getTokens().get(1).getValue());
     }
@@ -98,8 +96,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         ErrorNode errorNode = (ErrorNode) result;
         assertEquals("Expected \";\" but found \"EOF\" instead", errorNode.getMessage());
         assertEquals(3, errorNode.getTokens().size());
-        assertEquals(IDENTIFIER, errorNode.getTokens().get(0).getType());
-        assertEquals("paradigm", errorNode.getTokens().get(0).getValue());
+        assertEquals(PARADIGM, errorNode.getTokens().get(0).getType());
         assertEquals(IDENTIFIER, errorNode.getTokens().get(1).getType());
         assertEquals("oop", errorNode.getTokens().get(1).getValue());
         assertEquals(EOF, errorNode.getTokens().get(2).getType());
@@ -117,8 +114,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         ErrorNode errorNode = (ErrorNode) result;
         assertEquals("Expected \";\" but found \"import\" instead", errorNode.getMessage());
         assertEquals(3, errorNode.getTokens().size());
-        assertEquals(IDENTIFIER, errorNode.getTokens().get(0).getType());
-        assertEquals("paradigm", errorNode.getTokens().get(0).getValue());
+        assertEquals(PARADIGM, errorNode.getTokens().get(0).getType());
         assertEquals(IDENTIFIER, errorNode.getTokens().get(1).getType());
         assertEquals("oop", errorNode.getTokens().get(1).getValue());
         assertEquals(IDENTIFIER, errorNode.getTokens().get(2).getType());

@@ -65,6 +65,7 @@ import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import abs.compiler.Options;
 import abs.compiler.Util;
 import abs.compiler.exception.IllegalCharacterException;
 import abs.compiler.exception.LexerException;
@@ -439,7 +440,7 @@ public class TokenStreamTest {
 
     @Test
     public void testEofEmptyInput() throws LexerException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -456,7 +457,7 @@ public class TokenStreamTest {
      */
     @Test
     public void testCommentAndDivision() throws LexerException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -508,7 +509,7 @@ public class TokenStreamTest {
 
     @Test
     public void testReadStringConstantMethod() throws LexerException, IOException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -571,7 +572,7 @@ public class TokenStreamTest {
 
     @Test
     public void testReadTabsMethod() throws LexerException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -601,7 +602,7 @@ public class TokenStreamTest {
 
     @Test
     public void testReadNameMethod() throws LexerException, IOException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -635,7 +636,7 @@ public class TokenStreamTest {
 
     @Test
     public void testReadNumberMethod() throws LexerException, IOException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -671,7 +672,7 @@ public class TokenStreamTest {
 
     @Test
     public void testReadOperatorMethod() throws LexerException, IOException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -712,7 +713,7 @@ public class TokenStreamTest {
 
     @Test
     public void testCommentMethod() throws LexerException, IOException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -800,7 +801,7 @@ public class TokenStreamTest {
 
     @Test
     public void testNextMethod() throws LexerException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -816,7 +817,7 @@ public class TokenStreamTest {
 
     @Test
     public void testTokenIsTypeMethod() throws LexerException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -832,7 +833,7 @@ public class TokenStreamTest {
 
     @Test(expected = IllegalCharacterException.class)
     public void testIllegalCharacterAtFrontOfComment() throws LexerException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -843,7 +844,7 @@ public class TokenStreamTest {
 
     @Test(expected = IllegalCharacterException.class)
     public void testIllegalCharacter() throws LexerException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -856,7 +857,7 @@ public class TokenStreamTest {
 
     @Test
     public void testNextNumMethod() throws LexerException, IOException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -889,7 +890,7 @@ public class TokenStreamTest {
 
     @Test
     public void testPeekNumMethod() throws LexerException, IOException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -918,7 +919,7 @@ public class TokenStreamTest {
 
     @Test
     public void testReadSymbolExceptions() {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -950,7 +951,7 @@ public class TokenStreamTest {
 
     @Test
     public void testReadStringConstantExceptions() throws LexerException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -991,7 +992,7 @@ public class TokenStreamTest {
         byte[] fileContent = Files.readAllBytes(filePath);
         String source = new String(fileContent, StandardCharsets.UTF_8);
 
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -1017,7 +1018,7 @@ public class TokenStreamTest {
         byte[] fileContent = Files.readAllBytes(filePath);
         String source = new String(fileContent, StandardCharsets.UTF_8);
 
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -1060,7 +1061,7 @@ public class TokenStreamTest {
      * @param options the options which should be passed to the token stream
      * @return the requested token stream
      */
-    private TokenStream createTokenStream(CharacterStream characterStream, LexerOptions options) {
+    private TokenStream createTokenStream(CharacterStream characterStream, Options options) {
         return new TokenStream(characterStream, options) {
             @Override
             public Token next() throws LexerException {
@@ -1076,7 +1077,7 @@ public class TokenStreamTest {
      * @throws LexerException thrown when something exceptional happens
      */
     private void verifyExpectedOutputs(Type[] expectedTypes, String[] expectedValues, String input) throws LexerException {
-        LexerOptions o = new LexerOptions() {{
+        Options o = new Options() {{
             setTrace(System.out);
             setTraceEnabled(false);
         }};
@@ -1088,7 +1089,7 @@ public class TokenStreamTest {
      * This is a pattern which gets repeated often in this test.
      * @throws LexerException thrown when something exceptional happens
      */
-    private void verifyExpectedOutputs(Type[] expectedTypes, String[] expectedValues, String input, LexerOptions o) throws LexerException {
+    private void verifyExpectedOutputs(Type[] expectedTypes, String[] expectedValues, String input, Options o) throws LexerException {
         assertEquals(expectedTypes.length, expectedValues.length);
 
         CharacterStream characterStream = new CharacterStream(input, o);

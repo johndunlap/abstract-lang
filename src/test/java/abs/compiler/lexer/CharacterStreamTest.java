@@ -1,5 +1,6 @@
 package abs.compiler.lexer;
 
+import abs.compiler.Options;
 import abs.compiler.exception.LexerException;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class CharacterStreamTest {
     @Test
     public void testNextMethodSequentially() throws IOException, LexerException {
         InputStream inputStream = new ByteArrayInputStream("This is a test".getBytes(StandardCharsets.UTF_8));
-        CharacterStream characterStream = new CharacterStream("This is a test", new LexerOptions());
+        CharacterStream characterStream = new CharacterStream("This is a test", new Options());
 
         int c;
 
@@ -29,7 +30,7 @@ public class CharacterStreamTest {
     @Test
     public void testNextMethodSequentiallyWithPeek() throws IOException, LexerException {
         InputStream inputStream = new ByteArrayInputStream("This is a test".getBytes(StandardCharsets.UTF_8));
-        CharacterStream characterStream = new CharacterStream("This is a test", new LexerOptions());
+        CharacterStream characterStream = new CharacterStream("This is a test", new Options());
 
         int c;
         int i = 0;
@@ -51,7 +52,7 @@ public class CharacterStreamTest {
         String sample = "This is\na test of\nthe next() method";
         byte[] bytes = StandardCharsets.UTF_8.encode(sample).array();
         InputStream inputStream = new ByteArrayInputStream(bytes);
-        CharacterStream characterStream = new CharacterStream(inputStream, new LexerOptions());
+        CharacterStream characterStream = new CharacterStream(inputStream, new Options());
         Integer c;
         int expectedColumn = 1;
         int expectedLine = 1;
@@ -90,7 +91,7 @@ public class CharacterStreamTest {
         String sample = "This is\na test of\nthe next(num) method";
         byte[] bytes = StandardCharsets.UTF_8.encode(sample).array();
         InputStream inputStream = new ByteArrayInputStream(bytes);
-        CharacterStream characterStream = new CharacterStream(inputStream, new LexerOptions());
+        CharacterStream characterStream = new CharacterStream(inputStream, new Options());
 
         List<Integer> expected1 = new ArrayList<>(){{
             add((int)'T');
@@ -148,7 +149,7 @@ public class CharacterStreamTest {
         String sample = "This is\na test of\nthe peek method";
         byte[] bytes = StandardCharsets.UTF_8.encode(sample).array();
         InputStream inputStream = new ByteArrayInputStream(bytes);
-        CharacterStream characterStream = new CharacterStream(inputStream, new LexerOptions());
+        CharacterStream characterStream = new CharacterStream(inputStream, new Options());
 
         assertEquals((int)'T', characterStream.peek());
         assertEquals(1, characterStream.getCurrentIndex());
@@ -177,7 +178,7 @@ public class CharacterStreamTest {
         String sample = "This is\na test of\nthe peek(num) method";
         byte[] bytes = StandardCharsets.UTF_8.encode(sample).array();
         InputStream inputStream = new ByteArrayInputStream(bytes);
-        CharacterStream characterStream = new CharacterStream(inputStream, new LexerOptions());
+        CharacterStream characterStream = new CharacterStream(inputStream, new Options());
 
         assertEquals(1, characterStream.getCurrentIndex());
         assertEquals(1, characterStream.getCurrentLine());

@@ -13,13 +13,13 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class ParserTest extends AbstractParserTest {
+public class TokenParserTest extends AbstractParserTest {
 
     @Test
     public void testMatchMethodWithValidCode() throws ParseErrorException {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("paradigm oop;", options);
-        List<Token> tokens = new Parser(tokenStream, options)
+        List<Token> tokens = new AbstractParser(tokenStream, options)
                 .match(PARADIGM)
                 .match(IDENTIFIER, "oop")
                 .match(SEMICOLON)
@@ -36,7 +36,7 @@ public class ParserTest extends AbstractParserTest {
     public void testMatchMethodWithInvalidCode() throws ParseErrorException {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("paradigm oop", options);
-        new Parser(tokenStream, options)
+        new AbstractParser(tokenStream, options)
                 .match(PARADIGM)
                 .match(IDENTIFIER, "oop")
                 .match(SEMICOLON)

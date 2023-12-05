@@ -2,6 +2,7 @@ package abs.compiler.parser.paradigms;
 
 import static abs.compiler.Util.coalesce;
 import static abs.compiler.lexer.Type.IDENTIFIER;
+import static abs.compiler.lexer.Type.PARADIGM;
 import static abs.compiler.lexer.Type.SEMICOLON;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
@@ -11,7 +12,7 @@ import abs.compiler.parser.AbstractParser;
 import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.Node;
 import abs.compiler.parser.ParseErrorException;
-import abs.compiler.parser.IParser;
+import abs.compiler.parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ParadigmParser extends AbstractParser {
         List<Token> tokens = new ArrayList<>();
 
         // If the next token is an identifier, and it has the value "paradigm", then we have a paradigm declaration
-        if (token.hasType(IDENTIFIER) && token.hasValue("paradigm")) {
+        if (token.hasType(PARADIGM)) {
             // Remove the "paradigm" token from the token stream
             tokenStream.consumeWhitespace().next();
             tokens.add(token);
@@ -86,20 +87,5 @@ public class ParadigmParser extends AbstractParser {
 
         // Return a parse error if no paradigm declaration was found
         return new ErrorNode("Expected \"paradigm\" but found \"" + token.getValue() + "\" instead", tokens);
-    }
-
-    @Override
-    public IParser match(Type type) throws ParseErrorException {
-        return null;
-    }
-
-    @Override
-    public IParser match(Type type, String value) throws ParseErrorException {
-        return null;
-    }
-
-    @Override
-    public List<Token> tokens() {
-        return null;
     }
 }

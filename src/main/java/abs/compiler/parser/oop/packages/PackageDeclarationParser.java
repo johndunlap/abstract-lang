@@ -10,14 +10,14 @@ import abs.compiler.parser.AbstractParser;
 import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.Node;
 import abs.compiler.parser.ParseErrorException;
-import abs.compiler.parser.IParser;
+import abs.compiler.parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PackageDeclarationParser extends AbstractParser {
 
-    private PackageSegmentParser packageSegmentParser;
+    private final PackageSegmentParser packageSegmentParser;
 
     public PackageDeclarationParser(TokenStream tokenStream, Options options) {
         super(tokenStream, options);
@@ -64,20 +64,5 @@ public class PackageDeclarationParser extends AbstractParser {
 
         // Return an error because we don't have a package declaration
         return new ErrorNode("Expected \"package\" but found " + token.toText() + " instead", tokens);
-    }
-
-    @Override
-    public IParser match(Type type) throws ParseErrorException {
-        return null;
-    }
-
-    @Override
-    public IParser match(Type type, String value) throws ParseErrorException {
-        return null;
-    }
-
-    @Override
-    public List<Token> tokens() {
-        return null;
     }
 }
