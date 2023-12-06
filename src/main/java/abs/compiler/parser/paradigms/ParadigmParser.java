@@ -18,13 +18,13 @@ import java.util.List;
  * Parser for parsing the paradigm declaration which may appear at the beginning of an ABS file. If no paradigm is
  * declared, the default paradigm is assumed.
  */
-public class ParadigmParser extends GenericParser<Node> {
+public class ParadigmParser extends GenericParser {
     public ParadigmParser(TokenStream tokenStream, Options options) {
         super(tokenStream, options);
     }
 
     @Override
-    public Node parse() {
+    public Node parse(Node parent) {
         // Look ahead at the next token without removing it from the token stream
         Token token = tokenStream.consumeWhitespace().peek();
         List<Token> tokens = new ArrayList<>();

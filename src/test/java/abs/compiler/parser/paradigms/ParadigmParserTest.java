@@ -11,6 +11,7 @@ import abs.compiler.lexer.TokenStream;
 import abs.compiler.parser.AbstractParserTest;
 import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.Node;
+import abs.compiler.parser.RootNode;
 import org.junit.Test;
 
 public class ParadigmParserTest extends AbstractParserTest {
@@ -19,7 +20,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("paradigm oop;");
         ParadigmParser parser = new ParadigmParser(tokenStream, options);
-        Node result = parser.parse();
+        Node result = parser.parse(new RootNode());
 
         assertNotError(result);
         assertEquals(ParadigmDeclaration.class, result.getClass());
@@ -39,7 +40,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("invalid");
         ParadigmParser parser = new ParadigmParser(tokenStream, options);
-        Node result = parser.parse();
+        Node result = parser.parse(new RootNode());
 
         assertEquals(ErrorNode.class, result.getClass());
 
@@ -55,7 +56,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("paradigm other");
         ParadigmParser parser = new ParadigmParser(tokenStream, options);
-        Node result = parser.parse();
+        Node result = parser.parse(new RootNode());
 
         assertEquals(ErrorNode.class, result.getClass());
 
@@ -72,7 +73,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("paradigm 5");
         ParadigmParser parser = new ParadigmParser(tokenStream, options);
-        Node result = parser.parse();
+        Node result = parser.parse(new RootNode());
 
         assertEquals(ErrorNode.class, result.getClass());
 
@@ -89,7 +90,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("paradigm oop");
         ParadigmParser parser = new ParadigmParser(tokenStream, options);
-        Node result = parser.parse();
+        Node result = parser.parse(new RootNode());
 
         assertEquals(ErrorNode.class, result.getClass());
 
@@ -107,7 +108,7 @@ public class ParadigmParserTest extends AbstractParserTest {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("paradigm oop\nimport com.abs.whatever.MyClass;");
         ParadigmParser parser = new ParadigmParser(tokenStream, options);
-        Node result = parser.parse();
+        Node result = parser.parse(new RootNode());
 
         assertEquals(ErrorNode.class, result.getClass());
 

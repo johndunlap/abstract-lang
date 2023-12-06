@@ -9,7 +9,7 @@ import abs.compiler.lexer.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenericParser<T> implements Parser<T> {
+public class GenericParser implements Parser {
 
     protected final TokenStream tokenStream;
 
@@ -29,7 +29,7 @@ public class GenericParser<T> implements Parser<T> {
     }
 
     @Override
-    public T parse() {
+    public Node parse(Node parent) {
         throw new ImplementMeException();
     }
 

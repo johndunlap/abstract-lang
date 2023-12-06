@@ -23,7 +23,7 @@ public class TokenParserTest extends AbstractParserTest {
         Options options = new Options();
         CharacterStream characterStream = new CharacterStream("paradigm oop;", options);
         TokenStream tokenStream = new TokenStream(characterStream, options);
-        List<Token> tokens = new GenericParser<>(tokenStream, options)
+        List<Token> tokens = new GenericParser(tokenStream, options)
                 .match(PARADIGM)
                 .match(IDENTIFIER, "oop")
                 .match(SEMICOLON)
@@ -48,7 +48,7 @@ public class TokenParserTest extends AbstractParserTest {
         Options options = new Options();
         CharacterStream characterStream = new CharacterStream("paradigm oop", options);
         TokenStream tokenStream = new TokenStream(characterStream, options);
-        new GenericParser<>(tokenStream, options)
+        new GenericParser(tokenStream, options)
                 .match(PARADIGM)
                 .match(IDENTIFIER, "oop")
                 .match(SEMICOLON)

@@ -12,7 +12,7 @@ public abstract class AbstractNode implements Node {
     private static long SEQUENCE = 0;
 
     /**
-     * The id of this node.
+     * The id of this node. Note that this approach is not thread safe.
      */
     protected final long id = ++SEQUENCE;
 

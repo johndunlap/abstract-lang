@@ -5,6 +5,6 @@ import abs.compiler.lexer.Type;
 
 import java.util.List;
 
-public interface Parser<T> {
-    T parse();
+public interface Parser {
+    Node parse(Node parent);
 }
