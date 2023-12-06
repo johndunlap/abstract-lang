@@ -4,7 +4,7 @@ import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.lexer.Type;
 import abs.compiler.archive.parser.ErrorHandler;
-import abs.compiler.archive.parser.Paradigm;
+import abs.compiler.archive.parser.OldDoNotUseParadigm;
 import abs.compiler.archive.parser.graph.SourceFile;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class Namespace {
      * The paradigm of this module. This attribute avoids the need for reflection to determine the paradigm
      * of the sub-class.
      */
-    private Paradigm paradigm;
+    private OldDoNotUseParadigm paradigm;
 
     /**
      * A list of files which have declared themselves within this namespace.
@@ -133,11 +133,11 @@ public class Namespace {
         this.children = children;
     }
 
-    public Paradigm getParadigm() {
+    public OldDoNotUseParadigm getParadigm() {
         return paradigm;
     }
 
-    public void setParadigm(Paradigm paradigm) {
+    public void setParadigm(OldDoNotUseParadigm paradigm) {
         this.paradigm = paradigm;
     }
 

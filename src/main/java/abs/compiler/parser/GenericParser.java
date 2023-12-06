@@ -9,6 +9,7 @@ import abs.compiler.lexer.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Make this class abstract
 public class GenericParser implements Parser {
 
     protected final TokenStream tokenStream;
@@ -28,6 +29,7 @@ public class GenericParser implements Parser {
         return new TokenParser(tokenStream, options).match(type, value);
     }
 
+    // TODO: This method should be deleted when ths class becomes abstract
     @Override
     public Node parse(Node parent) {
         throw new ImplementMeException();

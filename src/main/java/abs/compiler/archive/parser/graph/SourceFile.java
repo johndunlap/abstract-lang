@@ -8,7 +8,7 @@ public class SourceFile {
     /**
      * The paradigm of this source file.
      */
-    private ParadigmDeclaration paradigmDeclaration;
+    private OldDoNotUseParadigmDeclaration paradigmDeclaration;
 
     /**
      * The package(namespace) in which this source file was declared.
@@ -22,7 +22,7 @@ public class SourceFile {
      * @throws LexerException Thrown when something exceptional happens
      */
     public SourceFile(TokenStream tokenStream, ErrorHandler errorHandler) {
-        paradigmDeclaration = new ParadigmDeclaration(tokenStream, errorHandler);
+        paradigmDeclaration = new OldDoNotUseParadigmDeclaration(tokenStream, errorHandler);
 
         // Don't proceed unless the paradigm statement was successfully parsed
         if (errorHandler.fatalErrorCount() == 0) {
@@ -30,7 +30,7 @@ public class SourceFile {
         }
     }
 
-    public ParadigmDeclaration getParadigmDeclaration() {
+    public OldDoNotUseParadigmDeclaration getParadigmDeclaration() {
         return paradigmDeclaration;
     }
 

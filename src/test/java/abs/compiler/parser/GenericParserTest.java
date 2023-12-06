@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class TokenParserTest extends AbstractParserTest {
+public class GenericParserTest {
 
     @Test
     public void testMatchMethodWithValidCode() throws ParseErrorException {

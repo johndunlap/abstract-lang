@@ -5,19 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum Paradigm {
+public enum OldDoNotUseParadigm {
     OOP(true),
     PROCEDURAL(false),
     FUNCTIONAL(false);
 
     // Caches for performance
-    private static Map<String, Paradigm> supportedParadigmMap;
-    private static List<Paradigm> supportedParadigmList;
+    private static Map<String, OldDoNotUseParadigm> supportedParadigmMap;
+    private static List<OldDoNotUseParadigm> supportedParadigmList;
     private static String legalParadigms;
 
     private boolean supported;
 
-    Paradigm(boolean supported) {
+    OldDoNotUseParadigm(boolean supported) {
         this.supported = supported;
 
         updateStaticMembers();
@@ -55,7 +55,7 @@ public enum Paradigm {
 
         // Build a string list of supported paradigms which an be used in error messages
         boolean first = true;
-        for (Paradigm p : supportedParadigmList) {
+        for (OldDoNotUseParadigm p : supportedParadigmList) {
             if (!first) {
                 sb.append(',');
             } else {

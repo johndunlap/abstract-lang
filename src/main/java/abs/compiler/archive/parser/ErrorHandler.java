@@ -100,9 +100,9 @@ public class ErrorHandler {
         addError(new ParseError("Missing semicolon", position, fatal));
     }
 
-    public void addFatalUnsupportedParadigmError(Paradigm paradigm, Position position) {
+    public void addFatalUnsupportedParadigmError(OldDoNotUseParadigm paradigm, Position position) {
         addFatalError(
-            "Unsupported paradigm: " + paradigm + ". Supported paradigms are: " + Paradigm.getLegalParadigmsAsString(),
+            "Unsupported paradigm: " + paradigm + ". Supported paradigms are: " + OldDoNotUseParadigm.getLegalParadigmsAsString(),
             position
         );
     }

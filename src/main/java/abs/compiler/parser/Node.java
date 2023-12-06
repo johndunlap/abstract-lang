@@ -10,6 +10,30 @@ import java.util.List;
  */
 public interface Node {
     /**
+     * Add a child to this node.
+     * @param child The child to add.
+     */
+    void addChild(Node child);
+
+    /**
+     * Set the parent of this node.
+     * @param parent The parent of this node.
+     */
+    void setParent(Node parent);
+
+    /**
+     * Get the parent of this node.
+     * @return The parent of this node.
+     */
+    Node getParent();
+
+    /**
+     * Get the children of this node.
+     * @return The children of this node.
+     */
+    List<Node> getChildren();
+
+    /**
      * This id should be unique within the tree. This is necessary for rendering the tree.
      * @return The unique id of this node.
      */

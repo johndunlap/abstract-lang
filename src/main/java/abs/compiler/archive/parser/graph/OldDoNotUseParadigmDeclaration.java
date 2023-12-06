@@ -1,17 +1,17 @@
 package abs.compiler.archive.parser.graph;
 
 import abs.compiler.archive.parser.ErrorHandler;
-import abs.compiler.archive.parser.Paradigm;
+import abs.compiler.archive.parser.OldDoNotUseParadigm;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.lexer.Type;
 
-public class ParadigmDeclaration extends GraphObject     {
-    private Paradigm paradigm;
+public class OldDoNotUseParadigmDeclaration extends GraphObject     {
+    private OldDoNotUseParadigm paradigm;
     private String between;
     private boolean hasSemicolon = true;
 
-    public ParadigmDeclaration(TokenStream tokenStream, ErrorHandler errorHandler) {
+    public OldDoNotUseParadigmDeclaration(TokenStream tokenStream, ErrorHandler errorHandler) {
         Token paradigmToken = tokenStream.peek(0);
 
         // What if there was white space prior to the paradigm keyword
@@ -35,14 +35,14 @@ public class ParadigmDeclaration extends GraphObject     {
             String name = paradigmNameToken.getValue();
 
             if (name.equals("oop")) {
-                paradigm = Paradigm.OOP;
+                paradigm = OldDoNotUseParadigm.OOP;
             } else if (name.equals("procedural")) {
-                paradigm = Paradigm.PROCEDURAL;
+                paradigm = OldDoNotUseParadigm.PROCEDURAL;
             } else if (name.equals("functional")) {
-                paradigm = Paradigm.FUNCTIONAL;
+                paradigm = OldDoNotUseParadigm.FUNCTIONAL;
                 } else {
                 errorHandler.addFatalError(
-                    "Unsupported paradigm: " + name + ". Supported paradigms are: " + Paradigm.getLegalParadigmsAsString(),
+                    "Unsupported paradigm: " + name + ". Supported paradigms are: " + OldDoNotUseParadigm.getLegalParadigmsAsString(),
                     paradigmNameToken.getRange()
                 );
             }
@@ -55,7 +55,7 @@ public class ParadigmDeclaration extends GraphObject     {
         }
     }
 
-    public Paradigm getParadigm() {
+    public OldDoNotUseParadigm getParadigm() {
         return paradigm;
     }
 

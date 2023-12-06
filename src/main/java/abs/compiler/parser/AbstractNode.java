@@ -3,6 +3,7 @@ package abs.compiler.parser;
 import abs.ImplementMeException;
 import abs.compiler.lexer.Token;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractNode implements Node {
@@ -12,7 +13,8 @@ public abstract class AbstractNode implements Node {
     private static long SEQUENCE = 0;
 
     /**
-     * The id of this node. Note that this approach is not thread safe.
+     * The id of this node. Note that this approach is not thread safe but it should be fine provided it is only used
+     * by the toDot() method.
      */
     protected final long id = ++SEQUENCE;
 
@@ -22,11 +24,53 @@ public abstract class AbstractNode implements Node {
     protected List<Token> tokens;
 
     /**
+     * The parent of this node.
+     */
+    protected Node parent;
+
+    /**
+     * The children of this node.
+     */
+    protected List<Node> children = new ArrayList<>();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addChild(Node child) {
+        children.add(child);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Node getParent() {
+        return parent;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Node> getChildren() {
+        return children;
+    }
+
+    /**
      * {@inheritDoc
      */
     @Override
     public String getId() {
-        return id + "";
+        return String.valueOf(id);
     }
 
     /**

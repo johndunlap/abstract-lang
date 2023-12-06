@@ -1,10 +1,11 @@
 package abs.compiler.parser;
 
-import abs.compiler.lexer.Token;
-import abs.compiler.lexer.Type;
-
-import java.util.List;
-
 public interface Parser {
+
+    /**
+     * Parse the current token stream into a {@link Node}. Created nodes should be added to the parent node.
+     * @param parent The parent node to which the created node should be added.
+     * @return The child node which was created by this parser.
+     */
     Node parse(Node parent);
 }
