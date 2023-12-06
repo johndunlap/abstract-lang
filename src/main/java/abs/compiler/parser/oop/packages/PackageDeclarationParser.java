@@ -5,17 +5,14 @@ import static abs.compiler.lexer.Type.SEMICOLON;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
-import abs.compiler.lexer.Type;
-import abs.compiler.parser.AbstractParser;
+import abs.compiler.parser.GenericParser;
 import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.Node;
-import abs.compiler.parser.ParseErrorException;
-import abs.compiler.parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PackageDeclarationParser extends AbstractParser {
+public class PackageDeclarationParser extends GenericParser {
 
     private final PackageSegmentParser packageSegmentParser;
 

@@ -7,12 +7,9 @@ import static abs.compiler.lexer.Type.SEMICOLON;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
-import abs.compiler.lexer.Type;
-import abs.compiler.parser.AbstractParser;
+import abs.compiler.parser.GenericParser;
 import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.Node;
-import abs.compiler.parser.ParseErrorException;
-import abs.compiler.parser.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +18,12 @@ import java.util.List;
  * Parser for parsing the paradigm declaration which may appear at the beginning of an ABS file. If no paradigm is
  * declared, the default paradigm is assumed.
  */
-public class ParadigmParser extends AbstractParser {
+public class ParadigmParser extends GenericParser<Node> {
     public ParadigmParser(TokenStream tokenStream, Options options) {
         super(tokenStream, options);
     }
 
+    @Override
     public Node parse() {
         // Look ahead at the next token without removing it from the token stream
         Token token = tokenStream.consumeWhitespace().peek();
@@ -60,7 +58,7 @@ public class ParadigmParser extends AbstractParser {
                         tokens.add(token);
 
                         // Return the paradigm declaration node
-                        return new ParadigmDeclaration(paradigm, tokens);
+                        return new ParadigmDeclaration(tokens);
                     }
 
                     tokens.add(token);

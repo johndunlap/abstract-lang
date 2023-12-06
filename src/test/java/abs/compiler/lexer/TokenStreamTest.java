@@ -38,6 +38,7 @@ import static abs.compiler.lexer.Type.NOTEQ;
 import static abs.compiler.lexer.Type.OR;
 import static abs.compiler.lexer.Type.OREQ;
 import static abs.compiler.lexer.Type.OROR;
+import static abs.compiler.lexer.Type.PARADIGM;
 import static abs.compiler.lexer.Type.PERIOD;
 import static abs.compiler.lexer.Type.PIPE;
 import static abs.compiler.lexer.Type.QUESTION;
@@ -824,7 +825,7 @@ public class TokenStreamTest {
         CharacterStream characterStream = new CharacterStream("paradigm oop;\n", o);
         TokenStream tokenStream = createTokenStream(characterStream, o);
 
-        assertTrue(tokenStream.next().hasType(IDENTIFIER));
+        assertTrue(tokenStream.next().hasType(PARADIGM));
         assertTrue(tokenStream.next().hasType(WHITESPACE));
         assertTrue(tokenStream.next().hasType(IDENTIFIER));
         assertTrue(tokenStream.next().hasType(SEMICOLON));

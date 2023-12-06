@@ -1,5 +1,6 @@
 package abs.compiler.parser;
 
+import abs.ImplementMeException;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
@@ -8,13 +9,13 @@ import abs.compiler.lexer.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractParser implements Parser {
+public class GenericParser<T> implements Parser<T> {
 
     protected final TokenStream tokenStream;
 
     protected final Options options;
 
-    public AbstractParser(TokenStream tokenStream, Options options) {
+    public GenericParser(TokenStream tokenStream, Options options) {
         this.tokenStream = tokenStream;
         this.options = options;
     }
@@ -27,10 +28,15 @@ public class AbstractParser implements Parser {
         return new TokenParser(tokenStream, options).match(type, value);
     }
 
+    @Override
+    public T parse() {
+        throw new ImplementMeException();
+    }
+
     /**
      * The purpose of this class is to capture a list of tokens from a single parsing operation.
      */
-    public static class TokenParser implements Parser {
+    public static class TokenParser {
         private final TokenStream tokenStream;
 
         private final Options options;

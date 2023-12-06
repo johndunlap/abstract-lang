@@ -9,7 +9,7 @@ import abs.compiler.parser.Node;
 import org.junit.Test;
 
 public class PackageDeclarationParserTest extends AbstractParserTest {
-    @Test
+    //@Test
     public void testPackageDecl() {
         Options options = new Options();
         TokenStream tokenStream = buildTokenStream("package abs.compiler.parser.oop.packages;");

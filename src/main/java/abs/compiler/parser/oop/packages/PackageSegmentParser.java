@@ -1,17 +1,11 @@
 package abs.compiler.parser.oop.packages;
 
 import abs.compiler.Options;
-import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
-import abs.compiler.lexer.Type;
-import abs.compiler.parser.AbstractParser;
+import abs.compiler.parser.GenericParser;
 import abs.compiler.parser.Node;
-import abs.compiler.parser.ParseErrorException;
-import abs.compiler.parser.Parser;
 
-import java.util.List;
-
-public class PackageSegmentParser extends AbstractParser {
+public class PackageSegmentParser extends GenericParser {
 
     public PackageSegmentParser(TokenStream tokenStream, Options options) {
         super(tokenStream, options);

@@ -8,8 +8,8 @@ import java.util.List;
 public class ParadigmDeclaration extends AbstractNode {
     private ParadigmEnum paradigm;
 
-    public ParadigmDeclaration(ParadigmEnum paradigm, List<Token> tokens) {
-        this.paradigm = paradigm;
+    public ParadigmDeclaration(List<Token> tokens) {
+        this.paradigm = ParadigmEnum.findByName(tokens.get(1).getValue());
         this.tokens = tokens;
     }
 

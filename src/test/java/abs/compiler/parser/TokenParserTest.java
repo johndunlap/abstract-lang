@@ -5,9 +5,12 @@ import static abs.compiler.lexer.Type.PARADIGM;
 import static abs.compiler.lexer.Type.SEMICOLON;
 import static abs.compiler.parser.paradigms.ParadigmEnum.OOP;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import abs.compiler.Options;
+import abs.compiler.lexer.CharacterStream;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
+import abs.compiler.parser.paradigms.ParadigmDeclaration;
 import abs.compiler.parser.paradigms.ParadigmEnum;
 import org.junit.Test;
 
@@ -18,25 +21,34 @@ public class TokenParserTest extends AbstractParserTest {
     @Test
     public void testMatchMethodWithValidCode() throws ParseErrorException {
         Options options = new Options();
-        TokenStream tokenStream = buildTokenStream("paradigm oop;", options);
-        List<Token> tokens = new AbstractParser(tokenStream, options)
+        CharacterStream characterStream = new CharacterStream("paradigm oop;", options);
+        TokenStream tokenStream = new TokenStream(characterStream, options);
+        List<Token> tokens = new GenericParser<>(tokenStream, options)
                 .match(PARADIGM)
                 .match(IDENTIFIER, "oop")
                 .match(SEMICOLON)
                 .tokens();
 
+        ParadigmDeclaration paradigm = new ParadigmDeclaration(tokens);
+
+        // Verify content of tokens
         assertEquals(3, tokens.size());
         assertEquals(PARADIGM, tokens.get(0).getType());
         assertEquals(IDENTIFIER, tokens.get(1).getType());
         assertEquals(OOP, ParadigmEnum.findByName(tokens.get(1).getValue()));
         assertEquals(SEMICOLON, tokens.get(2).getType());
+
+        // Verify content of paradigm AST node
+        assertNotNull(paradigm);
+        assertEquals(OOP, paradigm.getParadigm());
     }
 
     @Test(expected = ParseErrorException.class)
     public void testMatchMethodWithInvalidCode() throws ParseErrorException {
         Options options = new Options();
-        TokenStream tokenStream = buildTokenStream("paradigm oop", options);
-        new AbstractParser(tokenStream, options)
+        CharacterStream characterStream = new CharacterStream("paradigm oop", options);
+        TokenStream tokenStream = new TokenStream(characterStream, options);
+        new GenericParser<>(tokenStream, options)
                 .match(PARADIGM)
                 .match(IDENTIFIER, "oop")
                 .match(SEMICOLON)
