@@ -23,9 +23,9 @@ public class ParadigmParserTest extends AbstractParserTest {
         Node result = parser.parse(new RootNode());
 
         assertNotError(result);
-        assertEquals(ParadigmDeclaration.class, result.getClass());
+        assertEquals(ParadigmDeclarationNode.class, result.getClass());
 
-        ParadigmDeclaration paradigmDeclaration = (ParadigmDeclaration) result;
+        ParadigmDeclarationNode paradigmDeclaration = (ParadigmDeclarationNode) result;
 
         assertEquals(ParadigmEnum.OOP, paradigmDeclaration.getParadigm());
         assertEquals(3, paradigmDeclaration.getTokens().size());

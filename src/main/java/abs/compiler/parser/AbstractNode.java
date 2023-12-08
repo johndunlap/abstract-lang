@@ -2,6 +2,7 @@ package abs.compiler.parser;
 
 import abs.ImplementMeException;
 import abs.compiler.lexer.Token;
+import abs.compiler.parser.tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public abstract class AbstractNode implements Node {
     /**
      * The list of tokens that this node represents.
      */
-    protected List<Token> tokens;
+    protected List<Token> tokens = new ArrayList<>();
 
     /**
      * The parent of this node.
@@ -32,6 +33,14 @@ public abstract class AbstractNode implements Node {
      * The children of this node.
      */
     protected List<Node> children = new ArrayList<>();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Node getChild(int index) {
+        return children.get(index);
+    }
 
     /**
      * {@inheritDoc}
@@ -77,21 +86,38 @@ public abstract class AbstractNode implements Node {
      * {@inheritDoc
      */
     @Override
-    public String toDot() {
-        throw new ImplementMeException();
-    }
-
-    /**
-     * {@inheritDoc
-     */
-    @Override
     public List<Token> getTokens() {
         return tokens;
     }
 
     /**
-     * {@inheritDoc
+     * {@inheritDoc}
+     */
+    public void addToken(Token token) {
+        tokens.add(token);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public abstract String toString();
+    public void toDot(StringBuilder stringBuilder) {
+        // Build the dot node for this node
+        stringBuilder.append("      ")
+                .append(id)
+                .append(" [label=\"")
+                .append(toString())
+                .append("\", shape=oval];\n");
+
+        // Add dot edges to each child node
+        for (Node child : children) {
+            stringBuilder.append("      ")
+                    .append(id)
+                    .append(" -> ")
+                    .append(child.getId())
+                    .append(";\n");
+
+            child.toDot(stringBuilder);
+        }
+    }
 }

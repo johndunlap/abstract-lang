@@ -5,7 +5,7 @@ import abs.ImplementMeException;
 import abs.compiler.Options;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.parser.oop.OopRootParser;
-import abs.compiler.parser.paradigms.ParadigmDeclaration;
+import abs.compiler.parser.paradigms.ParadigmDeclarationNode;
 import abs.compiler.parser.paradigms.ParadigmParser;
 
 public class RootParser extends GenericParser {
@@ -32,14 +32,12 @@ public class RootParser extends GenericParser {
             return rootNode;
         }
 
-        ParadigmDeclaration paradigmDeclaration = (ParadigmDeclaration) paradigmNode;
+        ParadigmDeclarationNode paradigmDeclaration = (ParadigmDeclarationNode) paradigmNode;
 
         if (paradigmDeclaration.getParadigm() == OOP) {
             // Treat the remainder of the token stream as OOP
             OopRootParser oopRootParser = new OopRootParser(tokenStream, options);
-            Node oopRootNode = oopRootParser.parse(rootNode);
-            rootNode.addChild(oopRootNode);
-            rootNode = oopRootNode;
+            oopRootParser.parse(rootNode);
         } else {
             // TODO: As a general rule we shouldn't throw exceptions but, in practice, this shouldn't happen. Even so,
             //  this should be replaced with an error node.

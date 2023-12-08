@@ -11,6 +11,11 @@ import java.util.List;
 public class ErrorNode extends AbstractNode {
     private final String message;
 
+    public ErrorNode(ParseErrorException e) {
+        this.message = e.getMessage();
+        this.tokens = e.getError().getTokens();
+    }
+
     /**
      * Create a new error node with the given message and tokens.
      * @param message The error message
@@ -23,6 +28,10 @@ public class ErrorNode extends AbstractNode {
 
     public String getMessage() {
         return message;
+    }
+
+    public List<Token> getTokens() {
+        return tokens;
     }
 
     /**

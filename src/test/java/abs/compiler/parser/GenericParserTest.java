@@ -10,7 +10,7 @@ import abs.compiler.Options;
 import abs.compiler.lexer.CharacterStream;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
-import abs.compiler.parser.paradigms.ParadigmDeclaration;
+import abs.compiler.parser.paradigms.ParadigmDeclarationNode;
 import abs.compiler.parser.paradigms.ParadigmEnum;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class GenericParserTest {
                 .match(SEMICOLON)
                 .tokens();
 
-        ParadigmDeclaration paradigm = new ParadigmDeclaration(tokens);
+        ParadigmDeclarationNode paradigm = new ParadigmDeclarationNode(tokens);
 
         // Verify content of tokens
         assertEquals(3, tokens.size());

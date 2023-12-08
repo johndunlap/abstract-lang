@@ -1,9 +1,18 @@
 package abs.compiler.parser.oop.packages;
 
+import static abs.compiler.lexer.Type.IDENTIFIER;
+import static abs.compiler.lexer.Type.PERIOD;
 import abs.compiler.Options;
+import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
+import abs.compiler.lexer.Type;
+import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.GenericParser;
 import abs.compiler.parser.Node;
+import abs.compiler.parser.ParseErrorException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PackageSegmentParser extends GenericParser {
 
@@ -11,49 +20,23 @@ public class PackageSegmentParser extends GenericParser {
         super(tokenStream, options);
     }
 
-    public Node parse() {
-/*
-        if (token.hasType(IDENTIFIER)) {
-            tokenStream.consumeWhitespace().next();
-            tokens.add(token);
+    public Node parse(Node parent) {
+        try {
+            List<Token> tokens = match(PERIOD)
+                .match(IDENTIFIER)
+                .tokens();
 
-            String packageName = token.getValue();
-            PackageDeclaration rootPackageDeclaration;
+            PackageSegmentNode packageSegmentNode = new PackageSegmentNode(parent, tokens);
 
-            if (token.getValue() != null || !token.getValue().isEmpty()) {
-                rootPackageDeclaration = new PackageDeclaration(packageName);
-            } else {
-                // Return an error because we don't have a package name
-                return new ErrorNode("Expected package name but found " + token.toText() + " instead", tokens);
+            // Recursively parse the next package segment if there is one
+            if(tokenStream.peek(0).hasType(PERIOD) && tokenStream.peek(1).hasType(IDENTIFIER)) {
+                // We don't care about the return value because the result is added to the parent node as a child
+                parse(packageSegmentNode);
             }
 
-            // Look ahead at the next token without removing it from the token stream
-            token = tokenStream.consumeWhitespace().peek();
-
-            PackageDeclaration previousPackageDeclaration = rootPackageDeclaration;
-
-            while (token.hasType(PERIOD)) {
-                tokenStream.consumeWhitespace().next();
-                tokens.add(token);
-                token = tokenStream.consumeWhitespace().peek();
-                tokens.add(token);
-
-                if (token.hasType(IDENTIFIER)) {
-                    tokenStream.consumeWhitespace().next();
-                    PackageSegment packageSegment = new PackageSegment(token.getValue());
-                    previousPackageDeclaration.setPackageName(packageDeclaration);
-                    previousPackageDeclaration = packageDeclaration;
-                    token = tokenStream.consumeWhitespace().peek();
-                } else {
-                    // Return error because we don't have a package name
-                    return new ErrorNode("Expected package name but found " + token.toText() + " instead", tokens);
-                }
-            }
-
-            tokens.add(token);
+            return packageSegmentNode;
+        } catch (ParseErrorException e) {
+            return new ErrorNode(e);
         }
-
-*/
-        return null;
     }
 }

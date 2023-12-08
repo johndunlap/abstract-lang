@@ -5,10 +5,10 @@ import abs.compiler.parser.AbstractNode;
 
 import java.util.List;
 
-public class ParadigmDeclaration extends AbstractNode {
+public class ParadigmDeclarationNode extends AbstractNode {
     private ParadigmEnum paradigm;
 
-    public ParadigmDeclaration(List<Token> tokens) {
+    public ParadigmDeclarationNode(List<Token> tokens) {
         this.paradigm = ParadigmEnum.findByName(tokens.get(1).getValue());
         this.tokens = tokens;
     }
@@ -23,6 +23,6 @@ public class ParadigmDeclaration extends AbstractNode {
 
     @Override
     public String toString() {
-        return paradigm.name();
+        return "PARADIGM " + paradigm.name();
     }
 }

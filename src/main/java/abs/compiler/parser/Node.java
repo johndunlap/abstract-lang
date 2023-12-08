@@ -16,6 +16,13 @@ public interface Node {
     void addChild(Node child);
 
     /**
+     * Get the child at the specified index.
+     * @param index The index of the child to get.
+     * @return The child at the specified index.
+     */
+    Node getChild(int index);
+
+    /**
      * Set the parent of this node.
      * @param parent The parent of this node.
      */
@@ -40,17 +47,17 @@ public interface Node {
     String getId();
 
     /**
-     * Render the tree from this node downwards in the DOT language. The output of this method can be used to visualize
-     * the tree using Graphviz.
-     * @return A string in the DOT language which can be used to visualize this tree.
-     */
-    String toDot();
-
-    /**
      * Returns a list of all tokens which were used to create this node.
      * @return A list of all tokens which were used to create this node.
      */
     List<Token> getTokens();
+
+    /**
+     * Render the tree from this node downwards in the DOT language. The output of this method can be used to visualize
+     * the tree using Graphviz.
+     * @param stringBuilder The string builder to append the DOT language to.
+     */
+    void toDot(StringBuilder stringBuilder);
 
     /**
      * Returns a string representation of this node.

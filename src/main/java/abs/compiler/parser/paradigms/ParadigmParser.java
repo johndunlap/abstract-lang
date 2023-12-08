@@ -58,7 +58,7 @@ public class ParadigmParser extends GenericParser {
                         tokens.add(token);
 
                         // Return the paradigm declaration node
-                        return new ParadigmDeclaration(tokens);
+                        return new ParadigmDeclarationNode(tokens);
                     }
 
                     tokens.add(token);

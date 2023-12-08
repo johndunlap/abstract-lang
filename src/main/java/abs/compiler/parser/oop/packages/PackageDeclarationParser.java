@@ -1,6 +1,7 @@
 package abs.compiler.parser.oop.packages;
 
 import static abs.compiler.lexer.Type.IDENTIFIER;
+import static abs.compiler.lexer.Type.PACKAGE;
 import static abs.compiler.lexer.Type.SEMICOLON;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
@@ -8,6 +9,7 @@ import abs.compiler.lexer.TokenStream;
 import abs.compiler.parser.GenericParser;
 import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.Node;
+import abs.compiler.parser.ParseErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,45 +23,23 @@ public class PackageDeclarationParser extends GenericParser {
         packageSegmentParser = new PackageSegmentParser(tokenStream, options);
     }
 
-    public Node parse() {
-        // Look ahead at the next token without removing it from the token stream
-        Token token = tokenStream.consumeWhitespace().peek();
-        List<Token> tokens = new ArrayList<>();
+    @Override
+    public Node parse(Node parent) {
+        try {
+            List<Token> tokens = match(PACKAGE)
+                    .match(IDENTIFIER)
+                    .tokens();
 
-        if (token.hasType(IDENTIFIER) && token.hasValue("package")) {
-            tokenStream.consumeWhitespace().next();
-            tokens.add(token);
-            token = tokenStream.consumeWhitespace().peek();
+            PackageDeclarationNode packageDeclarationNode = new PackageDeclarationNode(parent, tokens);
+            packageDeclarationNode.addToken(tokens.get(0));
+            Node packageSegment = packageDeclarationNode.getChild(0);
 
-            PackageDeclaration packageDeclaration;
+            // We don't care about the return value because the result is added to the parent node as a child
+            packageSegmentParser.parse(packageSegment);
 
-            // Invoke PackageSegmentParser here
-            Node node = packageSegmentParser.parse();
-
-            if (node instanceof PackageSegment) {
-                packageDeclaration = new PackageDeclaration((PackageSegment) node);
-
-                if (token.hasType(SEMICOLON)) {
-                    return packageDeclaration;
-                }
-
-                // Return an error because we don't have a semicolon
-                return new ErrorNode("Expected \";\" but found " + token.toText() + " instead", tokens);
-            } else if (node instanceof ErrorNode) {
-                // TODO: This is not returning the correct list of tokens. I need a better solution for capturing
-                //  parsed tokens.....
-                return node;
-            }
-
-            tokens.add(token);
-
-            // Return an error because we don't have a package name
-            return new ErrorNode("Expected package name but found " + token.toText() + " instead", tokens);
+            return packageDeclarationNode;
+        } catch (ParseErrorException e) {
+            return new ErrorNode(e);
         }
-
-        tokens.add(token);
-
-        // Return an error because we don't have a package declaration
-        return new ErrorNode("Expected \"package\" but found " + token.toText() + " instead", tokens);
     }
 }

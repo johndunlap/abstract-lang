@@ -73,6 +73,7 @@ public enum Type {
     PERIOD(".", ONE, LEFT, false),
     PERIODEQ(".=", ONE, LEFT, false),
     PARADIGM("paradigm", ONE, LEFT, false),
+    PACKAGE("package", ONE, LEFT, false),
     IDENTIFIER(null, null, false),
     COMMENT(ONE, LEFT, true),
     STRCONST(ONE, LEFT, false),

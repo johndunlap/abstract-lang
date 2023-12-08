@@ -21,6 +21,10 @@ public class GenericParser implements Parser {
         this.options = options;
     }
 
+    public Token matchSingle(Type type) throws ParseErrorException {
+        return new TokenParser(tokenStream, options).match(type).tokens().get(0);
+    }
+
     public TokenParser match(Type type) throws ParseErrorException {
         return new TokenParser(tokenStream, options).match(type);
     }
@@ -58,7 +62,7 @@ public class GenericParser implements Parser {
                 return this;
             }
 
-            throw new ParseErrorException("Expected " + type + " but got " + peek.getType());
+            throw new ParseErrorException("Expected " + type + " but got " + peek.getType(), tokens);
         }
 
         public TokenParser match(Type type, String value) throws ParseErrorException {
@@ -69,7 +73,7 @@ public class GenericParser implements Parser {
                 return this;
             }
 
-            throw new ParseErrorException("Expected " + type + " with value " + value + " but got " + peek.getType() + " with value " + peek.getValue());
+            throw new ParseErrorException("Expected " + type + " with value " + value + " but got " + peek.getType() + " with value " + peek.getValue(), tokens);
         }
 
         public List<Token> tokens() {

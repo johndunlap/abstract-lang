@@ -1,23 +1,22 @@
 package abs.compiler.parser;
 
+import abs.compiler.lexer.Token;
+
 import java.util.List;
 
 public class ParseErrorException extends Exception {
-    private List<ErrorNode> errors;
-
-    public ParseErrorException(String message) {
-        super(message);
-    }
-
-    public ParseErrorException(List<ErrorNode> errors) {
-        this.errors = errors;
-    }
+    private ErrorNode error;
 
     public ParseErrorException(ErrorNode error) {
-        this.errors = List.of(error);
+        super(error.getMessage());
+        this.error = error;
     }
 
-    public List<ErrorNode> getErrors() {
-        return errors;
+    public ParseErrorException(String message, List<Token> tokens) {
+        this(new ErrorNode(message, tokens));
+    }
+
+    public ErrorNode getError() {
+        return error;
     }
 }
