@@ -5,9 +5,17 @@ import abs.compiler.Options;
 import abs.compiler.Util;
 import abs.compiler.lexer.CharacterStream;
 import abs.compiler.lexer.TokenStream;
+import org.junit.Before;
 import org.junit.Test;
 
 public class RootParserTest extends AbstractParserTest {
+
+    @Before
+    public void before() {
+        // Without this, the test will fail because other tests will have incremented the sequence.
+        AbstractNode.SEQUENCE = 0;
+    }
+
     @Test
     public void testRootParserToDotMethodWithValidSyntax() {
         Options options = new Options();
