@@ -2,6 +2,7 @@ package abs.compiler.parser.paradigms;
 
 import static abs.compiler.lexer.Type.EOF;
 import static abs.compiler.lexer.Type.IDENTIFIER;
+import static abs.compiler.lexer.Type.IMPORT;
 import static abs.compiler.lexer.Type.PARADIGM;
 import static abs.compiler.lexer.Type.SEMICOLON;
 import static abs.compiler.lexer.Type.WHOLE_NUMBER_LITERAL;
@@ -118,7 +119,6 @@ public class ParadigmParserTest extends AbstractParserTest {
         assertEquals(PARADIGM, errorNode.getTokens().get(0).getType());
         assertEquals(IDENTIFIER, errorNode.getTokens().get(1).getType());
         assertEquals("oop", errorNode.getTokens().get(1).getValue());
-        assertEquals(IDENTIFIER, errorNode.getTokens().get(2).getType());
-        assertEquals("import", errorNode.getTokens().get(2).getValue());
+        assertEquals(IMPORT, errorNode.getTokens().get(2).getType());
     }
 }

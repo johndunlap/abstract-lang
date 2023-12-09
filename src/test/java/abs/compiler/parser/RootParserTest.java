@@ -26,6 +26,8 @@ public class RootParserTest extends AbstractParserTest {
         "      5 [label=\"compiler\", shape=oval];\n" +
         "      5 -> 6;\n" +
         "      6 [label=\"test\", shape=oval];\n" +
+        "      2 -> 7;\n" +
+        "      7 [label=\"IMPORT LIST\", shape=oval];\n" +
         "}";
 
     @Before
