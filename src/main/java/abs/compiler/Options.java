@@ -1,5 +1,7 @@
 package abs.compiler;
 
+import abs.compiler.parser.paradigms.ParadigmEnum;
+
 import java.io.PrintStream;
 
 public class Options {
@@ -11,67 +13,87 @@ public class Options {
     private boolean includeLineFeed = false;
     private boolean includeTab = false;
     private boolean includeComment = false;
+    
+    private ParadigmEnum defaultParadigm = ParadigmEnum.OOP;
 
     public boolean isTraceEnabled() {
         return traceEnabled;
     }
 
-    public void setTraceEnabled(boolean traceEnabled) {
+    public Options setTraceEnabled(boolean traceEnabled) {
         this.traceEnabled = traceEnabled;
+        return this;
     }
 
     public boolean isDebugEnabled() {
         return debugEnabled;
     }
 
-    public void setDebugEnabled(boolean debugEnabled) {
+    public Options setDebugEnabled(boolean debugEnabled) {
         this.debugEnabled = debugEnabled;
+        return this;
     }
 
     public PrintStream getTrace() {
         return trace;
     }
 
-    public void setTrace(PrintStream trace) {
+    public Options setTrace(PrintStream trace) {
         this.trace = trace;
+        return this;
     }
 
     public PrintStream getDebug() {
         return debug;
     }
 
-    public void setDebug(PrintStream debug) {
+    public Options setDebug(PrintStream debug) {
         this.debug = debug;
+        return this;
     }
+
     public boolean isIncludeSpaces() {
         return includeSpaces;
     }
 
-    public void setIncludeSpaces(boolean includeSpaces) {
+    public Options setIncludeSpaces(boolean includeSpaces) {
         this.includeSpaces = includeSpaces;
+        return this;
     }
 
     public boolean isIncludeLineFeed() {
         return includeLineFeed;
     }
 
-    public void setIncludeLineFeed(boolean includeLineFeed) {
+    public Options setIncludeLineFeed(boolean includeLineFeed) {
         this.includeLineFeed = includeLineFeed;
+        return this;
     }
 
     public boolean isIncludeTab() {
         return includeTab;
     }
 
-    public void setIncludeTab(boolean includeTab) {
+    public Options setIncludeTab(boolean includeTab) {
         this.includeTab = includeTab;
+        return this;
     }
 
     public boolean isIncludeComment() {
         return includeComment;
     }
 
-    public void setIncludeComment(boolean includeComment) {
+    public Options setIncludeComment(boolean includeComment) {
         this.includeComment = includeComment;
+        return this;
+    }
+
+    public ParadigmEnum getDefaultParadigm() {
+        return defaultParadigm;
+    }
+
+    public Options setDefaultParadigm(ParadigmEnum defaultParadigm) {
+        this.defaultParadigm = defaultParadigm;
+        return this;
     }
 }

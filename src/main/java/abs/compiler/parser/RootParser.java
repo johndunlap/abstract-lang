@@ -27,9 +27,20 @@ public class RootParser extends GenericParser {
         Node paradigmNode = paradigmParser.parse(parent);
         rootNode.addChild(paradigmNode);
 
-        // It's not possible to parse the rest of the token stream without the paradigm declaration.
         if (paradigmNode instanceof ErrorNode) {
-            return rootNode;
+            if (options.getDefaultParadigm() != null) {
+                // This is necessary for the unit tests to pass because is incremented by the error node which
+                // was discarded
+                AbstractNode.SEQUENCE--;
+
+                // Leave the token stream empty because the paradigm wasn't taken from the token stream.
+                paradigmNode = new ParadigmDeclarationNode(options.getDefaultParadigm());
+                paradigmNode.setParent(rootNode);
+                rootNode.getChildren().set(0, paradigmNode);
+            } else {
+                // It's not possible to parse the rest of the token stream without a paradigm declaration.
+                return rootNode;
+            }
         }
 
         ParadigmDeclarationNode paradigmDeclaration = (ParadigmDeclarationNode) paradigmNode;
