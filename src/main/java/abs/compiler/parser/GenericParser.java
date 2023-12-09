@@ -1,5 +1,6 @@
 package abs.compiler.parser;
 
+import static abs.compiler.parser.ErrorTypeEnum.LEXICAL;
 import abs.ImplementMeException;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
@@ -62,7 +63,7 @@ public class GenericParser implements Parser {
                 return this;
             }
 
-            throw new ParseErrorException("Expected " + type + " but got " + peek.getType(), tokens);
+            throw new ParseErrorException(LEXICAL, "Expected " + type + " but got " + peek.getType(), tokens);
         }
 
         public TokenParser match(Type type, String value) throws ParseErrorException {
@@ -73,7 +74,7 @@ public class GenericParser implements Parser {
                 return this;
             }
 
-            throw new ParseErrorException("Expected " + type + " with value " + value + " but got " + peek.getType() + " with value " + peek.getValue(), tokens);
+            throw new ParseErrorException(LEXICAL, "Expected " + type + " with value " + value + " but got " + peek.getType() + " with value " + peek.getValue(), tokens);
         }
 
         public List<Token> tokens() {

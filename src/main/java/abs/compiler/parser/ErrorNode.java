@@ -2,6 +2,7 @@ package abs.compiler.parser;
 
 import abs.compiler.lexer.Token;
 
+import javax.lang.model.type.ErrorType;
 import java.util.List;
 
 /**
@@ -11,9 +12,12 @@ import java.util.List;
 public class ErrorNode extends AbstractNode {
     private final String message;
 
-    public ErrorNode(ParseErrorException e) {
+    private final ErrorTypeEnum errorType;
+
+    public ErrorNode(ErrorTypeEnum errorType, ParseErrorException e) {
         this.message = e.getMessage();
         this.tokens = e.getError().getTokens();
+        this.errorType = errorType;
     }
 
     /**
@@ -21,9 +25,10 @@ public class ErrorNode extends AbstractNode {
      * @param message The error message
      * @param tokens The tokens that caused the error
      */
-    public ErrorNode(String message, List<Token> tokens) {
+    public ErrorNode(ErrorTypeEnum errorType, String message, List<Token> tokens) {
         this.message = message;
         this.tokens = tokens;
+        this.errorType = errorType;
     }
 
     public String getMessage() {
@@ -32,6 +37,10 @@ public class ErrorNode extends AbstractNode {
 
     public List<Token> getTokens() {
         return tokens;
+    }
+
+    public ErrorTypeEnum getErrorType() {
+        return errorType;
     }
 
     /**

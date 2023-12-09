@@ -2,10 +2,12 @@ package abs.compiler.parser.oop.imports;
 
 import static abs.compiler.lexer.Type.IDENTIFIER;
 import static abs.compiler.lexer.Type.IMPORT;
+import static abs.compiler.parser.ErrorTypeEnum.LEXICAL;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.parser.ErrorNode;
+import abs.compiler.parser.ErrorTypeEnum;
 import abs.compiler.parser.GenericParser;
 import abs.compiler.parser.Node;
 import abs.compiler.parser.ParseErrorException;
@@ -36,7 +38,7 @@ public class ImportParser extends GenericParser {
 
             return importDefinitionNode;
         } catch (ParseErrorException e) {
-            return new ErrorNode(e);
+            return new ErrorNode(LEXICAL, e);
         }
     }
 }

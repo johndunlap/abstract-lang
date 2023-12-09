@@ -3,6 +3,7 @@ package abs.compiler.parser.oop.packages;
 import static abs.compiler.lexer.Type.IDENTIFIER;
 import static abs.compiler.lexer.Type.PACKAGE;
 import static abs.compiler.lexer.Type.SEMICOLON;
+import static abs.compiler.parser.ErrorTypeEnum.LEXICAL;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
@@ -39,7 +40,7 @@ public class PackageDeclarationParser extends GenericParser {
 
             return packageDeclarationNode;
         } catch (ParseErrorException e) {
-            return new ErrorNode(e);
+            return new ErrorNode(LEXICAL, e);
         }
     }
 }

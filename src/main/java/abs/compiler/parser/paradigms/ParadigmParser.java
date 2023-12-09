@@ -4,9 +4,13 @@ import static abs.compiler.Util.coalesce;
 import static abs.compiler.lexer.Type.IDENTIFIER;
 import static abs.compiler.lexer.Type.PARADIGM;
 import static abs.compiler.lexer.Type.SEMICOLON;
+import static abs.compiler.parser.ErrorTypeEnum.LEXICAL;
+import static abs.compiler.parser.ErrorTypeEnum.SEMANTIC;
+import static abs.compiler.parser.ErrorTypeEnum.SYNTACTIC;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
+import abs.compiler.parser.ErrorTypeEnum;
 import abs.compiler.parser.GenericParser;
 import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.Node;
@@ -64,19 +68,19 @@ public class ParadigmParser extends GenericParser {
                     tokens.add(token);
 
                     // Return a parse error because a semicolon was not found
-                    return new ErrorNode("Expected \";\" but found \"" + coalesce(token.getValue(), token.getType().name()) + "\" instead", tokens);
+                    return new ErrorNode(SYNTACTIC, "Expected \";\" but found \"" + coalesce(token.getValue(), token.getType().name()) + "\" instead", tokens);
                 }
 
                 tokens.add(token);
 
                 // Return a parse error because a valid paradigm name was not found
-                return new ErrorNode("\"" + token.getValue() + "\" is not a valid paradigm", tokens);
+                return new ErrorNode(SEMANTIC, "\"" + token.getValue() + "\" is not a valid paradigm", tokens);
             }
 
             tokens.add(token);
 
             // Return a parse error because an identifier was not found
-            return new ErrorNode("Expected identifier but found \"" + token.getValue() + "\" instead", tokens);
+            return new ErrorNode(LEXICAL, "Expected identifier but found \"" + token.getValue() + "\" instead", tokens);
         }
 
         // Add the token to the list of tokens that caused the error despite it not being
@@ -84,6 +88,6 @@ public class ParadigmParser extends GenericParser {
         tokens.add(token);
 
         // Return a parse error if no paradigm declaration was found
-        return new ErrorNode("Expected \"paradigm\" but found \"" + token.getValue() + "\" instead", tokens);
+        return new ErrorNode(LEXICAL, "Expected \"paradigm\" but found \"" + token.getValue() + "\" instead", tokens);
     }
 }

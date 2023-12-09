@@ -3,6 +3,7 @@ package abs.compiler.parser.oop.packages;
 import static abs.compiler.lexer.Type.IDENTIFIER;
 import static abs.compiler.lexer.Type.PERIOD;
 import static abs.compiler.lexer.Type.SEMICOLON;
+import static abs.compiler.parser.ErrorTypeEnum.LEXICAL;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
@@ -36,7 +37,7 @@ public class PackageSegmentParser extends GenericParser {
                 parse(packageSegmentNode);
             } else {
                 if (!Character.isUpperCase(packageSegmentNode.getName().charAt(0))) {
-                    ErrorNode errorNode = new ErrorNode("Class names must begin with an upper case letter", packageSegmentNode.getTokens());
+                    ErrorNode errorNode = new ErrorNode(LEXICAL, "Class names must begin with an upper case letter", packageSegmentNode.getTokens());
                     ((AbstractNode)parent).replaceLastChild(errorNode);
                 }
 
@@ -47,7 +48,7 @@ public class PackageSegmentParser extends GenericParser {
 
             return packageSegmentNode;
         } catch (ParseErrorException e) {
-            return new ErrorNode(e);
+            return new ErrorNode(LEXICAL, e);
         }
     }
 }

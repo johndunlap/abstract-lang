@@ -12,8 +12,8 @@ public class ParseErrorException extends Exception {
         this.error = error;
     }
 
-    public ParseErrorException(String message, List<Token> tokens) {
-        this(new ErrorNode(message, tokens));
+    public ParseErrorException(ErrorTypeEnum errorType, String message, List<Token> tokens) {
+        this(new ErrorNode(errorType, message, tokens));
     }
 
     public ErrorNode getError() {
