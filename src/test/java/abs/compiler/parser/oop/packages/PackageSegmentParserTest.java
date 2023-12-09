@@ -16,7 +16,7 @@ public class PackageSegmentParserTest extends AbstractParserTest {
     @Test
     public void testPackageSegmentParserWithValidInput() {
         Options options = new Options();
-        CharacterStream characterStream = new CharacterStream(".compiler.parser.oop.packages", options);
+        CharacterStream characterStream = new CharacterStream(".compiler.parser.oop.Packages", options);
         TokenStream tokenStream = new TokenStream(characterStream, options);
         PackageSegmentParser parser = new PackageSegmentParser(tokenStream, options);
         Node node = parser.parse(new RootNode());
@@ -53,11 +53,11 @@ public class PackageSegmentParserTest extends AbstractParserTest {
         packageSegment = (PackageSegmentNode) packageSegment.getChild(0);
         assertEquals(0, packageSegment.getChildren().size());
         assertEquals(2, packageSegment.getTokens().size());
-        assertEquals("packages", packageSegment.getName());
+        assertEquals("Packages", packageSegment.getName());
         assertEquals(PERIOD, packageSegment.getTokens().get(0).getType());
         assertEquals(".", packageSegment.getTokens().get(0).getValue());
         assertEquals(IDENTIFIER, packageSegment.getTokens().get(1).getType());
-        assertEquals("packages", packageSegment.getTokens().get(1).getValue());
+        assertEquals("Packages", packageSegment.getTokens().get(1).getValue());
 
         assertTrue(packageSegment.getChildren().isEmpty());
     }

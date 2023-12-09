@@ -13,7 +13,7 @@ public class Main {
         CharacterStream characterStream = new CharacterStream(
             "paradigm oop;\n" +
             "package abs.compiler.test;\n" +
-            "import abs.compiler.test.ModuleOne;\n" +
+            "impot abs.compiler.test.ModuleOne;\n" +
             "import abs.compiler.test.ModuleTwo;\n",
             options
         );

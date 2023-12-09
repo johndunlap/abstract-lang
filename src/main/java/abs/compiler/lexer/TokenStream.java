@@ -56,6 +56,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This is a lossless lexer for the abs programming language. This means that it is possible
@@ -74,9 +75,39 @@ public class TokenStream {
     }
 
     /**
+     * This is intended for use during error recovery. It will eat tokens until it encounters a token of the specified
+     * type. The goal is to find a point in the token stream where parsing can resume.
+     * @param type The type of token to eat until
+     * @return This token stream
+     */
+    public TokenStream eatUntil(Type type) {
+        while (!peek().hasType(type)) {
+            eat();
+        }
+
+        return this;
+    }
+
+    /**
+     * This is intended for use during error recovery. It will eat tokens until it encounters a token of the specified
+     * type or one of the specified types. The goal is to find a point in the token stream where parsing can resume.
+     * @param type The type of token to eat until
+     * @return This token stream
+     */
+    public TokenStream eatUntil(Type... type) {
+        Set<Type> types = Set.of(type);
+
+        while (!types.contains(peek().getType())) {
+            eat();
+        }
+
+        return this;
+    }
+
+    /**
      * Remove all whitespace tokens from the token stream until a non-whitespace token is encountered.
      */
-    public TokenStream consumeWhitespace() {
+    public TokenStream eatWhitespace() {
         Token token = peek();
 
         // Skip over any whitespace tokens

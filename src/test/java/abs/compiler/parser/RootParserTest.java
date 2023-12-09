@@ -25,7 +25,7 @@ public class RootParserTest extends AbstractParserTest {
         "      4 -> 5;\n" +
         "      5 [label=\"compiler\", shape=oval];\n" +
         "      5 -> 6;\n" +
-        "      6 [label=\"test\", shape=oval];\n" +
+        "      6 [label=\"Test\", shape=oval];\n" +
         "      2 -> 7;\n" +
         "      7 [label=\"IMPORT LIST\", shape=oval];\n" +
         "}";
@@ -39,7 +39,7 @@ public class RootParserTest extends AbstractParserTest {
     @Test
     public void testRootParserToDotMethodWithValidSyntax() {
         Options options = new Options();
-        CharacterStream characterStream = new CharacterStream("paradigm oop; package abs.compiler.test;", options);
+        CharacterStream characterStream = new CharacterStream("paradigm oop; package abs.compiler.Test;", options);
         TokenStream tokenStream = new TokenStream(characterStream, options);
         RootParser parser = new RootParser(tokenStream, options);
         Node node = parser.parse(null);
@@ -53,7 +53,7 @@ public class RootParserTest extends AbstractParserTest {
     @Test
     public void testMissingParadigmDeclarationWithOopDefaultParadigm() {
         Options options = new Options();
-        CharacterStream characterStream = new CharacterStream("package abs.compiler.test;", options);
+        CharacterStream characterStream = new CharacterStream("package abs.compiler.Test;", options);
         TokenStream tokenStream = new TokenStream(characterStream, options);
         RootParser parser = new RootParser(tokenStream, options);
         Node node = parser.parse(null);
@@ -74,7 +74,7 @@ public class RootParserTest extends AbstractParserTest {
         Options options = new Options();
         options.setDefaultParadigm(null);
 
-        CharacterStream characterStream = new CharacterStream("package abs.compiler.test;", options);
+        CharacterStream characterStream = new CharacterStream("package abs.compiler.Test;", options);
         TokenStream tokenStream = new TokenStream(characterStream, options);
         RootParser parser = new RootParser(tokenStream, options);
         Node node = parser.parse(null);

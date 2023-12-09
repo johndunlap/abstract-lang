@@ -26,17 +26,17 @@ public class ParadigmParser extends GenericParser {
     @Override
     public Node parse(Node parent) {
         // Look ahead at the next token without removing it from the token stream
-        Token token = tokenStream.consumeWhitespace().peek();
+        Token token = tokenStream.eatWhitespace().peek();
         List<Token> tokens = new ArrayList<>();
 
         // If the next token is an identifier, and it has the value "paradigm", then we have a paradigm declaration
         if (token.hasType(PARADIGM)) {
             // Remove the "paradigm" token from the token stream
-            tokenStream.consumeWhitespace().next();
+            tokenStream.eatWhitespace().next();
             tokens.add(token);
 
             // Look ahead at the next token without removing it from the token stream
-            token = tokenStream.consumeWhitespace().peek();
+            token = tokenStream.eatWhitespace().peek();
 
             // If the next token is an identifier, then we need to check it to see if it is a valid paradigm name
             if (token.hasType(IDENTIFIER)) {
@@ -45,16 +45,16 @@ public class ParadigmParser extends GenericParser {
 
                 // Was a valid paradigm name found?
                 if (paradigm != null) {
-                    tokenStream.consumeWhitespace().next();
+                    tokenStream.eatWhitespace().next();
                     tokens.add(token);
 
                     // Look ahead at the next token without removing it from the token stream
-                    token = tokenStream.consumeWhitespace().peek();
+                    token = tokenStream.eatWhitespace().peek();
 
                     // If the next token is a semicolon, then we have a valid paradigm declaration
                     if (token.hasType(SEMICOLON)) {
                         // Remove the semicolon token from the token stream
-                        tokenStream.consumeWhitespace().next();
+                        tokenStream.eatWhitespace().next();
                         tokens.add(token);
 
                         // Return the paradigm declaration node

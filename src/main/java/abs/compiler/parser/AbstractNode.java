@@ -1,8 +1,6 @@
 package abs.compiler.parser;
 
-import abs.ImplementMeException;
 import abs.compiler.lexer.Token;
-import abs.compiler.parser.tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +31,12 @@ public abstract class AbstractNode implements Node {
      * The children of this node.
      */
     protected List<Node> children = new ArrayList<>();
+
+    public void replaceLastChild(ErrorNode errorNode) {
+        children.remove(children.size() - 1);
+        children.add(errorNode);
+        errorNode.setParent(this);
+    }
 
     /**
      * {@inheritDoc}

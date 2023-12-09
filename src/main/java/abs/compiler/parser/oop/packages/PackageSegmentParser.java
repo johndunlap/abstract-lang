@@ -7,6 +7,7 @@ import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
 import abs.compiler.lexer.Type;
+import abs.compiler.parser.AbstractNode;
 import abs.compiler.parser.ErrorNode;
 import abs.compiler.parser.GenericParser;
 import abs.compiler.parser.Node;
@@ -34,6 +35,11 @@ public class PackageSegmentParser extends GenericParser {
                 // We don't care about the return value because the result is added to the parent node as a child
                 parse(packageSegmentNode);
             } else {
+                if (!Character.isUpperCase(packageSegmentNode.getName().charAt(0))) {
+                    ErrorNode errorNode = new ErrorNode("Class names must begin with an upper case letter", packageSegmentNode.getTokens());
+                    ((AbstractNode)parent).replaceLastChild(errorNode);
+                }
+
                 // Parse the semicolon
                 Token semicolon = matchSingle(SEMICOLON);
                 packageSegmentNode.addToken(semicolon);

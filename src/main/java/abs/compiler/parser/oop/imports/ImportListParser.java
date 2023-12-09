@@ -19,12 +19,14 @@ public class ImportListParser extends GenericParser {
         ImportListDefinitionNode importListDefinitionNode = new ImportListDefinitionNode(parent);
 
         // If the next token is not an import, then we have an empty import list
-        if (!tokenStream.consumeWhitespace().peek().hasType(IMPORT)) {
+        if (!tokenStream.eatWhitespace().peek().hasType(IMPORT)) {
             return importListDefinitionNode;
         }
 
+        // TODO: This isn't good enough. This stops parsing imports the first time it encounters a broken import
+        //  statement rather than recovering, leaving an error node behind, and parsing the next import statement
         // Otherwise, we have at least one import
-        while (tokenStream.consumeWhitespace().peek().hasType(IMPORT)) {
+        while (tokenStream.eatWhitespace().peek().hasType(IMPORT)) {
             // We don't care about the return value because the result is added to the parent node as a child
             importParser.parse(importListDefinitionNode);
         }

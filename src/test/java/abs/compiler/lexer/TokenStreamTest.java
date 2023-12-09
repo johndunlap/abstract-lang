@@ -23,6 +23,7 @@ import static abs.compiler.lexer.Type.GT;
 import static abs.compiler.lexer.Type.GTEQ;
 import static abs.compiler.lexer.Type.HEX_LITERAL;
 import static abs.compiler.lexer.Type.IDENTIFIER;
+import static abs.compiler.lexer.Type.IMPORT;
 import static abs.compiler.lexer.Type.LBRACE;
 import static abs.compiler.lexer.Type.LBRACKET;
 import static abs.compiler.lexer.Type.LF;
@@ -814,6 +815,42 @@ public class TokenStreamTest {
         assertEquals(tokenStream.next().getValue(), "oop");
         assertEquals(tokenStream.next().getValue(), ";");
         assertEquals(tokenStream.next().getValue(), "\n");
+    }
+
+    @Test
+    public void testEatUntilSingle() {
+        Options o = new Options() {{
+            setTrace(System.out);
+            setTraceEnabled(false);
+        }};
+        CharacterStream characterStream = new CharacterStream("paradigm oop;\nimport abs.compiler.test.MyModule;", o);
+        TokenStream tokenStream = createTokenStream(characterStream, o);
+        tokenStream.eatUntil(IMPORT);
+        assertEquals(IMPORT, tokenStream.peek().getType());
+    }
+
+    @Test
+    public void testEatUntilMultiple1() {
+        Options o = new Options() {{
+            setTrace(System.out);
+            setTraceEnabled(false);
+        }};
+        CharacterStream characterStream = new CharacterStream("paradigm oop;\nimport abs.compiler.test.MyModule;", o);
+        TokenStream tokenStream = createTokenStream(characterStream, o);
+        tokenStream.eatUntil(IMPORT, SEMICOLON);
+        assertEquals(SEMICOLON, tokenStream.peek().getType());
+    }
+
+    @Test
+    public void testEatUntilMultiple2() {
+        Options o = new Options() {{
+            setTrace(System.out);
+            setTraceEnabled(false);
+        }};
+        CharacterStream characterStream = new CharacterStream("paradigm oop;\nimport abs.compiler.test.MyModule;", o);
+        TokenStream tokenStream = createTokenStream(characterStream, o);
+        tokenStream.eatUntil(IDENTIFIER, SEMICOLON);
+        assertEquals(IDENTIFIER, tokenStream.peek().getType());
     }
 
     @Test

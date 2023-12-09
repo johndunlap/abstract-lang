@@ -55,7 +55,7 @@ public class GenericParser implements Parser {
         }
 
         public TokenParser match(Type type) throws ParseErrorException {
-            Token peek = tokenStream.consumeWhitespace().peek();
+            Token peek = tokenStream.eatWhitespace().peek();
 
             if (peek.hasType(type)) {
                 tokens.add(tokenStream.next());
@@ -66,7 +66,7 @@ public class GenericParser implements Parser {
         }
 
         public TokenParser match(Type type, String value) throws ParseErrorException {
-            Token peek = tokenStream.consumeWhitespace().peek();
+            Token peek = tokenStream.eatWhitespace().peek();
 
             if (peek.hasType(type) && peek.getValue().equals(value)) {
                 tokens.add(tokenStream.next());
