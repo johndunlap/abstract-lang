@@ -29,10 +29,6 @@ public class RootParser extends GenericParser {
 
         if (paradigmNode instanceof ErrorNode) {
             if (options.getDefaultParadigm() != null) {
-                // This is necessary for the unit tests to pass because is incremented by the error node which
-                // was discarded
-                AbstractNode.SEQUENCE--;
-
                 // Leave the token stream empty because the paradigm wasn't taken from the token stream.
                 paradigmNode = new ParadigmDeclarationNode(options.getDefaultParadigm());
                 paradigmNode.setParent(rootNode);

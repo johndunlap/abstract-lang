@@ -17,7 +17,7 @@ public abstract class AbstractNode implements Node {
      * The id of this node. Note that this approach is not thread safe but it should be fine provided it is only used
      * by the toDot() method.
      */
-    protected final long id = ++SEQUENCE;
+    protected Long id = null;
 
     /**
      * The list of tokens that this node represents.
@@ -79,6 +79,11 @@ public abstract class AbstractNode implements Node {
      */
     @Override
     public String getId() {
+        // I'm doing this on-demand because it makes it easier to test the dot output
+        if (id == null) {
+            id = ++SEQUENCE;
+        }
+
         return String.valueOf(id);
     }
 

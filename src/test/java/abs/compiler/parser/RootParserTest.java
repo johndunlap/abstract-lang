@@ -13,19 +13,19 @@ public class RootParserTest extends AbstractParserTest {
 
     public static final String EXPECTED_DOT_GRAPH1 = "digraph {\n" +
         "    node [shape=ellipse];\n" +
-        "      1 [label=\"ROOT\", shape=oval];\n" +
-        "      1 -> 2;\n" +
-        "      2 [label=\"PARADIGM OOP\", shape=oval];\n" +
-        "      1 -> 3;\n" +
-        "      3 [label=\"OOP ROOT\", shape=oval];\n" +
+        "      null [label=\"ROOT\", shape=oval];\n" +
+        "      null -> 1;\n" +
+        "      1 [label=\"PARADIGM OOP\", shape=oval];\n" +
+        "      null -> 2;\n" +
+        "      2 [label=\"OOP ROOT\", shape=oval];\n" +
+        "      2 -> 3;\n" +
+        "      3 [label=\"PACKAGE\", shape=oval];\n" +
         "      3 -> 4;\n" +
-        "      4 [label=\"PACKAGE\", shape=oval];\n" +
+        "      4 [label=\"abs\", shape=oval];\n" +
         "      4 -> 5;\n" +
-        "      5 [label=\"abs\", shape=oval];\n" +
+        "      5 [label=\"compiler\", shape=oval];\n" +
         "      5 -> 6;\n" +
-        "      6 [label=\"compiler\", shape=oval];\n" +
-        "      6 -> 7;\n" +
-        "      7 [label=\"test\", shape=oval];\n" +
+        "      6 [label=\"test\", shape=oval];\n" +
         "}";
 
     @Before
