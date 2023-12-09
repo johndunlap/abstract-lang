@@ -24,5 +24,5 @@ public enum ErrorTypeEnum {
     /**
      * Code not reachable, infinite loop, or assigning null to a non-nullable variable.
      */
-    LOGICAL
+    LOGICAL;
 }
