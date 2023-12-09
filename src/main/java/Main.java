@@ -10,7 +10,13 @@ import abs.compiler.parser.RootParser;
 public class Main {
     public static void main(String[] args) throws Exception {
         Options options = new Options();
-        CharacterStream characterStream = new CharacterStream("paradigm oop; package abs.compiler.test;", options);
+        CharacterStream characterStream = new CharacterStream(
+            "paradigm oop;\n" +
+            "package abs.compiler.test;\n" +
+            "import abs.compiler.test.ModuleOne;\n" +
+            "import abs.compiler.test.ModuleTwo;\n",
+            options
+        );
         TokenStream tokenStream = new TokenStream(characterStream, options);
         RootParser parser = new RootParser(tokenStream, options);
         Node node = parser.parse(null);

@@ -2,6 +2,7 @@ package abs.compiler.parser.oop.packages;
 
 import static abs.compiler.lexer.Type.IDENTIFIER;
 import static abs.compiler.lexer.Type.PERIOD;
+import static abs.compiler.lexer.Type.SEMICOLON;
 import abs.compiler.Options;
 import abs.compiler.lexer.Token;
 import abs.compiler.lexer.TokenStream;
@@ -32,6 +33,10 @@ public class PackageSegmentParser extends GenericParser {
             if(tokenStream.peek(0).hasType(PERIOD) && tokenStream.peek(1).hasType(IDENTIFIER)) {
                 // We don't care about the return value because the result is added to the parent node as a child
                 parse(packageSegmentNode);
+            } else {
+                // Parse the semicolon
+                Token semicolon = matchSingle(SEMICOLON);
+                packageSegmentNode.addToken(semicolon);
             }
 
             return packageSegmentNode;

@@ -31,6 +31,8 @@ public class RootParser extends GenericParser {
             if (options.getDefaultParadigm() != null) {
                 // Leave the token stream empty because the paradigm wasn't taken from the token stream.
                 paradigmNode = new ParadigmDeclarationNode(options.getDefaultParadigm());
+
+                // Update the tree linkages so that they no longer point to the error node.
                 paradigmNode.setParent(rootNode);
                 rootNode.getChildren().set(0, paradigmNode);
             } else {
